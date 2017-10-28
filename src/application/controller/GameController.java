@@ -6,12 +6,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
 public class GameController {
-    private static final GameController gc;
+
+    @FXML
+    private Pane pane;
+
+    private static final GameController gc;  // GameControllerインスタンス
     private static final Scene SCENE;
 
     static  {
@@ -23,10 +28,9 @@ public class GameController {
             e.printStackTrace();
         }
         Parent parent = fxmlLoader.getRoot();
-        Scene s = new Scene(parent);
+        Scene scene = new Scene(parent);
 
-        SCENE = s;
-        s.setFill(Color.RED);
+        SCENE = scene;
         gc = fxmlLoader.getController();
     }
 

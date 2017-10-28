@@ -20,8 +20,6 @@ public class Main extends Application {
 
             this.primaryStage.setTitle("JavaGame");  // タイトル設定
 
-//            scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
-
             GameController.getInstance().show();  // シーンの挿入
             this.primaryStage.show();
         } catch (Exception e) {
