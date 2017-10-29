@@ -39,7 +39,7 @@ public class GameController {
     }
 
     public void show() {
-        Main.primaryStage.setScene(SCENE);
+        GameControllerMain.primaryStage.setScene(SCENE);
     }
 
 //    @FXML
