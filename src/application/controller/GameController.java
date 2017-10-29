@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GameController {
 
     @FXML
-    private Pane pane;
+    private Pane drawPane;
 
     private static final GameController gc;  // GameControllerインスタンス
     private static final Scene SCENE;
