@@ -24,7 +24,6 @@ public class GameController {
         try {
             fxmlLoader.load();
         } catch (IOException e) {
-            // loggerを使って何かしら出すほうがいいですね。手抜きですみません
             e.printStackTrace();
         }
         Parent parent = fxmlLoader.getRoot();
@@ -41,10 +40,4 @@ public class GameController {
     public void show() {
         GameControllerMain.primaryStage.setScene(SCENE);
     }
-
-//    @FXML
-//    public void onClick(ActionEvent event) {
-//        // クリック時の処理とか色々して~~~次のページ表示
-//        FirstContent.getInstance().show();
-//    }
 }
