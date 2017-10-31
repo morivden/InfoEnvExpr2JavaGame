@@ -1,7 +1,5 @@
 package application.controller;
 
-import application.component.map.IllegalMapDataException;
-import application.component.map.MapFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
