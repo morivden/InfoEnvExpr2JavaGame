@@ -1,7 +1,7 @@
 package application.controller;
 
+import application.component.map.IllegalMapDataException;
 import application.component.map.MapFactory;
-import application.component.map.MapInfomation;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -24,8 +24,6 @@ public class GameControllerMain extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        MapFactory.createMap(1);
     }
 
     public static void main(String[] args) {
