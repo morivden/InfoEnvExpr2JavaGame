@@ -8,5 +8,6 @@ public class GameManager {
     }
 
     private GameManager() {
+
     }
 }
