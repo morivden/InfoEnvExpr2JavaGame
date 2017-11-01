@@ -18,7 +18,7 @@ public class TitleController {
     @FXML private Button startButton;
     @FXML private Button configBottun;
 
-    private static final TitleController tc;  // GameControllerインスタンス
+    private static final TitleController tc;  // TitleControllerインスタンス
     private static final Scene SCENE;
 
     static  {
