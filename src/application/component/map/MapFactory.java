@@ -24,7 +24,7 @@ public class MapFactory {
      */
     public static Map createMap(int stageNum) throws IllegalMapDataException, IllegalArgumentException {
         //== 引数の判定
-        if ( checkExistMap(stageNum) ) { throw new IllegalArgumentException(); }
+        if ( !checkExistMap(stageNum) ) { throw new IllegalArgumentException(); }
 
         //== 対応するMapInformationの取得
         MapInformation mapInfo = getMapInformation(stageNum);
