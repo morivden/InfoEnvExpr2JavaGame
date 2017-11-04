@@ -37,12 +37,9 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // drawPaneにフォーカスを移す
         drawPane.setFocusTraversable(true);
         drawPane.requestFocus();
-
-        if ( drawPane.isFocused() ) {
-            System.out.println("aa");
-        }
     }
 
     public static GameController getInstance() {
