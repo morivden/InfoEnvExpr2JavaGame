@@ -58,20 +58,7 @@ public class GameController implements Initializable {
     @FXML
     public void onKeyPressed(KeyEvent event) {
         System.out.print("Pressed  ");
-        switch ( event.getCode() ) {
-            case UP :
-                System.out.println("うえ");      break;
-            case DOWN :
-                System.out.println("した");      break;
-            case LEFT :
-                System.out.println("ひだり");    break;
-            case RIGHT :
-                System.out.println("みぎ");      break;
-            case SPACE :
-                System.out.println("すぺーす");  break;
-            default :
-                System.out.println("なし");      break;
-        }
+        changeKeyFlag(event);
     }
 
     /**
@@ -81,6 +68,15 @@ public class GameController implements Initializable {
      */
     public void onKeyReleased(KeyEvent event) {
         System.out.print("Released: ");
+        changeKeyFlag(event);
+    }
+
+    /**
+     * キーの入力メソッド
+     *
+     * @param event
+     */
+    private void changeKeyFlag(KeyEvent event) {
         switch ( event.getCode() ) {
             case UP :
                 System.out.println("うえ");      break;
