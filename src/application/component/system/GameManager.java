@@ -21,6 +21,7 @@ public class GameManager {
     private GameProcess gp;         // ゲームプロセス
 
     private GameMap gameMap;        // マップ
+    // TODO Playerクラスのフィールドを作成
 
     private GameManager() {
         running = new AtomicBoolean(false);
