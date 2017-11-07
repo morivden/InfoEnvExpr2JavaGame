@@ -1,7 +1,7 @@
 package application.component.system;
 
 import application.component.map.GameMap;
-import application.component.map.IllegalMapDataException;
+import application.component.map.MapFactory.IllegalMapDataException;
 import application.component.map.MapFactory;
 import javafx.scene.layout.Pane;
 
@@ -88,7 +88,7 @@ public class GameManager {
     private void initializeGameComponent(int stageNum) {
         try {
             gameMap = MapFactory.createMap(stageNum);
-        } catch ( IllegalMapDataException e ) {
+        } catch ( IllegalMapDataException | IllegalArgumentException e ) {
             e.printStackTrace();
             // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
