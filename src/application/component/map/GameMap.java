@@ -1,4 +1,5 @@
 package application.component.map;
 
-public class Map {
+public class GameMap {
+
 }
