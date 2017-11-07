@@ -22,7 +22,7 @@ public class MapFactory {
      * @return 指定した番号のマップクラスのインスタンス
      * @throws IllegalMapDataException マップデータが不適であるとき、発生
      */
-    public static Map createMap(int stageNum) throws IllegalMapDataException, IllegalArgumentException {
+    public static GameMap createMap(int stageNum) throws IllegalMapDataException, IllegalArgumentException {
         //== 引数の判定
         if ( !checkExistMap(stageNum) ) { throw new IllegalArgumentException(); }
 
@@ -64,10 +64,10 @@ public class MapFactory {
      * 二次元文字配列からMapを生成する
      *
      * @param charMap 文字のマップデータ
-     * @return Map
+     * @return GameMap
      */
-    private static Map convertToMapFromCharArray(char[][] charMap) {
-        return new Map();
+    private static GameMap converToMapFromCharArray(char[][] charMap) {
+        return new GameMap();
     }
 
     /**
