@@ -14,4 +14,8 @@ public abstract class GameObject {
     public Point2D getPosition() {
         return position;
     }
+    
+    public CollisionObject getCollisionObject() {
+        return collisionObject;
+    }
 }
