@@ -33,7 +33,7 @@ public class MapFactory {
         char[][] charMapData = readMapDate(mapInfo);
 
         //== Mapインスタンスの生成
-        return converToMapFromCharArray(charMapData);
+        return convertToMapFromCharArray(charMapData);
     }
 
     /**
@@ -143,5 +143,21 @@ public class MapFactory {
         //== ファイル情報の読み込み
         List<String> inputString = bReader.lines().collect(Collectors.toList());
         return inputString;
+    }
+
+    /**
+     * マップデータが不適切なときの例外
+     *
+     */
+    private static class IllegalMapDataException extends Exception {
+        private static final long serialVersionUID = 1L;
+
+        public IllegalMapDataException() {
+            System.out.println("不適切なMapデータです");
+        }
+
+        public IllegalMapDataException(String message) {
+            super(message);
+        }
     }
 }
