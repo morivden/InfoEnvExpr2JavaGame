@@ -66,7 +66,7 @@ public class MapFactory {
      * @param charMap 文字のマップデータ
      * @return GameMap
      */
-    private static GameMap converToMapFromCharArray(char[][] charMap) {
+    private static GameMap convertToMapFromCharArray(char[][] charMap) {
         return new GameMap();
     }
 
@@ -149,7 +149,7 @@ public class MapFactory {
      * マップデータが不適切なときの例外
      *
      */
-    private static class IllegalMapDataException extends Exception {
+    public static class IllegalMapDataException extends Exception {
         private static final long serialVersionUID = 1L;
 
         public IllegalMapDataException() {
