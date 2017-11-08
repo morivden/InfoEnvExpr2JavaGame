@@ -92,4 +92,22 @@ public class GameController implements Initializable {
                 System.out.println("なし");      break;
         }
     }
+
+    /**
+     * シーンの幅を取得
+     *
+     * @return the scene width
+     */
+    public static double getSceneWidth() {
+        return SCENE.getWidth();
+    }
+
+    /**
+     * シーンの高さを取得
+     *
+     * @return the scene height
+     */
+    public static double getSceneHeight() {
+        return SCENE.getHeight();
+    }
 }
