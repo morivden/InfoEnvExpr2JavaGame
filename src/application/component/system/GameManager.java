@@ -95,7 +95,7 @@ public class GameManager {
             // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-        inputObjectsToPane();    // drawPaneの初期化
+        inputObjectsToPane();    // 描画パネル関連の初期化
     }
 
     /**
