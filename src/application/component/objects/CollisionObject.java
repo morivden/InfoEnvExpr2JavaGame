@@ -14,12 +14,12 @@ public abstract class CollisionObject {
      * オブジェクトごとの衝突チェック
      * @param gameObject
      */
-    public static void checkCollisions(GameObject gameObject) {
+    public void checkCollisions(List<CollisionObject> co, GameObject gameObject) {
         // 衝突してるかをチェック
         // チェックしたいCollisionObjectをcollisionObjectsからピックアップ
-        for (CollisionObject pickupCollisionObject : collisionObjects) {
+        for (CollisionObject pickupCollisionObject : co) {
             // 全てのcollisionObjectsを見ていく
-            for (CollisionObject collisionObject : collisionObjects) {
+            for (CollisionObject collisionObject : co) {
                 // GameObject側からCollisionObjectの呼び出し
                 CollisionObject collisionGameObject = gameObject.getCollisionObject();
                 // 同じオブジェクトの場合はcontinue;
