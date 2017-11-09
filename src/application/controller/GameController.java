@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.component.system.GameManager;
+import application.component.system.InputManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,24 +10,31 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameController implements Initializable {
 
-    @FXML private AnchorPane root;
-    @FXML private Pane drawPane;
+    @FXML
+    protected AnchorPane root;
+    @FXML
+    protected Pane drawPane;
 
-    private static final GameController gc;  // GameControllerインスタンス
-    private static final Scene SCENE;
+    protected static final GameController gc;  // GameControllerインスタンス
+    protected static final Scene SCENE;
+    protected GameManager gameManager;
 
-    static  {
+    static {
         FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/GameController.fxml"));
         try {
             fxmlLoader.load();
-        } catch (IOException e) {
+        } catch ( IOException e ) {
             e.printStackTrace();
         }
         Parent parent = fxmlLoader.getRoot();
@@ -40,6 +49,11 @@ public class GameController implements Initializable {
         // drawPaneにフォーカスを移す
         drawPane.setFocusTraversable(true);
         drawPane.requestFocus();
+
+        gameManager = GameManager.getInstance(drawPane, 1);
+        gameManager.start();
+
+        drawPane.getChildren().add(new Circle(300, 250,100));
     }
 
     public static GameController getInstance() {
@@ -58,7 +72,7 @@ public class GameController implements Initializable {
     @FXML
     public void onKeyPressed(KeyEvent event) {
         System.out.print("Pressed  ");
-        changeKeyFlag(event);
+        changeKeyState(event, true);
     }
 
     /**
@@ -68,28 +82,32 @@ public class GameController implements Initializable {
      */
     public void onKeyReleased(KeyEvent event) {
         System.out.print("Released: ");
-        changeKeyFlag(event);
+        changeKeyState(event, false);
     }
 
     /**
-     * キーの入力メソッド
+     * キーの状態更新メソッド
      *
      * @param event
      */
-    private void changeKeyFlag(KeyEvent event) {
+    protected void changeKeyState(KeyEvent event, boolean state) {
         switch ( event.getCode() ) {
-            case UP :
-                System.out.println("うえ");      break;
-            case DOWN :
-                System.out.println("した");      break;
-            case LEFT :
-                System.out.println("ひだり");    break;
-            case RIGHT :
-                System.out.println("みぎ");      break;
-            case SPACE :
-                System.out.println("すぺーす");  break;
-            default :
-                System.out.println("なし");      break;
+            case UP:
+                GameManager.getInputManager().set(InputManager.KindOfPushedKey.UP_KEY, state);
+                System.out.println("うえ"); break;
+            case DOWN:
+                GameManager.getInputManager().set(InputManager.KindOfPushedKey.DOWN_KEY, state);
+                System.out.println("した"); break;
+            case LEFT:
+                GameManager.getInputManager().set(InputManager.KindOfPushedKey.LEFT_KEY, state);
+                System.out.println("ひだり"); break;
+            case RIGHT:
+                GameManager.getInputManager().set(InputManager.KindOfPushedKey.RIGHT_KEY, state);
+                System.out.println("みぎ"); break;
+            case SPACE:
+                GameManager.getInputManager().set(InputManager.KindOfPushedKey.SPACE_KEY, state);
+            default:
+                System.out.println("なし"); break;
         }
     }
 

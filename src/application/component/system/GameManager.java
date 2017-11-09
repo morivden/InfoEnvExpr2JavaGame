@@ -8,16 +8,15 @@ import javafx.scene.layout.Pane;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static application.component.system.GameManager.GameProcessState.PAUSE;
-import static application.component.system.GameManager.GameProcessState.RUN;
-import static application.component.system.GameManager.GameProcessState.STOP;
+import static application.component.system.GameManager.GameProcessState.*;
 
 /**
  * ゲームの管理クラス (シングルトン)
  */
 public class GameManager {
     private static final GameManager ourInstance = new GameManager();
-    private static final int PROCESS_INTERVAL_MILLISECOND = 500;  // 処理の間隔
+    private static final int PROCESS_INTERVAL_MILLISECOND = 30;           // 処理の間隔
+    private static final InputManager inputManager = new InputManager();  // 入力キー管理
 
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
@@ -41,6 +40,18 @@ public class GameManager {
         ourInstance.stageNum = stageNum;
         ourInstance.drawPane = drawPane;
         return ourInstance;
+    }
+
+    public static InputManager getInputManager() {
+        return inputManager;
+    }
+
+    public static void setKeyState(InputManager.KindOfPushedKey key, boolean state) {
+        inputManager.set(key, state);
+    }
+
+    public static boolean getKeyState(InputManager.KindOfPushedKey key) {
+        return inputManager.get(key);
     }
 
     /**
@@ -78,6 +89,10 @@ public class GameManager {
         gameState = STOP;  // 状態の更新
     }
 
+    public Pane getDrawPane() {
+        return drawPane;
+    }
+
     /**
      * 実行メソッド
      */
@@ -112,7 +127,24 @@ public class GameManager {
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
     private void inputObjectsToPane() {
+        dpm = new DrawPanelManager(drawPane);
         // TODO 実装する
+    }
+
+    /**
+     * ゲームの起動状況判別用列挙体
+     */
+    public enum GameProcessState {
+        RUN, STOP, PAUSE
+    }
+
+    /**
+     * GameProcessクラスのインスタンスが用意されていないとき発生する例外
+     */
+    private class NotGameProcessException extends Exception {
+        public NotGameProcessException() {
+            super();
+        }
     }
 
     /**
@@ -128,22 +160,27 @@ public class GameManager {
             //== 攻撃オブジェクトの更新
             //== 衝突オブジェクトの反映
             //== 描画パネル(drawPane)の移動
+            moveDrawPanel();
+
             //== 無効キャラクターの削除
             //== ゲーム終了判定
         }
-    }
 
-    /**
-     * ゲームの起動状況判別用列挙体
-     */
-    public enum GameProcessState { RUN, STOP, PAUSE; }
-
-    /**
-     * GameProcessクラスのインスタンスが用意されていないとき発生する例外
-     */
-    private class NotGameProcessException extends Exception {
-        public NotGameProcessException() {
-            super();
+        private void moveDrawPanel() {
+            double nextX = drawPane.getTranslateX();
+            double nextY = drawPane.getTranslateY();
+            // TODO 今後、Playerのキャラクターの座標に追随するように変更予定
+            if ( inputManager.get(InputManager.KindOfPushedKey.UP_KEY) ) {
+                nextY -= 10;
+            } else if ( inputManager.get(InputManager.KindOfPushedKey.DOWN_KEY) ) {
+                nextY += 10;
+            }
+            if ( inputManager.get(InputManager.KindOfPushedKey.LEFT_KEY) ) {
+                nextX -= 10;
+            } else if ( inputManager.get(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
+                nextX += 10;
+            }
+            dpm.transfer(nextX, nextY);
         }
     }
 }

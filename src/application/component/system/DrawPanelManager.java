@@ -43,8 +43,8 @@ public class DrawPanelManager {
      */
     public void transfer(double x, double y) {
         double maxX = 0, maxY = 0;  // 上限
-        double minX = drawPane.getWidth() - GameController.getSceneWidth();    // 下限
-        double minY = drawPane.getHeight() - GameController.getSceneHeight();  // 下限
+        double minX = GameController.getSceneWidth() - drawPane.getWidth();    // 下限
+        double minY = GameController.getSceneHeight() - drawPane.getHeight();  // 下限
 
         // 補正
         if ( x < minX ) { x = minX; } else if ( x > maxX ) { x = maxX; }
