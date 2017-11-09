@@ -7,7 +7,10 @@ import javafx.scene.layout.Pane;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import static application.component.system.GameManager.GameProcessState.PAUSE;
+import static application.component.system.GameManager.GameProcessState.RUN;
+import static application.component.system.GameManager.GameProcessState.STOP;
 
 /**
  * ゲームの管理クラス (シングルトン)
@@ -19,7 +22,7 @@ public class GameManager {
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
 
-    private AtomicBoolean is_continuing = new AtomicBoolean(false);  // ゲームの持続判定
+    private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
     private GameProcessTask gpt;    // ゲームプロセス
     private Timer gameTimer;        // ゲームプロセス用タイマー
 
@@ -45,7 +48,7 @@ public class GameManager {
      */
     public void start() {
         // 実行中でなければ、開始
-        if ( gameTimer == null ) {
+        if ( gameState != RUN ) {
             try {
                 exec();             // ゲーム実行
             } catch ( NotGameProcessException e ) {
@@ -55,23 +58,24 @@ public class GameManager {
     }
 
     /**
-     * 停止メソッド
+     * 一時停止メソッド
      */
-    public void stop() {
+    public void pause() {
         // ゲームが実行中であれば、停止
-        if ( gameTimer != null ) {
+        if ( gameState == RUN ) {
             gameTimer.cancel();  // 停止
             gameTimer.purge();   // タスクの消去
             gameTimer = null;    // 破棄
+            gameState = PAUSE;   // 状態の更新
         }
     }
 
     /**
-     * 現在のゲーム状態を削除
+     * 停止メソッド
      */
-    public void delete() {
-        stop();  // 停止
-        is_continuing.set(false);  // ゲームの状態の継続フラグを下ろす
+    public void stop() {
+        pause();  // 停止
+        gameState = STOP;  // 状態の更新
     }
 
     /**
@@ -79,15 +83,15 @@ public class GameManager {
      */
     private void exec() throws NotGameProcessException {
         // ゲーム状態の新規作成判定
-        if ( is_continuing.get() ) {
+        if ( gameState == STOP ) {
             initializeGameComponent(stageNum);  // 初期化
-            is_continuing.set(true);            // ゲーム状態の継続フラグを立てる
         }
 
         // 実行
         gameTimer = new Timer("game_timer", true);
         gpt = new GameProcessTask();
         gameTimer.scheduleAtFixedRate(gpt, 0, PROCESS_INTERVAL_MILLISECOND);  // 実行
+        gameState = RUN;                    // 状態の更新
     }
 
     /**
@@ -128,6 +132,11 @@ public class GameManager {
             //== ゲーム終了判定
         }
     }
+
+    /**
+     * ゲームの起動状況判別用列挙体
+     */
+    public enum GameProcessState { RUN, STOP, PAUSE; }
 
     /**
      * GameProcessクラスのインスタンスが用意されていないとき発生する例外
