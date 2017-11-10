@@ -3,12 +3,8 @@ package application.component.objects;
 import java.util.List;
 
 public abstract class CollisionObject {
-    //public static List<CollisionObject> collisionObjects;
-    
-    public CollisionObject() {
-        
-    }
-    
+
+    // TODO 抽象クラスかインターフェースか要検討
     /**
      * オブジェクトごとの衝突チェック
      * @param gameObject
@@ -16,8 +12,7 @@ public abstract class CollisionObject {
     public static void checkCollisions(List<GameObject> go, GameObject gameObject) {
      // GameObjectからCollisionObjectを取り出す
         CollisionObject collisionGameObject = gameObject.getCollisionObject();
-        // 衝突してるかをチェック
-        // チェックしたいCollisionObjectをcollisionObjectsからピックアップ
+        // チェックしたいGameObjectをList<GameObject> goからピックアップ
         for (GameObject pickupGameObject : go) {
             // 同じGameObjectならcontinue
             if (pickupGameObject == gameObject) {
