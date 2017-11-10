@@ -57,7 +57,7 @@ public class MapFactory {
      * @return 真偽値
      */
     public static boolean checkExistMap(int stageNum) {
-        return (( 0 < stageNum && stageNum < MapInformation.values().length ) ? true : false);
+        return (( 0 < stageNum && stageNum <= MapInformation.values().length ) ? true : false);
     }
 
     /**
