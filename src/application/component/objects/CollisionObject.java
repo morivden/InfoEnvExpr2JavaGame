@@ -13,24 +13,24 @@ public abstract class CollisionObject {
      * オブジェクトごとの衝突チェック
      * @param gameObject
      */
-    public static void checkCollisions(List<CollisionObject> co, GameObject gameObject) {
+    public static void checkCollisions(List<GameObject> go, GameObject gameObject) {
+     // GameObjectからCollisionObjectを取り出す
+        CollisionObject collisionGameObject = gameObject.getCollisionObject();
         // 衝突してるかをチェック
         // チェックしたいCollisionObjectをcollisionObjectsからピックアップ
-        for (CollisionObject pickupCollisionObject : co) {
-            // GameObjectからCollisionObjectを取り出す
-            CollisionObject collisionGameObject = gameObject.getCollisionObject();
-            // 同じオブジェクトの場合はcontinue;
-            if (pickupCollisionObject.equals(collisionGameObject)) {
+        for (GameObject pickupGameObject : go) {
+            // 同じGameObjectならcontinue
+            if (pickupGameObject == gameObject) {
                 continue;
             }
+            // GameObjectからCollisionObjectを引っ張ってくる
+            CollisionObject pickupCollisionObject = pickupGameObject.getCollisionObject();
             // 衝突していたらigniteEventsを呼び出す
             if (pickupCollisionObject.isCollide(collisionGameObject)) {
                 pickupCollisionObject.igniteEvents(gameObject);
-                collisionGameObject.igniteEvents(gameObject);
+                collisionGameObject.igniteEvents(pickupGameObject);
             }
         }
-        
-        // 衝突してたらiginteEventsで発火
     }
     
     // イベントの発火
