@@ -3,7 +3,7 @@ package application.component.objects;
 import java.util.List;
 
 public abstract class CollisionObject {
-    public static List<CollisionObject> collisionObjects;
+    //public static List<CollisionObject> collisionObjects;
     
     
     public CollisionObject() {
@@ -14,22 +14,20 @@ public abstract class CollisionObject {
      * オブジェクトごとの衝突チェック
      * @param gameObject
      */
-    public void checkCollisions(List<CollisionObject> co, GameObject gameObject) {
+    public static void checkCollisions(List<CollisionObject> co, GameObject gameObject) {
         // 衝突してるかをチェック
         // チェックしたいCollisionObjectをcollisionObjectsからピックアップ
         for (CollisionObject pickupCollisionObject : co) {
-            // 全てのcollisionObjectsを見ていく
-            for (CollisionObject collisionObject : co) {
-                // GameObject側からCollisionObjectの呼び出し
-                CollisionObject collisionGameObject = gameObject.getCollisionObject();
-                // 同じオブジェクトの場合はcontinue;
-                if (pickupCollisionObject.equals(collisionGameObject)) {
-                    continue;
-                }
-                // 衝突していたらigniteEventsを呼び出す
-                if (pickupCollisionObject.isCollide(collisionGameObject)) {
-                    pickupCollisionObject.igniteEvents(gameObject);
-                }
+            // GameObjectからCollisionObjectを取り出す
+            CollisionObject collisionGameObject = gameObject.getCollisionObject();
+            // 同じオブジェクトの場合はcontinue;
+            if (pickupCollisionObject.equals(collisionGameObject)) {
+                continue;
+            }
+            // 衝突していたらigniteEventsを呼び出す
+            if (pickupCollisionObject.isCollide(collisionGameObject)) {
+                pickupCollisionObject.igniteEvents(gameObject);
+                collisionGameObject.igniteEvents(gameObject);
             }
         }
         
