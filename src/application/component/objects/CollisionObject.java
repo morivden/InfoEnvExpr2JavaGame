@@ -5,7 +5,6 @@ import java.util.List;
 public abstract class CollisionObject {
     //public static List<CollisionObject> collisionObjects;
     
-    
     public CollisionObject() {
         
     }
@@ -34,17 +33,11 @@ public abstract class CollisionObject {
         // 衝突してたらiginteEventsで発火
     }
     
+    // イベントの発火
     public abstract void igniteEvents(GameObject gameObject);
     
-    public abstract boolean isCollide(CollisionObject collisionObject);/** {
-        if (collisionObject.instanceOf(RectangleCollisionObject)) {
-            // TODO 後でgetRectangleメソッドを実装
-            // 型キャストしてgetRectangleメソッドを呼び出す
-            // ((RectangleCollisionObject)collisionObject).getRectangle();
-        }
-        return true;
-    }**/
-    
+    // 衝突判定
+    public abstract boolean isCollide(CollisionObject collisionObject);    
     
     // 座標移動
     public abstract void transfer(double x, double y);
