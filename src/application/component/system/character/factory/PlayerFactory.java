@@ -1,6 +1,8 @@
 package application.component.system.character.factory;
 
-public class PlayerFactory {
+import application.component.system.character.controller.Player;
+
+public class PlayerFactory implements CharacterFactory<Player> {
     private static PlayerFactory ourInstance = new PlayerFactory();
 
     public static PlayerFactory getInstance() {
@@ -8,5 +10,15 @@ public class PlayerFactory {
     }
 
     private PlayerFactory() {
+    }
+
+    @Override
+    public void updateAll() {
+
+    }
+
+    @Override
+    public Player create() {
+        return null;
     }
 }
