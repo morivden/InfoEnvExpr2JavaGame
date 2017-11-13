@@ -9,11 +9,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TitleController">
    <children>
       <Accordion />
-      <Button fx:id="startButton" layoutX="273.0" layoutY="270.0" mnemonicParsing="false" text="Start" />
-      <Button fx:id="configBottun" layoutX="268.0" layoutY="320.0" mnemonicParsing="false" text="Config" />
-      <Text fx:id="gameTitle" layoutX="116.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="げーむたいとる" textAlignment="CENTER">
+      <Button fx:id="startButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="273.0" layoutY="256.0" mnemonicParsing="false" onAction="#clickStartButton" text="Start" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="configBottun" layoutX="268.0" layoutY="308.0" mnemonicParsing="false" text="Config" />
+      <Text fx:id="gameTitle" layoutX="89.0" layoutY="153.0" stroke="BLACK" strokeDashOffset="1.0" strokeLineCap="BUTT" strokeMiterLimit="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="げーむたいとる" textAlignment="CENTER">
          <font>
-            <Font size="52.0" />
+            <Font name="Arial" size="60.0" />
          </font>
       </Text>
    </children>
