@@ -4,4 +4,5 @@ import application.component.objects.GameObject;
 
 public abstract class Character extends GameObject {
 
+
 }
