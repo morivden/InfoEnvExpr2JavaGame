@@ -25,17 +25,17 @@ public class Player extends CharacterController {
         InputManager im = GameManager.getInputManager();
         character.setSpeed(0, 0);
         if ( im.get(InputManager.KindOfPushedKey.UP_KEY) ) {
-            character.setSpeed(0, -10);
+            character.setSpeed(character.getX_speed(), -TMPCharacter.DEFAULT_SPEED);
         } else if ( im.get(InputManager.KindOfPushedKey.DOWN_KEY) ) {
-            character.setSpeed(0, 10);
+            character.setSpeed(character.getX_speed(), TMPCharacter.DEFAULT_SPEED);
 
         }
 
         if ( im.get(InputManager.KindOfPushedKey.LEFT_KEY) ) {
-            character.setSpeed(-10, 0);
+            character.setSpeed(-TMPCharacter.DEFAULT_SPEED, character.getY_speed());
 
         } else if ( im.get(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
-            character.setSpeed(10, 0);
+            character.setSpeed(TMPCharacter.DEFAULT_SPEED, character.getY_speed());
 
         }
     }
