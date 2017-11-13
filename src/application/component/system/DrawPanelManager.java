@@ -52,7 +52,7 @@ public class DrawPanelManager {
         double maxX = 0, maxY = 0;  // 上限
         double minX = GameController.getSceneWidth() - drawPane.getWidth();    // 下限
         double minY = GameController.getSceneHeight() - drawPane.getHeight();  // 下限
-        System.out.println("  " + minX + "  " + minY);
+
         // 補正
         if ( x < minX ) { x = minX; } else if ( x > maxX ) { x = maxX; }
         if ( y < minY ) { y = minY; } else if ( y > maxY ) { y = maxY; }
