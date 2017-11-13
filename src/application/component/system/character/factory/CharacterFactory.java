@@ -15,6 +15,7 @@ public abstract class CharacterFactory<T extends CharacterController> {
     protected FactoryList factoryList;  // ファクトリーリスト
 
     public CharacterFactory(FactoryList fl, Point2D createPosition) {
+
         factoryList = fl;
         this.createPosition = createPosition;
     }

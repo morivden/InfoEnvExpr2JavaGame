@@ -8,6 +8,7 @@ import com.sun.javafx.geom.Point2D;
  * ファクトリークラスにより、生成されるゲームオブジェクトリスト
  */
 public enum FactoryList {
+
     // オブジェクト一覧
     Hero("+", pos -> { return null; }),
     Moster("-", pos -> { return null; });

@@ -52,6 +52,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
     @Override
     public void updateAll() {
         createdCharacterController.update();
+
     }
 
     @Override
