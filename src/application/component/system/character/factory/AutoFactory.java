@@ -11,10 +11,11 @@ import java.util.List;
  * 自動操作のキャラクターを生成するクラス
  */
 public class AutoFactory extends CharacterFactory<Enemy> {
+
     private List<CharacterController> createdCharacterController = new ArrayList<>();  // 自身が作成したキャラクターコントローラのインスタンス
 
-    public AutoFactory(Point2D createPosition) {
-        super(createPosition);
+    public AutoFactory(FactoryList fl,  Point2D createPosition) {
+        super(fl, createPosition);
     }
 
     @Override
