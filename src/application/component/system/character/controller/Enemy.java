@@ -13,4 +13,8 @@ public class Enemy extends CharacterController {
     public void update() {
 
     }
+
+    public PlayableCharacter getCharacter() {
+        return character;
+    }
 }
