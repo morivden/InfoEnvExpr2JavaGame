@@ -2,7 +2,7 @@ package application.component.system.character.controller;
 
 import application.component.objects.character.PlayableCharacter;
 
-public class Enemy implements CharacterController {
+public class Enemy extends CharacterController {
     private PlayableCharacter character;
 
     public Enemy(PlayableCharacter character) {
