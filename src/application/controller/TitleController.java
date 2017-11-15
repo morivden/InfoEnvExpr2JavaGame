@@ -47,4 +47,8 @@ public class TitleController {
     public void clickStartButton(ActionEvent event) {          // startButtonを押した時に実行するアクションイベント
     	GameController.getInstance().show();
     }
+    @FXML
+    public void clickConfigButton(ActionEvent event) {          // configButtonを押した時に実行するアクションイベント
+    	ConfigController.getInstance().show();
+    }
 }
