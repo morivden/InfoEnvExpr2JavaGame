@@ -42,4 +42,9 @@ public class TitleController {
     public void show() {
         TitleControllerMain.primaryStage.setScene(SCENE);
     }
+    
+    @FXML
+    public void clickStartButton(ActionEvent event) {          // startButtonを押した時に実行するアクションイベント
+    	GameController.getInstance().show();
+    }
 }
