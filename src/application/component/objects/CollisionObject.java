@@ -22,7 +22,7 @@ public abstract class CollisionObject {
             CollisionObject pickupCollisionObject = pickupGameObject.getCollisionObject();
             // 衝突していたらigniteEventsを呼び出す
             if (pickupCollisionObject.isCollide(collisionGameObject)) {
-                pickupCollisionObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
+                pickupCollisionObject.igniteEvents(pickupCollisionObject, gameObject, collisionGameObject);
                 collisionGameObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
             }
         }

@@ -48,6 +48,10 @@ public abstract class StageObject extends GameObject {
                 y2 = rect2.getY();
                 width2 = rect2.getWidth();
                 height2 = rect2.getHeight();
+                
+                // 先に矩形が重なっているか判定
+                
+                // どの方向からぶつかっているか判定
                 /*
                 if () {
                     // 上からぶつかっている場合
