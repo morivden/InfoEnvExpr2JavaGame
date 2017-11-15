@@ -3,12 +3,15 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.objects.character.PlayableCharacter;
 import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.controller.GameController;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,10 +31,9 @@ public class GameManager {
     private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
     private GameProcessTask gpt;    // ゲームプロセス
     private Timer gameTimer;        // ゲームプロセス用タイマー
-
-    private GameMap gameMap;        // マップ
-    private DrawPanelManager dpm;   // パネル管理
     private Player player;          // プレイヤーコントローラ
+
+    private DrawPanelManager dpm;   // パネル管理
 
     /**
      * インスタンスの取得
@@ -57,6 +59,8 @@ public class GameManager {
     public static boolean getKeyState(InputManager.KindOfPushedKey key) {
         return inputManager.get(key);
     }
+
+    public static Optional<PlayableCharacter> getPlayerCharacter() { return Optional.ofNullable(ourInstance.player.getCharacter()); }
 
     /**
      * 開始メソッド
@@ -117,6 +121,7 @@ public class GameManager {
      * ゲーム内要素の初期化
      */
     private void initializeGameComponent(int stageNum) {
+        GameMap gameMap = null;
         try {
             gameMap = MapFactory.createMap(stageNum);
         } catch ( IllegalMapDataException | IllegalArgumentException e ) {
@@ -125,19 +130,24 @@ public class GameManager {
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
 
-        inputObjectsToPane();    // 描画パネル関連の初期化
+        inputObjectsToPane(gameMap);    // 描画パネル関連の初期化
     }
 
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
-    private void inputObjectsToPane() {
-        dpm = new DrawPanelManager(drawPane);
+    Enemy enemy;
+    private void inputObjectsToPane(GameMap gm) {
+        dpm = new DrawPanelManager(gm, drawPane);
         // TODO 実装する
 
         // TODO 一時実装、あとで消す
         player = new Player(new TMPCharacter(new Point2D(0, 0)));
-        dpm.inputTMP((TMPCharacter) player.getCharacter());
+        dpm.inputTMP(player.getCharacter());
+
+        // TODO 一時実装あとで消す
+        enemy = new Enemy(new TMPCharacter(new Point2D(300, 100)));
+        dpm.inputTMP((TMPCharacter) enemy.getCharacter());
     }
 
     /**
@@ -166,8 +176,10 @@ public class GameManager {
             //== ファクトリーの更新
             //== キャラクターの更新
             player.update();
+            enemy.update();
             //== 移動オブジェクトの更新
             player.getCharacter().move();
+            enemy.getCharacter().move();
             //== 攻撃オブジェクトの更新
             //== 衝突オブジェクトの反映
             //== 描画パネル(drawPane)の移動
