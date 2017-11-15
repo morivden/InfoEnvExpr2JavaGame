@@ -19,9 +19,9 @@ public class RectangleCollisionObject extends CollisionObject {
      * イベントの発火
      * @param gameObject
      */
-    public void igniteEvents(GameObject gameObject) {
+    public void igniteEvents(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
         for (CollisionEvent event : events) {
-            event.ignite(gameObject);
+            event.ignite(collidedObj, gameObject, collidingObj);
         }
     }
     

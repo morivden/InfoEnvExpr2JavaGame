@@ -22,14 +22,14 @@ public abstract class CollisionObject {
             CollisionObject pickupCollisionObject = pickupGameObject.getCollisionObject();
             // 衝突していたらigniteEventsを呼び出す
             if (pickupCollisionObject.isCollide(collisionGameObject)) {
-                pickupCollisionObject.igniteEvents(gameObject);
-                collisionGameObject.igniteEvents(pickupGameObject);
+                pickupCollisionObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
+                collisionGameObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
             }
         }
     }
     
     // イベントの発火
-    public abstract void igniteEvents(GameObject gameObject);
+    public abstract void igniteEvents(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj);
     
     // 衝突判定
     public abstract boolean isCollide(CollisionObject collisionObject);    

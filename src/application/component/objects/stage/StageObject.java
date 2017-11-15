@@ -10,7 +10,10 @@ public abstract class StageObject extends GameObject {
     }
     
     public static class StageCollision extends CollisionEvent {
-        private double x, y, width, height;
+        // StageObject側の座標
+        private double x1, y1, width1, height1;
+        // MovableObject側の座標
+        private double x2, y2, width2, height2;
         
         public StageCollision() {
             
@@ -18,7 +21,7 @@ public abstract class StageObject extends GameObject {
         
         /**
          * イベントの発火(衝突したときの処理)
-         * @param gameObject
+         * @param collidedObje, gameObject, collidingOjb
          */
         @Override
         public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {           
@@ -28,24 +31,33 @@ public abstract class StageObject extends GameObject {
                 MovableObject movalbeObject = ((MovableObject)gameObject);
                 
                 // gameObjectからCollisionObjectを引っ張ってくる
-                CollisionObject collisionObject = gameObject.getCollisionObject();
+                //CollisionObject collisionObject = gameObject.getCollisionObject();
                 // RectangleCollisionObjectにキャストし、Rectangleを引っ張ってくる
-                Rectangle rect1 = ((RectangleCollisionObject)collisionObject).getRectangle();
+                Rectangle rect1 = ((RectangleCollisionObject)collidingObj).getRectangle();
                 
                 // 引っ張ってきたRectangleからx座標、y座標、幅、高さを引っ張ってくる
-                x = rect1.getX();
-                y = rect1.getY();
-                width = rect1.getWidth();
-                height = rect1.getHeight();
+                x1 = rect1.getX();
+                y1 = rect1.getY();
+                width1 = rect1.getWidth();
+                height1 = rect1.getHeight();
                 
                 // StageObject側のRectangleを引っ張ってくる
-                
+                Rectangle rect2 = ((RectangleCollisionObject)collidedObj).getRectangle();
                 // 引っ張ってきたRectangleからx座標、y座標、幅、高さを引っ張ってくる
-                
-                // 上からぶつかっているか
-                // 下からぶつかっているか
-                // 左からぶつかっているか
-                // 右からぶつかっているか
+                x2 = rect2.getX();
+                y2 = rect2.getY();
+                width2 = rect2.getWidth();
+                height2 = rect2.getHeight();
+
+                if () {
+                    // 上からぶつかっている場合
+                } else if () {
+                    // 下からぶつかっている場合
+                } else if () {
+                    // 左からぶつかっている場合
+                } else if () {
+                    // 右からぶつかっている場合
+                }
             }
         }
     }
