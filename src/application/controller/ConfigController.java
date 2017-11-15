@@ -13,12 +13,19 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 public class ConfigController {
-	
+
+    @FXML private Text config;
+    @FXML private Text volume;
+    @FXML private Text contrast;
+    @FXML private Slider volumeBar;
+    @FXML private Slider contrastBar;
+    @FXML private Button backButton;
+    
 	private static final ConfigController cc;  // ConfigControllerインスタンス
     private static final Scene SCENE;
     
     static {
-    	FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/TitleController.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/ConfigController.fxml"));
         try {
             fxmlLoader.load();
         } catch (IOException e) {
@@ -30,11 +37,16 @@ public class ConfigController {
         SCENE = scene;
         cc = fxmlLoader.getController();
     }
-    public static TitleController getInstance() {
+    public static ConfigController getInstance() {
         return cc;
     }
 
     public void show() {
-        ConfigControllerMain.primaryStage.setScene(SCENE);
+        //ConfigControllerMain.primaryStage.setScene(SCENE);
+        TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
+    }
+    @FXML
+    public void clickBackButton(ActionEvent event) {          // backButtonを押した時に実行するアクションイベント
+    	TitleController.getInstance().show();
     }
 }
