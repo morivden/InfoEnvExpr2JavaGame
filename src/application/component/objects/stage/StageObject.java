@@ -48,7 +48,7 @@ public abstract class StageObject extends GameObject {
                 y2 = rect2.getY();
                 width2 = rect2.getWidth();
                 height2 = rect2.getHeight();
-
+                /*
                 if () {
                     // 上からぶつかっている場合
                 } else if () {
@@ -58,6 +58,7 @@ public abstract class StageObject extends GameObject {
                 } else if () {
                     // 右からぶつかっている場合
                 }
+                */
             }
         }
     }
