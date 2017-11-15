@@ -1,6 +1,8 @@
 package application.component.system;
 
 import application.component.map.GameMap;
+import application.component.objects.GameObject;
+import application.component.objects.character.implement_character.TMPCharacter;
 import application.controller.GameController;
 import javafx.scene.layout.Pane;
 
@@ -29,9 +31,14 @@ public class DrawPanelManager {
     /**
      * オブジェクトの反映
      */
-    // TODO GameObject実装後、実装2
-    public void inputGameObject() {
+    public void inputGameObject(GameObject gameObject) {
+        // TODO ImageManager実装後に、追加処理の追加
+//        drawPane.getChildren().add();
+    }
 
+    // TODO 一時メソッド、あとで消す
+    public void inputTMP(TMPCharacter tp) {
+        drawPane.getChildren().add(tp.getImg());
     }
 
     /**
@@ -51,7 +58,7 @@ public class DrawPanelManager {
         if ( y < minY ) { y = minY; } else if ( y > maxY ) { y = maxY; }
 
         // 格納
-        drawPane.setTranslateX(x);
-        drawPane.setTranslateY(y);
+        drawPane.setLayoutX(x);
+        drawPane.setLayoutY(y);;
     }
 }

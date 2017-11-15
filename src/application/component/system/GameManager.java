@@ -3,6 +3,10 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.system.character.controller.Player;
+import application.controller.GameController;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
 import java.util.Timer;
@@ -27,7 +31,7 @@ public class GameManager {
 
     private GameMap gameMap;        // マップ
     private DrawPanelManager dpm;   // パネル管理
-    // TODO Playerクラスのフィールドを作成
+    private Player player;          // プレイヤーコントローラ
 
     /**
      * インスタンスの取得
@@ -120,6 +124,7 @@ public class GameManager {
             // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
+
         inputObjectsToPane();    // 描画パネル関連の初期化
     }
 
@@ -129,6 +134,10 @@ public class GameManager {
     private void inputObjectsToPane() {
         dpm = new DrawPanelManager(drawPane);
         // TODO 実装する
+
+        // TODO 一時実装、あとで消す
+        player = new Player(new TMPCharacter(new Point2D(0, 0)));
+        dpm.inputTMP((TMPCharacter) player.getCharacter());
     }
 
     /**
@@ -156,7 +165,9 @@ public class GameManager {
             // TODO 各ゲームプロセスの実装
             //== ファクトリーの更新
             //== キャラクターの更新
+            player.update();
             //== 移動オブジェクトの更新
+            player.getCharacter().move();
             //== 攻撃オブジェクトの更新
             //== 衝突オブジェクトの反映
             //== 描画パネル(drawPane)の移動
@@ -166,21 +177,21 @@ public class GameManager {
             //== ゲーム終了判定
         }
 
+        /**
+         * 描画パネルの移動
+         */
         private void moveDrawPanel() {
-            double nextX = drawPane.getTranslateX();
-            double nextY = drawPane.getTranslateY();
-            // TODO 今後、Playerのキャラクターの座標に追随するように変更予定
-            if ( inputManager.get(InputManager.KindOfPushedKey.UP_KEY) ) {
-                nextY -= 10;
-            } else if ( inputManager.get(InputManager.KindOfPushedKey.DOWN_KEY) ) {
-                nextY += 10;
-            }
-            if ( inputManager.get(InputManager.KindOfPushedKey.LEFT_KEY) ) {
-                nextX -= 10;
-            } else if ( inputManager.get(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
-                nextX += 10;
-            }
-            dpm.transfer(nextX, nextY);
+            // 座標の取得と算出
+            double drawPaneHalfWidth = GameController.getSceneWidth() / 2.0d;
+            double drawPaneHalfHeight = GameController.getSceneHeight() / 2.0d;
+
+            Point2D characterPos = player.getCharacter().getPosition();
+
+            double drawPaneX =  drawPaneHalfWidth - characterPos.getX();
+            double drawPaneY =  drawPaneHalfHeight - characterPos.getY();
+
+            // 移動
+            dpm.transfer(drawPaneX, drawPaneY);
         }
     }
 }
