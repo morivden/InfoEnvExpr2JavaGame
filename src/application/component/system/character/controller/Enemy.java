@@ -21,7 +21,6 @@ public class Enemy extends CharacterController {
         Optional<PlayableCharacter> playerCharacter = GameManager.getPlayerCharacter();
 
         double speedX = 0;
-        double speedY = 0;
 
         if ( playerCharacter.isPresent() ) {
             Point2D playerPos = playerCharacter.get().getPosition();
@@ -29,9 +28,11 @@ public class Enemy extends CharacterController {
                 double distanceX = playerPos.getX() - character.getPosition().getX();
                 speedX = ((TMPCharacter)character).DEFAULT_SPEED * Math.signum(distanceX);
 
-                if ( speedX > distanceX ) {
+                if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
                 }
+
+                speedX *= 0.5;
             }
         }
 
