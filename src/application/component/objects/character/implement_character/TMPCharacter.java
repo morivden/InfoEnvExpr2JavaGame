@@ -19,7 +19,7 @@ public class TMPCharacter extends PlayableCharacter {
         position = pos;
         range.setStrokeWidth(1);
         range.setFill(Color.TRANSPARENT);
-        range.setStroke(Color.BLACK);
+        range.setStroke(Color.color(1.0, 0.3, 0.3, 0.5));
         updateImg();
     }
 
