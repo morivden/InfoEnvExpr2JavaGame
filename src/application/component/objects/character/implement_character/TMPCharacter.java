@@ -2,22 +2,36 @@ package application.component.objects.character.implement_character;
 
 import application.component.objects.character.PlayableCharacter;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.EllipseBuilder;
 
 public class TMPCharacter extends PlayableCharacter {
     private Circle img = new Circle(10);
+    private Circle range = new Circle(RANGE);
     public static int DEFAULT_SPEED = 10;
+    public static int RANGE = 200;
 
     private int x_speed = 0, y_speed = 0;
 
     public TMPCharacter(Point2D pos) {
         position = pos;
+        range.setStrokeWidth(1);
+        range.setFill(Color.TRANSPARENT);
+        range.setStroke(Color.BLACK);
         updateImg();
     }
 
     private void updateImg() {
         img.setTranslateX(position.getX());
         img.setTranslateY(position.getY());
+        range.setTranslateX(position.getX());
+        range.setTranslateY(position.getY());
+    }
+
+    public Circle getRange() {
+        return range;
     }
 
     public void move() {

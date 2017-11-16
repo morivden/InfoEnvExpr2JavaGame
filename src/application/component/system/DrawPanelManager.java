@@ -48,6 +48,7 @@ public class DrawPanelManager {
     public void inputTMP(TMPCharacter tp) {
         gameMap.addGameObject(tp);
         drawPane.getChildren().add(tp.getImg());
+        drawPane.getChildren().add(tp.getRange());
     }
 
     public GameMap getGameMap() {

@@ -17,14 +17,13 @@ public class Enemy extends CharacterController {
 
     @Override
     public void update() {
-        int range = 200;  // 索敵範囲
         Optional<PlayableCharacter> playerCharacter = GameManager.getPlayerCharacter();
 
         double speedX = 0;
 
         if ( playerCharacter.isPresent() ) {
             Point2D playerPos = playerCharacter.get().getPosition();
-            if ( playerPos.distance(character.getPosition()) < range ) {
+            if ( playerPos.distance(character.getPosition()) < character.RANGE ) {
                 double distanceX = playerPos.getX() - character.getPosition().getX();
                 speedX = ((TMPCharacter)character).DEFAULT_SPEED * Math.signum(distanceX);
 
