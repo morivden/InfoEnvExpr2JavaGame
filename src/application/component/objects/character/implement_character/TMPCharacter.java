@@ -4,8 +4,6 @@ import application.component.objects.character.PlayableCharacter;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.EllipseBuilder;
 
 public class TMPCharacter extends PlayableCharacter {
     private Circle img = new Circle(10);
