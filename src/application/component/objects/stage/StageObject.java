@@ -49,20 +49,22 @@ public abstract class StageObject extends GameObject {
                 width2 = rect2.getWidth();
                 height2 = rect2.getHeight();
                 
-                // 先に矩形が重なっているか判定
-                
                 // どの方向からぶつかっているか判定
-                /*
-                if () {
+                // 恐らくこのままだと重なり方によっては埋まる可能性がありそうなので
+                // ぶつかってくる側の進行方向(vxとかvy)を判定の内容に使いたい
+                if ((y1 + height1) > y2) {
                     // 上からぶつかっている場合
-                } else if () {
+                    rect1.translate((int)x1, (int)(y2 - height1));
+                } else if (y1 < (y2 + height2)) {
                     // 下からぶつかっている場合
-                } else if () {
+                    rect1.translate((int)x1, (int)(y2 + height2));
+                } else if ((x1 + width1) > x2) {
                     // 左からぶつかっている場合
-                } else if () {
+                    rect1.translate((int)(x2 - width1), (int)y1);
+                } else if (x1 < (x2 + width2)) {
                     // 右からぶつかっている場合
+                    rect1.translate((int)(x2 + width2), (int)y1);
                 }
-                */
             }
         }
     }
