@@ -8,7 +8,7 @@ import application.component.objects.character.MovableObject;
 public class RectangleCollisionObject extends CollisionObject {
     protected List<CollisionEvent> events;
     protected Rectangle rect1;
-    private int x_speed, y_speed;
+    private double x_speed, y_speed;
     
     /**
      * コンストラクタ
@@ -42,7 +42,11 @@ public class RectangleCollisionObject extends CollisionObject {
             // collisionObjectをMovableObjectにキャスト
             MovableObject movableObject = (MovableObject)collisionObject;
             // スピードを引っ張ってくる
-            // x_speed = 
+            x_speed = movableObject.getX_speed();
+            y_speed = movableObject.getY_speed();
+            
+            // collisionObject(rect2)を動かす
+            rect2.add(x_speed, y_speed);
             
             // 矩形が重なっているか判定
             if (rect1.intersects(rect2)) {
