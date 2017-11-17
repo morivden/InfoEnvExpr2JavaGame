@@ -8,7 +8,7 @@ import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.controller.GameController;
-import javafx.geometry.Point2D;
+import com.sun.javafx.geom.Point2D;
 import javafx.scene.layout.Pane;
 
 import java.util.Optional;
@@ -27,6 +27,7 @@ public class GameManager {
 
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
+    private GameEnvironment gameEnvironment;  // ゲーム環境値
 
     private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
     private GameProcessTask gpt;    // ゲームプロセス
@@ -129,14 +130,14 @@ public class GameManager {
             // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-
+        gameEnvironment = GameEnvironment.getInstance();  // 環境の作成
         inputObjectsToPane(gameMap);    // 描画パネル関連の初期化
     }
 
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
-    Enemy enemy;
+    private Enemy enemy;
     private void inputObjectsToPane(GameMap gm) {
         dpm = new DrawPanelManager(gm, drawPane);
         // TODO 実装する
@@ -148,6 +149,14 @@ public class GameManager {
         // TODO 一時実装あとで消す
         enemy = new Enemy(new TMPCharacter(new Point2D(300, 100)));
         dpm.inputTMP((TMPCharacter) enemy.getCharacter());
+    }
+
+    /**
+     * 環境値のGetter
+     * @return
+     */
+    public GameEnvironment getGameEnvironment() {
+        return gameEnvironment;
     }
 
     /**
@@ -199,8 +208,8 @@ public class GameManager {
 
             Point2D characterPos = player.getCharacter().getPosition();
 
-            double drawPaneX =  drawPaneHalfWidth - characterPos.getX();
-            double drawPaneY =  drawPaneHalfHeight - characterPos.getY();
+            double drawPaneX =  drawPaneHalfWidth - characterPos.x;
+            double drawPaneY =  drawPaneHalfHeight - characterPos.y;
 
             // 移動
             dpm.transfer(drawPaneX, drawPaneY);
