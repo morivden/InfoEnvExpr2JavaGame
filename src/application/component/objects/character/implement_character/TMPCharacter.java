@@ -38,7 +38,7 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public void setSpeed(int x_speed, int y_speed) {
-        this.speed.add(speedCheck(x_speed), speedCheck(y_speed));
+        speed.add(speedCheck(x_speed), speedCheck(y_speed));
     }
 
     public int getX_speed() {
