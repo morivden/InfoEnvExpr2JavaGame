@@ -1,7 +1,5 @@
 package application.component.system.character.factory;
 
-import application.component.objects.GameObject;
-import application.component.objects.character.PlayableCharacter;
 import application.component.system.character.controller.CharacterController;
 import com.sun.javafx.geom.Point2D;
 
@@ -12,11 +10,11 @@ import com.sun.javafx.geom.Point2D;
  */
 public abstract class CharacterFactory<T extends CharacterController> {
     protected Point2D createPosition;   // 生成ポイント
-    protected FactoryList factoryList;  // ファクトリーリスト
+    protected GameObjectList gameObjectList;  // ファクトリーリスト
 
-    public CharacterFactory(FactoryList fl, Point2D createPosition) {
+    public CharacterFactory(GameObjectList fl, Point2D createPosition) {
 
-        factoryList = fl;
+        gameObjectList = fl;
         this.createPosition = createPosition;
     }
 

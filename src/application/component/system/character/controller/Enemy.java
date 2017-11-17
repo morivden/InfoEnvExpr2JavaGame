@@ -3,7 +3,7 @@ package application.component.system.character.controller;
 import application.component.objects.character.PlayableCharacter;
 import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.GameManager;
-import javafx.geometry.Point2D;
+import com.sun.javafx.geom.Point2D;
 
 import java.util.Optional;
 
@@ -14,7 +14,6 @@ public class Enemy extends CharacterController {
         this.character = character;
     }
 
-
     @Override
     public void update() {
         Optional<PlayableCharacter> playerCharacter = GameManager.getPlayerCharacter();
@@ -24,7 +23,7 @@ public class Enemy extends CharacterController {
         if ( playerCharacter.isPresent() ) {
             Point2D playerPos = playerCharacter.get().getPosition();
             if ( playerPos.distance(character.getPosition()) < character.RANGE ) {
-                double distanceX = playerPos.getX() - character.getPosition().getX();
+                double distanceX = playerPos.x - character.getPosition().x;
                 speedX = ((TMPCharacter)character).DEFAULT_SPEED * Math.signum(distanceX);
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {

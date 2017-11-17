@@ -14,7 +14,7 @@ public class AutoFactory extends CharacterFactory<Enemy> {
 
     private List<CharacterController> createdCharacterController = new ArrayList<>();  // 自身が作成したキャラクターコントローラのインスタンス
 
-    public AutoFactory(FactoryList fl,  Point2D createPosition) {
+    public AutoFactory(GameObjectList fl, Point2D createPosition) {
         super(fl, createPosition);
     }
 

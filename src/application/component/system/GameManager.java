@@ -25,9 +25,10 @@ public class GameManager {
     private static final int PROCESS_INTERVAL_MILLISECOND = 30;           // 処理の間隔
     private static final InputManager inputManager = new InputManager();  // 入力キー管理
 
+    public static final int DEFAULT_BLOCK_SCALE = 50;                    // 標準の1区画のサイズ
+
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
-    private GameEnvironment gameEnvironment;  // ゲーム環境値
 
     private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
     private GameProcessTask gpt;    // ゲームプロセス
@@ -130,7 +131,6 @@ public class GameManager {
             // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-        gameEnvironment = GameEnvironment.getInstance();  // 環境の作成
         inputObjectsToPane(gameMap);    // 描画パネル関連の初期化
     }
 
@@ -149,14 +149,6 @@ public class GameManager {
         // TODO 一時実装あとで消す
         enemy = new Enemy(new TMPCharacter(new Point2D(300, 100)));
         dpm.inputTMP((TMPCharacter) enemy.getCharacter());
-    }
-
-    /**
-     * 環境値のGetter
-     * @return
-     */
-    public GameEnvironment getGameEnvironment() {
-        return gameEnvironment;
     }
 
     /**
