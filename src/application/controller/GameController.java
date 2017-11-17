@@ -94,19 +94,19 @@ public class GameController implements Initializable {
     protected void changeKeyState(KeyEvent event, boolean state) {
         switch ( event.getCode() ) {
             case UP:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.UP_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.UP_KEY, state);
                 System.out.println("うえ"); break;
             case DOWN:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.DOWN_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.DOWN_KEY, state);
                 System.out.println("した"); break;
             case LEFT:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.LEFT_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.LEFT_KEY, state);
                 System.out.println("ひだり"); break;
             case RIGHT:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.RIGHT_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.RIGHT_KEY, state);
                 System.out.println("みぎ"); break;
             case SPACE:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.SPACE_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.SPACE_KEY, state);
             default:
                 System.out.println("なし"); break;
         }

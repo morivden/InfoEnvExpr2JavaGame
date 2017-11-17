@@ -50,10 +50,6 @@ public class GameManager {
         return ourInstance;
     }
 
-    public static InputManager getInputManager() {
-        return inputManager;
-    }
-
     public static void setKeyState(InputManager.KindOfPushedKey key, boolean state) {
         inputManager.set(key, state);
     }
