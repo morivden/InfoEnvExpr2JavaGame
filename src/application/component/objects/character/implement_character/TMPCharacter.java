@@ -8,7 +8,7 @@ public class TMPCharacter extends PlayableCharacter {
     private Circle img = new Circle(10);
     public static int DEFAULT_SPEED = 10;
 
-    private int x_speed = 0, y_speed = 0;
+    private Point2D speed;
 
     public TMPCharacter(Point2D pos) {
         position = pos;
@@ -21,17 +21,16 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public void move() {
-        position = position.add(x_speed, y_speed);
+        position = position.add(speed.getX(), speed.getY());
         updateImg();
     }
 
     public void setSpeed(int x_speed, int y_speed) {
-        this.x_speed = speedCheck(x_speed);
-        this.y_speed = speedCheck(y_speed);
+        this.speed.add(speedCheck(x_speed), speedCheck(y_speed));
     }
 
     public int getX_speed() {
-        return x_speed;
+        return (int)speed.getX();
     }
 
     public Circle getImg() {
@@ -39,7 +38,7 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public int getY_speed() {
-        return y_speed;
+        return (int)speed.getY();
 
     }
 
