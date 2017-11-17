@@ -8,7 +8,7 @@ public class TMPCharacter extends PlayableCharacter {
     private Circle img = new Circle(10);
     public static int DEFAULT_SPEED = 10;
 
-    private Point2D speed;
+    private Point2D speed = new Point2D(0.0, 0.0);
 
     public TMPCharacter(Point2D pos) {
         position = pos;
