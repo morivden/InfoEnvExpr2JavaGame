@@ -7,10 +7,13 @@ import application.component.objects.character.PlayableCharacter;
 import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
+import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
 import com.sun.javafx.geom.Point2D;
 import javafx.scene.layout.Pane;
+import lib.TupleUtil;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -119,22 +122,22 @@ public class GameManager {
      * ゲーム内要素の初期化
      */
     private void initializeGameComponent(int stageNum) {
-        GameMap gameMap = null;
+        TupleUtil.Tuple3<GameMap, GameEnvironment, List<CharacterFactory>> gameInfo = null;
         try {
-            gameMap = MapFactory.createMap(stageNum);
+            gameInfo = MapFactory.createMap(stageNum);
         } catch ( IllegalMapDataException | IllegalArgumentException e ) {
             e.printStackTrace();
-            // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
+            // TODO 例外が発生した場合のデフォルトデータを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
         // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-        inputObjectsToPane(gameMap);    // 描画パネル関連の初期化
+        inputObjectsToPane(gameInfo._1, gameInfo._2, gameInfo._3);    // 描画パネル関連の初期化
     }
 
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
     private Enemy enemy;
-    private void inputObjectsToPane(GameMap gm) {
+    private void inputObjectsToPane(GameMap gm, GameEnvironment ge, List<CharacterFactory> factryList) {
         dpm = new DrawPanelManager(gm, drawPane);
         // TODO 実装する
 

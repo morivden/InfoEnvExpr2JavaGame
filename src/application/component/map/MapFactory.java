@@ -1,10 +1,14 @@
 package application.component.map;
 
-import application.component.objects.GameObject;
 import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
+import application.component.system.character.factory.AutoFactory;
+import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.GameObjectList;
+import application.component.system.character.factory.PlayerFactory;
 import com.sun.javafx.geom.Point2D;
+import lib.TupleUtil.Tuple2;
+import lib.TupleUtil.Tuple3;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -27,7 +31,8 @@ public class MapFactory {
      * @return 指定した番号のマップクラスのインスタンス
      * @throws IllegalMapDataException マップデータが不適であるとき、発生
      */
-    public static GameMap createMap(int stageNum) throws IllegalMapDataException, IllegalArgumentException {
+    public static Tuple3<GameMap, GameEnvironment, List<CharacterFactory>> createMap(int stageNum)
+            throws IllegalMapDataException, IllegalArgumentException {
         //== 引数の判定
         if ( !checkExistMap(stageNum) ) { throw new IllegalArgumentException(); }
 
@@ -38,11 +43,13 @@ public class MapFactory {
         char[][] charMapData = readMapDate(mapInfo);
 
         //== 環境値
-        // TODO 環境値に関する処理
-        //        GameEnvironment gameEnvironment
+        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
 
         //== Mapインスタンスの生成
-        return convertToMapFromCharArray(charMapData);
+        Tuple2<GameMap, List<CharacterFactory>> objInfo = convertToMapFromCharArray(charMapData);
+
+        //== マップ情報と環境値とファクトリーを返却
+        return new Tuple3<>(objInfo._1, gameEnvironment, objInfo._2);
     }
 
     /**
@@ -76,26 +83,44 @@ public class MapFactory {
      * @param charMap 文字のマップデータ
      * @return GameMap
      */
-    private static GameMap convertToMapFromCharArray(char[][] charMap) {
+    private static Tuple2<GameMap, List<CharacterFactory>> convertToMapFromCharArray(char[][] charMap) {
         int mapWidth = charMap[0].length * GameManager.DEFAULT_BLOCK_SCALE;  // マップの幅
         int mapHeight = charMap.length * GameManager.DEFAULT_BLOCK_SCALE;    // マップの高さ
-        GameMap gameMap = new GameMap(mapWidth, mapHeight);
 
+        GameMap gameMap = new GameMap(mapWidth, mapHeight);      // マップ返却用
+        List<CharacterFactory> factoryList = new ArrayList<>();  // ファクトリ返却用
+
+        //== オブジェクトの生成
         for ( int ver = 0; ver < charMap.length; ver++ ) {
             for ( int hol = 0; hol < charMap[0].length; hol++ ) {
                 char ch = charMap[ver][hol];
                 final int fVer = ver;
                 final int fHol = hol;
+
+                //== 該当するオブジェクトデータがある場合
                 GameObjectList.getOf(ch).ifPresent(gol -> {
-                    System.out.print(gol.getIdentificationString());
-                    Point2D pos = new Point2D(fHol * GameManager.DEFAULT_BLOCK_SCALE, fVer * GameManager.DEFAULT_BLOCK_SCALE);
-                    gameMap.addGameObject(gol.getInstance(pos));
+                    Point2D pos = new Point2D(fHol * GameManager.DEFAULT_BLOCK_SCALE,
+                                              fVer * GameManager.DEFAULT_BLOCK_SCALE);
+                    char iChar = gol.getIdentificationChar();  // 識別文字列の取得
+                    // TODO java.lang.Character を要修正
+                    //= 文字が数値であるとき、ファクトリーを生成
+                    if ( java.lang.Character.isDigit(iChar) ) {
+                        //== '0' のときはプレイヤーとして
+                        if ( iChar == '0' ) {
+                            // プレイヤー
+                            factoryList.add(PlayerFactory.getInstance(pos));
+                        } else {
+                            // エネミー
+                            factoryList.add(new AutoFactory(gol, pos));
+                        }
+                    } else {  // それ以外は、ゲームオブジェクトを生成
+                        gameMap.addGameObject(gol.getInstance(pos));
+                    }
                 });
             }
-            System.out.println();
         }
 
-        return gameMap;
+        return new Tuple2<>(gameMap, factoryList);
     }
 
     /**

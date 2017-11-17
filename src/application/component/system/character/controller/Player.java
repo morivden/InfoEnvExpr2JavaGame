@@ -34,7 +34,6 @@ public class Player extends CharacterController {
 
         } else if ( GameManager.getKeyState(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
             character.setSpeed(TMPCharacter.DEFAULT_SPEED, character.getY_speed());
-
         }
     }
 

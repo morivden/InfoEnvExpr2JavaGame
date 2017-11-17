@@ -15,40 +15,40 @@ public enum GameObjectList {
     Monster('1', pos -> { return null; }),
     TMPStage('@', pos -> { return new TMPStageBlock(pos); });
 
-    private char identificationString;     // 識別用文字列
+    private char identificationChar;     // 識別用文字列
 
-    public char getIdentificationString() {
-        return identificationString;
+    public char getIdentificationChar() {
+        return identificationChar;
     }
 
     private CharacterCreator createProcess;  // 生成用
 
-    GameObjectList(char identificationString, CharacterCreator cc) {
-        this.identificationString = identificationString;
+    GameObjectList(char identificationChar, CharacterCreator cc) {
+        this.identificationChar = identificationChar;
         this.createProcess = cc;
     }
 
     /**
      * 指定の識別文字列に対応するゲームオブジェクトを生成する
      *
-     * @param iStr 識別文字列
+     * @param iChar 識別文字列
      * @param pos  生成位置
      * @return game object
      */
-    public static GameObject createOf(char iStr, Point2D pos) {
-        GameObjectList gol = getOf(iStr).orElse(TMPStage);
+    public static GameObject createOf(char iChar, Point2D pos) {
+        GameObjectList gol = getOf(iChar).orElse(TMPStage);
         return gol.createProcess.getInstance(pos);
     }
 
     /**
      * 指定の識別文字列に対応する要素を取得
      *
-     * @param iStr 識別文字列
+     * @param iChar 識別文字列
      * @return of
      */
-    public static Optional<GameObjectList> getOf(char iStr) {
+    public static Optional<GameObjectList> getOf(char iChar) {
         for ( GameObjectList goList : GameObjectList.values() ) {
-            if ( goList.equals(iStr) ) { return Optional.of(goList); }
+            if ( goList.equals(iChar) ) { return Optional.of(goList); }
         }
 
         return Optional.empty();
@@ -57,11 +57,11 @@ public enum GameObjectList {
     /**
      * 識別文字列による等価判定
      *
-     * @param iStr 判別したい識別用文字列
+     * @param iChar 判別したい識別用文字列
      * @return
      */
-    public boolean equals(char iStr) {
-        return identificationString == iStr;
+    public boolean equals(char iChar) {
+        return identificationChar == iChar;
     }
 
     /**
