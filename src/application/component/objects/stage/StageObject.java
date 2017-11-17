@@ -80,22 +80,6 @@ public abstract class StageObject extends GameObject {
                     System.out.println("下から衝突");
                     rect1.translate((int)x1, (int)(y2 + height2));
                 }
-                
-                /*
-                if ((y1 + height1) > y2) {
-                    // 上からぶつかっている場合
-                    rect1.translate((int)x1, (int)(y2 - height1));
-                } else if (y1 < (y2 + height2)) {
-                    // 下からぶつかっている場合
-                    rect1.translate((int)x1, (int)(y2 + height2));
-                } else if ((x1 + width1) > x2) {
-                    // 左からぶつかっている場合
-                    rect1.translate((int)(x2 - width1), (int)y1);
-                } else if (x1 < (x2 + width2)) {
-                    // 右からぶつかっている場合
-                    rect1.translate((int)(x2 + width2), (int)y1);
-                }
-                */
             }
         }
     }
