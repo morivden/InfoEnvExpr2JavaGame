@@ -3,17 +3,25 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.objects.GameObject;
 import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.system.character.controller.Enemy;
+import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
 import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 /**
  * 描画パネル管理クラス
  */
 public class DrawPanelManager {
-    private Pane drawPane;
+    private GameMap gameMap;  // マップ
+    private Pane drawPane;    // 描画パネル
 
-    public DrawPanelManager(Pane drawPane) {
+    public DrawPanelManager(GameMap gameMap, Pane drawPane) {
+        this.gameMap = gameMap;
         this.drawPane = drawPane;
+
+        inputMap(gameMap);
     }
 
     /**
@@ -21,11 +29,11 @@ public class DrawPanelManager {
      *
      * @param gm the gm
      */
-    public void inputMap(GameMap gm) {
+    private void inputMap(GameMap gm) {
         drawPane.getChildren().removeAll();  // 既存要素の削除
         // TODO GameObject実装後、実装
-//            List<GameObject> nodes = gm.getGameObject();
-//            nodes.stream().forEach(n -> { drawPane.getChildren().add(n) });
+//        List<GameObject> nodes = gm.getGameObject();
+//        nodes.stream().forEach(n -> { drawPane.getChildren().add(n) });
     }
 
     /**
@@ -38,7 +46,13 @@ public class DrawPanelManager {
 
     // TODO 一時メソッド、あとで消す
     public void inputTMP(TMPCharacter tp) {
+        gameMap.addGameObject(tp);
         drawPane.getChildren().add(tp.getImg());
+        drawPane.getChildren().add(tp.getRange());
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     /**
