@@ -1,6 +1,6 @@
 package application.component.objects;
 
-import javafx.geometry.Point2D;
+import com.sun.javafx.geom.Point2D;
 
 public abstract class GameObject {
     protected Point2D position;

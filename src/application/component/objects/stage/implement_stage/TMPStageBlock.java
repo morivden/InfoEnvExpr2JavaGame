@@ -1,7 +1,7 @@
 package application.component.objects.stage.implement_stage;
 
 import application.component.objects.stage.StageObject;
-import javafx.geometry.Point2D;
+import com.sun.javafx.geom.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -16,7 +16,7 @@ public class TMPStageBlock extends StageObject {
     }
 
     private void updateImg() {
-        rect.setTranslateX(position.getX());
-        rect.setTranslateY(position.getY());
+        rect.setTranslateX(position.x);
+        rect.setTranslateY(position.y);
     }
 }
