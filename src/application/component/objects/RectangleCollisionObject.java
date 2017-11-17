@@ -36,18 +36,7 @@ public class RectangleCollisionObject extends CollisionObject {
         // collisionObjectがRectangleCollisionObjectのインスタンスであるかどうか
         if (collisionObject instanceof RectangleCollisionObject) {
             // 型キャストしてgetRectangleメソッドを呼び出す
-            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();
-            
-            // 当たり判定の先読み処理
-            // collisionObjectをMovableObjectにキャスト
-            MovableObject movableObject = (MovableObject)collisionObject;
-            // スピードを引っ張ってくる
-            x_speed = movableObject.getX_speed();
-            y_speed = movableObject.getY_speed();
-            
-            // collisionObject(rect2)を動かす
-            rect2.add(x_speed, y_speed);
-            
+            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();           
             // 矩形が重なっているか判定
             if (rect1.intersects(rect2)) {
                 return true;
