@@ -8,10 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
-    // TODO List<GameObject> 変数の宣言
-    List<GameObject> gameObjects = new ArrayList<>();
-    List<MovableObject> movableObjects = new ArrayList<>();
-    List<OffensiveObject> offensiveObjects = new ArrayList<>();
+    private List<GameObject> gameObjects = new ArrayList<>();
+    private List<MovableObject> movableObjects = new ArrayList<>();
+    private List<OffensiveObject> offensiveObjects = new ArrayList<>();
+
+    private int mapWidth;
+    private int mapHeight;
+
+    public GameMap(int mapWidth, int mapHeight) {
+        this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+
+    public List<MovableObject> getMovableObjects() {
+        return movableObjects;
+    }
+
+    public List<OffensiveObject> getOffensiveObjects() {
+        return offensiveObjects;
+    }
 
     /**
      * ゲームオブジェクトの登録

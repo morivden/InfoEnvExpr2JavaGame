@@ -1,6 +1,8 @@
 package application.component.system.character.factory;
 
+import application.component.objects.GameObject;
 import application.component.objects.character.PlayableCharacter;
+import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Player;
 // import com.sun.javafx.geom.Point2D;
@@ -17,7 +19,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
     private CharacterController createdCharacterController;   // 自身が作成したキャラクターコントローラのインスタンス
 
     private PlayerFactory() {
-        super(FactoryList.Hero, new Point());
+        super(GameObjectList.Hero, new Point());
     }
 
     /**
@@ -58,7 +60,14 @@ public class PlayerFactory extends CharacterFactory<Player> {
 
     @Override
     public Player create() {
-        return new Player(factoryList.getInstance(createPosition));
+        GameObject tmpCharacter = gameObjectList.getInstance(createPosition);
+        PlayableCharacter createP = null;
+        if ( tmpCharacter instanceof PlayableCharacter ) {
+            createP = (PlayableCharacter) tmpCharacter;
+        } else {
+            createP = new TMPCharacter(createPosition);
+        }
+        return new Player(createP);
     }
 
     @Override

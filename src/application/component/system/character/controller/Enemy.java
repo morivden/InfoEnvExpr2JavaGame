@@ -15,7 +15,6 @@ public class Enemy extends CharacterController {
         this.character = character;
     }
 
-
     @Override
     public void update() {
         Optional<PlayableCharacter> playerCharacter = GameManager.getPlayerCharacter();

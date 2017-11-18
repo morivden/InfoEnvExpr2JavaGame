@@ -3,8 +3,6 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.objects.GameObject;
 import application.component.objects.character.implement_character.TMPCharacter;
-import application.component.system.character.controller.Enemy;
-import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
 import javafx.scene.layout.Pane;
 
@@ -16,6 +14,7 @@ import java.util.List;
 public class DrawPanelManager {
     private GameMap gameMap;  // マップ
     private Pane drawPane;    // 描画パネル
+    private GameEnvironment gameEnvironment;  // 環境値
 
     public DrawPanelManager(GameMap gameMap, Pane drawPane) {
         this.gameMap = gameMap;
@@ -31,9 +30,11 @@ public class DrawPanelManager {
      */
     private void inputMap(GameMap gm) {
         drawPane.getChildren().removeAll();  // 既存要素の削除
+        drawPane.setPrefWidth(gm.getMapWidth());
+        drawPane.setPrefHeight(gm.getMapHeight());
         // TODO GameObject実装後、実装
-//        List<GameObject> nodes = gm.getGameObject();
-//        nodes.stream().forEach(n -> { drawPane.getChildren().add(n) });
+        List<GameObject> gameObjects = gm.getGameObjects();
+        gameObjects.stream().forEach(go -> { drawPane.getChildren().add(go.getImg()); });
     }
 
     /**

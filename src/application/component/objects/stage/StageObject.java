@@ -24,7 +24,7 @@ public abstract class StageObject extends GameObject {
         
         /**
          * イベントの発火(衝突したときの処理)
-         * @param collidedObje, gameObject, collidingOjb
+         * @param collidedObj, gameObject, collidingOjb
          */
         @Override
         public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {           
