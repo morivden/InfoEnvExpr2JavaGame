@@ -1,7 +1,8 @@
 package application.component.objects.character.implement_character;
 
 import application.component.objects.character.PlayableCharacter;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
+import java.awt.Point;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -11,9 +12,9 @@ public class TMPCharacter extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int RANGE = 200;
 
-    private Point2D speed = new Point2D(0, 0);
+    private Point speed = new Point(0, 0);
 
-    public TMPCharacter(Point2D pos) {
+    public TMPCharacter(Point pos) {
         position = pos;
         range.setStrokeWidth(1);
         range.setFill(Color.TRANSPARENT);
@@ -43,7 +44,7 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public int getX_speed() {
-        return (int)speed.x;
+        return speed.x;
     }
 
     public Circle getImg() {
@@ -51,7 +52,7 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public int getY_speed() {
-        return (int)speed.y;
+        return speed.y;
 
     }
 
