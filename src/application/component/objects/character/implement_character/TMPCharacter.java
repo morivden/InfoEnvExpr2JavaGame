@@ -77,6 +77,11 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     @Override
+    public int getMaxSpeed() {
+        return 0;
+    }
+
+    @Override
     public Point getSpeed() {
         return null;
     }

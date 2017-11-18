@@ -26,8 +26,8 @@ public interface MovableObject {
      */
     default void setSpeed(int xSpeed, int ySpeed) {
         // 適正判定
-//        xSpeed = checkSpeed(xSpeed);
-//        ySpeed = checkSpeed(ySpeed);
+        xSpeed = checkSpeed(xSpeed);
+        ySpeed = checkSpeed(ySpeed);
 
         // 格納
         getSpeed().setLocation(xSpeed, ySpeed);
@@ -40,9 +40,9 @@ public interface MovableObject {
      * @return
      */
     default int checkSpeed(int speed) {
-        int defaultSpeed = getDefaultSpeed();
-        if ( -defaultSpeed > speed ) { speed = -defaultSpeed; }
-        else if ( defaultSpeed < speed ) { speed = defaultSpeed; }
+        int maxSpeed = getMaxSpeed();
+        if ( -maxSpeed > speed ) { speed = -maxSpeed; }
+        else if ( maxSpeed < speed ) { speed = maxSpeed; }
 
         return speed;
     }
@@ -67,6 +67,13 @@ public interface MovableObject {
      * @return
      */
     int getDefaultSpeed();
+
+    /**
+     * 最高スピードを取得
+     *
+     * @return
+     */
+    int getMaxSpeed();
 
     /**
      * スピードの取得

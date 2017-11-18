@@ -12,6 +12,7 @@ import java.awt.*;
 public class Monster extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/monster.png";
     public static int DEFAULT_SPEED = 10;
+    public static int MAX_SPEED = 100;
     public static int RANGE = 200;
 
     Point collisionRelativeDistance;
@@ -50,6 +51,11 @@ public class Monster extends PlayableCharacter {
     @Override
     public int getDefaultSpeed() {
         return DEFAULT_SPEED;
+    }
+
+    @Override
+    public int getMaxSpeed() {
+        return MAX_SPEED;
     }
 
     @Override

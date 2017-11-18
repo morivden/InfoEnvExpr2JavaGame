@@ -14,6 +14,7 @@ import java.awt.*;
 public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
+    public static int MAX_SPEED = 100;
 
     private Point collisionRelativeDistance;
 
@@ -57,6 +58,11 @@ public class Hero extends PlayableCharacter {
     @Override
     public int getDefaultSpeed() {
         return DEFAULT_SPEED;
+    }
+
+    @Override
+    public int getMaxSpeed() {
+        return MAX_SPEED;
     }
 
     @Override
