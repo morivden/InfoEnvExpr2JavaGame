@@ -1,10 +1,11 @@
 package application.component.objects;
 
-import com.sun.javafx.geom.Point2D;
 import javafx.scene.Node;
+import java.awt.Point;
 
 public abstract class GameObject {
-    protected Point2D position;
+    // protected Point2D position;
+    protected Point position;
     protected CollisionObject collisionObject;
     protected ImageManager imageManager;
     
@@ -14,7 +15,7 @@ public abstract class GameObject {
 
     public abstract Node getImg();
     
-    public Point2D getPosition() {
+    public Point getPosition() {
         return position;
     }
     

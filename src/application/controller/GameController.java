@@ -117,8 +117,8 @@ public class GameController implements Initializable {
      *
      * @return the scene width
      */
-    public static double getSceneWidth() {
-        return SCENE.getWidth();
+    public static int getSceneWidth() {
+        return (int)SCENE.getWidth();
     }
 
     /**
@@ -126,7 +126,7 @@ public class GameController implements Initializable {
      *
      * @return the scene height
      */
-    public static double getSceneHeight() {
-        return SCENE.getHeight();
+    public static int getSceneHeight() {
+        return (int)SCENE.getHeight();
     }
 }

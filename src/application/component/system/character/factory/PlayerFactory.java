@@ -5,8 +5,9 @@ import application.component.objects.character.PlayableCharacter;
 import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Player;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
 
+import java.awt.Point;
 import java.util.Optional;
 
 /**
@@ -18,7 +19,11 @@ public class PlayerFactory extends CharacterFactory<Player> {
     private CharacterController createdCharacterController;   // 自身が作成したキャラクターコントローラのインスタンス
 
     private PlayerFactory() {
+<<<<<<< HEAD
         super(GameObjectList.Hero, new Point2D());
+=======
+        super(FactoryList.Hero, new Point());
+>>>>>>> master
     }
 
     /**
@@ -27,7 +32,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
      * @param createPosition 生成位置
      * @return
      */
-    public static PlayerFactory getInstance(Point2D createPosition) {
+    public static PlayerFactory getInstance(Point createPosition) {
         ourInstance.setCreatePosition(createPosition);  // 位置の更新
         return ourInstance;
     }
@@ -37,7 +42,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
      *
      * @param createPosition
      */
-    private static void setCreatePosition(Point2D createPosition) {
+    private static void setCreatePosition(Point createPosition) {
         ourInstance.createPosition = createPosition;
     }
 

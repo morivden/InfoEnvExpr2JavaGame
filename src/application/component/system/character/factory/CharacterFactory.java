@@ -1,7 +1,8 @@
 package application.component.system.character.factory;
 
 import application.component.system.character.controller.CharacterController;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
+import java.awt.Point;
 
 /**
  * キャラクター生成クラス
@@ -9,10 +10,17 @@ import com.sun.javafx.geom.Point2D;
  * @param <T> 生成するキャラクターコントローラクラス
  */
 public abstract class CharacterFactory<T extends CharacterController> {
+<<<<<<< HEAD
     protected Point2D createPosition;   // 生成ポイント
     protected GameObjectList gameObjectList;  // ファクトリーリスト
 
     public CharacterFactory(GameObjectList fl, Point2D createPosition) {
+=======
+    protected Point createPosition;   // 生成ポイント
+    protected FactoryList factoryList;  // ファクトリーリスト
+
+    public CharacterFactory(FactoryList fl, Point createPosition) {
+>>>>>>> master
 
         gameObjectList = fl;
         this.createPosition = createPosition;

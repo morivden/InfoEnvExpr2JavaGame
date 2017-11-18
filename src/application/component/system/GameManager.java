@@ -9,12 +9,11 @@ import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
-
-import com.sun.javafx.geom.Point2D;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
 
 import java.util.List;
+import java.awt.Point;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -141,11 +140,11 @@ public class GameManager {
         // TODO 実装する
 
         // TODO 一時実装、あとで消す
-        player = new Player(new TMPCharacter(new Point2D(0, 0)));
+        player = new Player(new TMPCharacter(new Point(0, 0)));
         dpm.inputTMP(player.getCharacter());
 
         // TODO 一時実装あとで消す
-        enemy = new Enemy(new TMPCharacter(new Point2D(300, 100)));
+        enemy = new Enemy(new TMPCharacter(new Point(300, 100)));
         dpm.inputTMP((TMPCharacter) enemy.getCharacter());
     }
 
@@ -193,13 +192,13 @@ public class GameManager {
          */
         private void moveDrawPanel() {
             // 座標の取得と算出
-            double drawPaneHalfWidth = GameController.getSceneWidth() / 2.0d;
-            double drawPaneHalfHeight = GameController.getSceneHeight() / 2.0d;
+            int drawPaneHalfWidth = GameController.getSceneWidth() / 2;
+            int drawPaneHalfHeight = GameController.getSceneHeight() / 2;
 
-            Point2D characterPos = player.getCharacter().getPosition();
+            Point characterPos = player.getCharacter().getPosition();
 
-            double drawPaneX =  drawPaneHalfWidth - characterPos.x;
-            double drawPaneY =  drawPaneHalfHeight - characterPos.y;
+            int drawPaneX =  drawPaneHalfWidth - characterPos.x;
+            int drawPaneY =  drawPaneHalfHeight - characterPos.y;
 
             // 移動
             dpm.transfer(drawPaneX, drawPaneY);

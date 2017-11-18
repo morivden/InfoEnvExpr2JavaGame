@@ -8,14 +8,15 @@ import application.component.objects.character.MovableObject;
 public class RectangleCollisionObject extends CollisionObject {
     protected List<CollisionEvent> events;
     protected Rectangle rect1;
-    private double x_speed, y_speed;
+    // private double x_speed, y_speed;
+    private int x_speed, y_speed;
     
     /**
      * コンストラクタ
      * @param x, y, width, height
      */
-    public RectangleCollisionObject(double x, double y, double width, double height) {
-        rect1.setRect(x, y, width, height);
+    public RectangleCollisionObject(int x, int y, int width, int height) {
+        rect1.setBounds(x, y, width, height);
     }
     
     /**
@@ -49,8 +50,8 @@ public class RectangleCollisionObject extends CollisionObject {
      * 指定した座標(矩形の左上指定)への移動
      * @param x, y
      */
-    public void transfer(double x, double y) {
-        rect1.setLocation((int)x, (int)y);
+    public void transfer(int x, int y) {
+        rect1.setLocation(x, y);
     }
     
     /**
