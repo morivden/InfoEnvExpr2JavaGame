@@ -22,7 +22,7 @@ public class ImageManager {
         images.put(key, image);
     }
     
-    public void transfer(double x, double y) {
+    public void transfer(int x, int y) {
         imageView.setX(x);
         imageView.setY(y);
     }

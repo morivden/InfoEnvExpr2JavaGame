@@ -2,7 +2,8 @@ package application.component.system.character.factory;
 
 import application.component.objects.GameObject;
 import application.component.objects.character.PlayableCharacter;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
+import java.awt.Point;
 
 /**
  * ファクトリークラスにより、生成されるゲームオブジェクトリスト
@@ -37,7 +38,7 @@ public enum FactoryList {
      * @param pos キャラクターの位置
      * @return the instance
      */
-    public PlayableCharacter getInstance(Point2D pos) {
+    public PlayableCharacter getInstance(Point pos) {
         return this.createProcess.getInstance(pos);
     }
 
@@ -45,6 +46,6 @@ public enum FactoryList {
      * ゲームオブジェクト生成用のSAMインタフェース
      */
     public interface CharacterCreator {
-        public PlayableCharacter getInstance(Point2D createPos);
+        public PlayableCharacter getInstance(Point createPos);
     }
 }

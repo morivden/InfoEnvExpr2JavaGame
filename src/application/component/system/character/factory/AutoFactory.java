@@ -2,8 +2,9 @@ package application.component.system.character.factory;
 
 import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Enemy;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class AutoFactory extends CharacterFactory<Enemy> {
 
     private List<CharacterController> createdCharacterController = new ArrayList<>();  // 自身が作成したキャラクターコントローラのインスタンス
 
-    public AutoFactory(FactoryList fl,  Point2D createPosition) {
+    public AutoFactory(FactoryList fl,  Point createPosition) {
         super(fl, createPosition);
     }
 

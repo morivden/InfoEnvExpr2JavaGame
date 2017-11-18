@@ -12,7 +12,7 @@ public abstract class CollisionObject {
      */
     public static void checkCollisions(List<GameObject> go, GameObject gameObject) {
         // gameObjectのスピード
-        float x_speed, y_speed;
+        int x_speed, y_speed;
         
         // GameObjectからCollisionObjectを取り出す
         CollisionObject collisionGameObject = gameObject.getCollisionObject();
@@ -55,5 +55,5 @@ public abstract class CollisionObject {
     public abstract boolean isCollide(CollisionObject collisionObject);    
     
     // 座標移動
-    public abstract void transfer(double x, double y);
+    public abstract void transfer(int x, int y);
 }
