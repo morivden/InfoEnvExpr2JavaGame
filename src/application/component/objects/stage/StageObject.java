@@ -27,6 +27,19 @@ public abstract class StageObject extends GameObject {
             
         }
         
+        // 外積をもとにベクトルを用いて衝突した箇所を特定
+        public int checkCollidingPosition(Rectangle collidedRect, Rectangle collidingRect, PlayableCharacter tmpCharacter) {
+            // 移動前の状態
+            Rectangle previousCollidingRect = new Rectangle(collidingRect.x - tmpCharacter.getXSpeed(),
+                                                            collidingRect.y - tmpCharacter.getYSpeed(),
+                                                            collidingRect.width, collidingRect.height);
+            return 0;
+        }
+        
+        public int crossProduct() {
+            return 0;
+        }
+        
         /**
          * イベントの発火(衝突したときの処理)
          * @param collidedObj, gameObject, collidingOjb
@@ -85,7 +98,7 @@ public abstract class StageObject extends GameObject {
                     System.out.println("下から衝突");
                     tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed + (height2 - (y1 - y2)));
                 }
-
+                
                 // x_speedとy_speedをもとにどの方向からぶつかっているか判定
                 // x方向の当たり判定
                 if ( xSpeed > 0 && ONE_ANGLE_SECTION * 3 <= degree && degree <= ONE_ANGLE_SECTION * 5 ) {
