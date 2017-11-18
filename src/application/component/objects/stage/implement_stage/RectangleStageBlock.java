@@ -41,7 +41,6 @@ public class RectangleStageBlock extends StageObject {
         collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
         collRect.setFill(Color.RED);
 
-
         updateImage();
     }
 

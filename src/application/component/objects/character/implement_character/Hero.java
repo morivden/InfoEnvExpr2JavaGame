@@ -47,7 +47,7 @@ public class Hero extends PlayableCharacter {
     @Override
     public void move() {
         position.setLocation(position.x + speed.x, position.y + speed.y);
-        collisionObject.transfer(position.x + speed.x, position.y + speed.y);
+        collisionObject.transfer( position.x + collisionRelativeDistance.x + speed.x, position.y + collisionRelativeDistance.y + speed.y);
         collRect.setX((int)(collRect.getX()+speed.x));
         collRect.setY((int)(collRect.getY()+speed.y));
         updateImage();

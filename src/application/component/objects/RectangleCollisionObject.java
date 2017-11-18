@@ -15,7 +15,6 @@ public class RectangleCollisionObject extends CollisionObject {
     public RectangleCollisionObject(int x, int y, int width, int height) {
         rect = new Rectangle(x, y, width, height);
         events = new ArrayList<>();
-        rect.setBounds(x, y, width, height);
     }
 
     /**
@@ -37,6 +36,7 @@ public class RectangleCollisionObject extends CollisionObject {
         if (collisionObject instanceof RectangleCollisionObject) {
             // 型キャストしてgetRectangleメソッドを呼び出す
             Rectangle collidingRect = ((RectangleCollisionObject)collisionObject).getRectangle();
+            System.out.println(collidingRect + "aa");
             // 矩形が重なっているか判定
             if ( rect.intersects(collidingRect) ) {
                 return true;
