@@ -12,6 +12,7 @@ public class TMPStageBlock extends StageObject {
     private Rectangle rect = new Rectangle(GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale());
 
     public TMPStageBlock(Point pos) {
+        super(pos);
         position = pos;
         rect.setFill(Color.AQUA);
 
@@ -24,7 +25,7 @@ public class TMPStageBlock extends StageObject {
     }
 
     @Override
-    public Node getImg() {
+    public Node getImage() {
         return rect;
     }
 }

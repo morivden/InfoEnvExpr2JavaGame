@@ -17,6 +17,7 @@ public class TMPCharacter extends PlayableCharacter {
     private Point speed = new Point(0, 0);
 
     public TMPCharacter(Point pos) {
+        super(pos);
         position = pos;
         range.setStrokeWidth(1);
         range.setFill(Color.TRANSPARENT);
@@ -42,19 +43,19 @@ public class TMPCharacter extends PlayableCharacter {
         updateImg();
     }
 
-    public void setSpeed(int x_speed, int y_speed) {
-        speed.setLocation(speedCheck(x_speed), speedCheck(y_speed));
+    public void setSpeed(int speedX, int speedY) {
+        speed.setLocation(speedCheck(speedX), speedCheck(speedY));
     }
 
-    public int getX_speed() {
+    public int getXSpeed() {
         return speed.x;
     }
 
-    public Node getImg() {
+    public Node getImage() {
         return img;
     }
 
-    public int getY_speed() {
+    public int getYSpeed() {
         return speed.y;
     }
 
@@ -63,5 +64,20 @@ public class TMPCharacter extends PlayableCharacter {
         else if ( DEFAULT_SPEED < speed ) { speed = DEFAULT_SPEED; }
 
         return speed;
+    }
+
+    @Override
+    public void attack() {
+
+    }
+
+    @Override
+    public int getDefaultSpeed() {
+        return 0;
+    }
+
+    @Override
+    public Point getSpeed() {
+        return null;
     }
 }

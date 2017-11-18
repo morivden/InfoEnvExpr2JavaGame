@@ -29,8 +29,8 @@ public abstract class CollisionObject {
             // gameObjectをMovableObjectにキャスト
             MovableObject movableObject = (MovableObject)gameObject;
             // スピードを取ってくる
-            x_speed = movableObject.getX_speed();
-            y_speed = movableObject.getY_speed();
+            x_speed = movableObject.getXSpeed();
+            y_speed = movableObject.getYSpeed();
             
             // スピード分だけ移動させる
             gameObject.position.setLocation(gameObject.position.x + x_speed, gameObject.position.y + y_speed);

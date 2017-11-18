@@ -9,11 +9,11 @@ public abstract class GameObject {
     protected CollisionObject collisionObject;
     protected ImageManager imageManager;
     
-    public GameObject() {
-        
+    public GameObject(Point pos) {
+        position = pos;
     }
 
-    public abstract Node getImg();
+    public abstract Node getImage();
     
     public Point getPosition() {
         return position;
