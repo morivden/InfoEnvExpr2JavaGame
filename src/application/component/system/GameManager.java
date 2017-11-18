@@ -8,7 +8,8 @@ import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.controller.GameController;
-import javafx.geometry.Point2D;
+// import javafx.geometry.Point2D;
+import com.sun.javafx.geom.Point2D;
 import javafx.scene.layout.Pane;
 
 import java.util.Optional;
@@ -199,8 +200,8 @@ public class GameManager {
 
             Point2D characterPos = player.getCharacter().getPosition();
 
-            double drawPaneX =  drawPaneHalfWidth - characterPos.getX();
-            double drawPaneY =  drawPaneHalfHeight - characterPos.getY();
+            double drawPaneX =  drawPaneHalfWidth - characterPos.x;
+            double drawPaneY =  drawPaneHalfHeight - characterPos.y;
 
             // 移動
             dpm.transfer(drawPaneX, drawPaneY);

@@ -14,14 +14,16 @@ public class ImageManager {
     }
     
     public void showImage(String key) {
-        
+        Image image = images.get(key);
+        imageView.setImage(image);
     }
     
     public void addImage(String key, Image image) {
-        
+        images.put(key, image);
     }
     
     public void transfer(double x, double y) {
-        
+        imageView.setX(x);
+        imageView.setY(y);
     }
 }
