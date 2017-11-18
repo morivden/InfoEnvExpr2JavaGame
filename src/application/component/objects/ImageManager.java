@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 
 
 public class ImageManager {
-    private HashMap<Enum, Image> images;
+    private HashMap<ObjectStatus, Image> images;
     private ImageView imageView;
-    public enum ObjectStatuses {
+    public enum ObjectStatus {
         WAIT,
         IMG_LEFT,
         IMG_RIGHT,
@@ -19,12 +19,12 @@ public class ImageManager {
         
     }
     
-    public void showImage(objectStatus key) {
+    public void showImage(ObjectStatus key) {
         Image image = images.get(key);
         imageView.setImage(image);
     }
     
-    public void addImage(objectStatus key, Image image) {
+    public void addImage(ObjectStatus key, Image image) {
         images.put(key, image);
     }
     
