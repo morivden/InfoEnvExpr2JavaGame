@@ -1,33 +1,34 @@
 package application.component.objects.character.implement_character;
 
+import application.component.objects.ImageManager;
 import application.component.objects.character.PlayableCharacter;
-import javafx.scene.Group;
+import application.component.system.GameEnvironment;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
 
 public class Monster extends PlayableCharacter {
-    private Circle img = new Circle(10);
-    private Circle range = new Circle(RANGE);
+    private static String WAIT_IMAGE = "/images/monster.png";
     public static int DEFAULT_SPEED = 10;
     public static int RANGE = 200;
+
+    Point collisionRelativeDistance;
+
+    private Circle range = new Circle(RANGE);
 
     public Monster(Point pos) {
         super(pos);
         position = pos;
-        range.setStrokeWidth(1);
-        range.setFill(javafx.scene.paint.Color.TRANSPARENT);
-        range.setStroke(Color.color(1.0, 0.3, 0.3, 0.5));
-        updateImage();
-    }
 
-    private void updateImage() {
-        img.setTranslateX(position.x);
-        img.setTranslateY(position.y);
-        range.setTranslateX(position.x);
-        range.setTranslateY(position.y);
+        javafx.scene.image.Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
+        imageManager.addImage(ImageManager.ObjectStatus.WAIT, waitImage);
+        imageManager.showImage(ImageManager.ObjectStatus.WAIT);
+
+        collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
+
+        updateImage();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Monster extends PlayableCharacter {
 
     @Override
     public Node getImage() {
-        return new Group(img, range);
+        return imageManager.getImageView();
     }
 
     @Override
@@ -54,5 +55,10 @@ public class Monster extends PlayableCharacter {
     @Override
     public Point getSpeed() {
         return speed;
+    }
+
+    @Override
+    protected Point getCollisionRelativeDistance() {
+        return collisionRelativeDistance;
     }
 }

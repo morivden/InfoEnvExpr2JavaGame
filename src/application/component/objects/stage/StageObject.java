@@ -1,17 +1,20 @@
 package application.component.objects.stage;
 
-import java.awt.*;
-
-import application.component.objects.*;
+import application.component.objects.CollisionEvent;
+import application.component.objects.CollisionObject;
+import application.component.objects.GameObject;
+import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.MovableObject;
-import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.objects.character.PlayableCharacter;
+
+import java.awt.*;
 
 public abstract class StageObject extends GameObject {
     public StageObject(Point pos) {
         super(pos);
     }
 
-    public static class StageCollision extends CollisionEvent {
+    public static class StageCollision implements CollisionEvent {
         // StageObject側の座標
         private int x1, y1, width1, height1;
         // MovableObject側の座標
@@ -54,7 +57,8 @@ public abstract class StageObject extends GameObject {
                 height2 = (int)rect2.getHeight();
                 
                 // TMPCharacterにキャスト
-                TMPCharacter tmpCharacter = (TMPCharacter)gameObject;
+                PlayableCharacter tmpCharacter = (PlayableCharacter)gameObject;
+
                 // スピードを引っ張ってくる
                 xSpeed = tmpCharacter.getXSpeed();
                 ySpeed = tmpCharacter.getYSpeed();
@@ -64,22 +68,22 @@ public abstract class StageObject extends GameObject {
                 if ( xSpeed > 0) {
                     // 左からぶつかっている場合
                     System.out.println("左から衝突");
-                    rect1.translate(x2 - width1, y1);
+                    tmpCharacter.setSpeed(xSpeed, ySpeed);
                 } else if ( xSpeed < 0) {
                     // 右からぶつかっている場合
                     System.out.println("右から衝突");
-                    rect1.translate(x2 + width2, y1);
+                    tmpCharacter.setSpeed(xSpeed + (width2 - (x1 - x2)), ySpeed);
                 }
                 
                 // y方向の当たり判定                
                 if ( ySpeed > 0) {
                     // 上からぶつかっている場合
                     System.out.println("上から衝突");
-                    rect1.translate(x1, y2 - height1);
+                    tmpCharacter.setSpeed(xSpeed, ySpeed);
                 } else if ( ySpeed > 0) {
                     // 下からぶつかっている場合
                     System.out.println("下から衝突");
-                    rect1.translate(x1, y2 + height2);
+                    tmpCharacter.setSpeed(xSpeed, ySpeed);
                 }
             }
         }

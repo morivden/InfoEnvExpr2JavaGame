@@ -43,8 +43,8 @@ public class TMPCharacter extends PlayableCharacter {
         updateImg();
     }
 
-    public void setSpeed(int speedX, int speedY) {
-        speed.setLocation(speedCheck(speedX), speedCheck(speedY));
+    public void setSpeed(int xSpeed, int ySpeed) {
+        speed.setLocation(speedCheck(xSpeed), speedCheck(ySpeed));
     }
 
     public int getXSpeed() {
@@ -78,6 +78,11 @@ public class TMPCharacter extends PlayableCharacter {
 
     @Override
     public Point getSpeed() {
+        return null;
+    }
+
+    @Override
+    protected Point getCollisionRelativeDistance() {
         return null;
     }
 }

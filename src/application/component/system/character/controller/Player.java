@@ -6,18 +6,10 @@ import application.component.system.GameManager;
 import application.component.system.InputManager;
 
 public class Player extends CharacterController {
-    // TODO PlayableCharacterが実装、要修正
-    // TMPCharacterをPlayableCharacterに
-
     private PlayableCharacter character;
-//    private TMPCharacter character;
     public Player(PlayableCharacter character) {
         this.character = character;
     }
-
-//    public Player(TMPCharacter character) {
-//        this.character = character;
-//    }
 
     @Override
     public void update() {
@@ -35,12 +27,6 @@ public class Player extends CharacterController {
             character.setSpeed(TMPCharacter.DEFAULT_SPEED, character.getYSpeed());
         }
     }
-
-    // TODO 要修正
-//    public PlayableCharacter getCharacter() {
-//        return character;
-//    }
-
 
     public PlayableCharacter getCharacter() {
         return character;

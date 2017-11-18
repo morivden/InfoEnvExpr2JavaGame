@@ -21,16 +21,16 @@ public interface MovableObject {
 
     /**
      * スピード値の変更
-     * @param x_speed
-     * @param y_speed
+     * @param xSpeed
+     * @param ySpeed
      */
-    default void setSpeed(int x_speed, int y_speed) {
+    default void setSpeed(int xSpeed, int ySpeed) {
         // 適正判定
-        x_speed = checkSpeed(x_speed);
-        y_speed = checkSpeed(y_speed);
+//        xSpeed = checkSpeed(xSpeed);
+//        ySpeed = checkSpeed(ySpeed);
 
         // 格納
-        getSpeed().setLocation(x_speed, y_speed);
+        getSpeed().setLocation(xSpeed, ySpeed);
     }
 
     /**

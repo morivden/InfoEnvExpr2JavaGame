@@ -37,14 +37,13 @@ public abstract class CollisionObject {
             
             // 衝突していたらigniteEventsを呼び出す
             if (pickupCollisionObject.isCollide(collisionGameObject)) {
-                System.out.println("衝突");
+//                TODO System.out.println("衝突");
                 pickupCollisionObject.igniteEvents(pickupCollisionObject, gameObject, collisionGameObject);
                 collisionGameObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
             }
             
             // スピード分だけ戻す
             gameObject.position.setLocation(gameObject.position.x - x_speed, gameObject.position.y - y_speed);
-            
         }
     }
     

@@ -3,6 +3,7 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.objects.CollisionObject;
 import application.component.objects.character.PlayableCharacter;
 import application.component.objects.character.implement_character.Hero;
 import application.component.objects.character.implement_character.Monster;
@@ -142,7 +143,7 @@ public class GameManager {
         // TODO 実装する
 
         // TODO 一時実装、あとで消す
-        player = new Player(new Hero(new Point(0, 0)));
+        player = new Player(new Hero(new Point(75, 75)));
         dpm.inputGameObject(player.getCharacter());
 
         // TODO 一時実装あとで消す
@@ -174,14 +175,19 @@ public class GameManager {
         public void run() {
             // TODO 各ゲームプロセスの実装
             //== ファクトリーの更新
+
             //== キャラクターの更新
             player.update();
             enemy.update();
+
+            //== 衝突オブジェクトの反映
+            CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
+
             //== 移動オブジェクトの更新
             player.getCharacter().move();
             enemy.getCharacter().move();
+
             //== 攻撃オブジェクトの更新
-            //== 衝突オブジェクトの反映
             //== 描画パネル(drawPane)の移動
             moveDrawPanel();
 

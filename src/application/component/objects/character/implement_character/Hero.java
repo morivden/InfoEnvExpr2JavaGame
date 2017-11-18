@@ -1,32 +1,46 @@
 package application.component.objects.character.implement_character;
 
+import application.component.objects.ImageManager;
+import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
+import application.component.system.GameEnvironment;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
 
+
 public class Hero extends PlayableCharacter {
-    private Circle img = new Circle(10);
+    private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
+
+    private Point collisionRelativeDistance;
 
     public Hero(Point pos) {
         super(pos);
 
-        img.setFill(Color.RED);
+        //===  イメージ関連
+        Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
+        imageManager.addImage(ImageManager.ObjectStatus.WAIT, waitImage);
+        imageManager.showImage(ImageManager.ObjectStatus.WAIT);
+
+        //=== 衝突物体の相対距離算出
+        collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
+
+        //=== 衝突物体関連
+        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x + collisionRelativeDistance.x,
+                position.y + collisionRelativeDistance.y, (int)waitImage.getWidth(), (int) waitImage.getHeight());
+//        rectCO.addEvent((o, e, a) -> System.out.println("  ヒーロー衝突"));
+        collisionObject = rectCO;
 
         updateImage();
-    }
-
-    private void updateImage() {
-        img.setTranslateX(position.x);
-        img.setTranslateY(position.y);
     }
 
     @Override
     public void move() {
         position.setLocation(position.x + speed.x, position.y + speed.y);
+        collisionObject.transfer(position.x + speed.x, position.y + speed.y);
         updateImage();
     }
 
@@ -37,7 +51,7 @@ public class Hero extends PlayableCharacter {
 
     @Override
     public Node getImage() {
-        return img;
+        return imageManager.getImageView();
     }
 
     @Override
@@ -48,5 +62,10 @@ public class Hero extends PlayableCharacter {
     @Override
     public Point getSpeed() {
         return speed;
+    }
+
+    @Override
+    protected Point getCollisionRelativeDistance() {
+        return collisionRelativeDistance;
     }
 }
