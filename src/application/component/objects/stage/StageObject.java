@@ -73,7 +73,16 @@ public abstract class StageObject extends GameObject {
                 double radian = Math.atan2(centerY2 - centerY1, centerX2 - centerX1);
                 double degree = Math.toDegrees(radian) + 180;
 
-                System.out.println(centerX1 + "  "  + centerX2);
+                // y方向の当たり判定
+                if ( ySpeed > 0 && ONE_ANGLE_SECTION * 5 <= degree && degree <= ONE_ANGLE_SECTION * 7 ) {
+                    // 上からぶつかっている場合
+                    System.out.println("上から衝突");
+                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed - (height1 - (y2 - y1)));
+                } else if ( ySpeed < 0 && ONE_ANGLE_SECTION <= degree && degree <= ONE_ANGLE_SECTION * 3 ) {
+                    // 下からぶつかっている場合
+                    System.out.println("下から衝突");
+                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed + (height2 - (y1 - y2)));
+                }
 
                 // x_speedとy_speedをもとにどの方向からぶつかっているか判定
                 // x方向の当たり判定
@@ -85,17 +94,6 @@ public abstract class StageObject extends GameObject {
                     // 右からぶつかっている場合
                     System.out.println("右から衝突");
                     tmpCharacter.setSpeed(xSpeed + (width2 - (x1 - x2)), ySpeed);
-                }
-                
-                // y方向の当たり判定                
-                if ( ySpeed > 0 && ONE_ANGLE_SECTION * 5 <= degree && degree <= ONE_ANGLE_SECTION * 7 ) {
-                    // 上からぶつかっている場合
-                    System.out.println("上から衝突");
-                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed - (height1 - (y2 - y1)));
-                } else if ( ySpeed < 0 && ONE_ANGLE_SECTION <= degree && degree <= ONE_ANGLE_SECTION * 3 ) {
-                    // 下からぶつかっている場合
-                    System.out.println("下から衝突");
-                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed + (height2 - (y1 - y2)));
                 }
             }
         }
