@@ -8,10 +8,10 @@ import javafx.scene.image.ImageView;
 public class ImageManager {
     private HashMap<Enum, Image> images;
     private ImageView imageView;
-    public enum objectStatus {
+    public enum ObjectStatuses {
         WAIT,
-        IMGLEFT,
-        IMGRIGHT,
+        IMG_LEFT,
+        IMG_RIGHT,
         JUMP
     }
     
