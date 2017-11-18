@@ -28,8 +28,6 @@ public class GameManager {
     private static final int PROCESS_INTERVAL_MILLISECOND = 30;           // 処理の間隔
     private static final InputManager inputManager = new InputManager();  // 入力キー管理
 
-    public static final int DEFAULT_BLOCK_SCALE = 50;                    // 標準の1区画のサイズ
-
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
 

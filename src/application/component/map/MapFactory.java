@@ -84,8 +84,8 @@ public class MapFactory {
      * @return GameMap
      */
     private static Tuple2<GameMap, List<CharacterFactory>> convertToMapFromCharArray(char[][] charMap) {
-        int mapWidth = charMap[0].length * GameManager.DEFAULT_BLOCK_SCALE;  // マップの幅
-        int mapHeight = charMap.length * GameManager.DEFAULT_BLOCK_SCALE;    // マップの高さ
+        int mapWidth = charMap[0].length * GameEnvironment.getBlockScale();  // マップの幅
+        int mapHeight = charMap.length * GameEnvironment.getBlockScale();    // マップの高さ
 
         GameMap gameMap = new GameMap(mapWidth, mapHeight);      // マップ返却用
         List<CharacterFactory> factoryList = new ArrayList<>();  // ファクトリ返却用
@@ -99,8 +99,8 @@ public class MapFactory {
 
                 //== 該当するオブジェクトデータがある場合
                 GameObjectList.getOf(ch).ifPresent(gol -> {
-                    Point2D pos = new Point2D(fHol * GameManager.DEFAULT_BLOCK_SCALE,
-                                              fVer * GameManager.DEFAULT_BLOCK_SCALE);
+                    Point2D pos = new Point2D(fHol * GameEnvironment.getBlockScale(),
+                                              fVer * GameEnvironment.getBlockScale());
                     char iChar = gol.getIdentificationChar();  // 識別文字列の取得
                     // TODO java.lang.Character を要修正
                     //= 文字が数値であるとき、ファクトリーを生成
