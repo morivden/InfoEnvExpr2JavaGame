@@ -37,6 +37,10 @@ public class Monster extends PlayableCharacter {
         position.setLocation(position.x + speed.x, position.y + speed.y);
         updateImage();
     }
+    
+    public void jump() {
+        
+    }
 
     @Override
     public void attack() {

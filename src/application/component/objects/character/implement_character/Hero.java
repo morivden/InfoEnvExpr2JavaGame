@@ -18,13 +18,16 @@ public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
+    // 接地しているかどうか
+    public boolean onGround;
 
     private Rectangle collRect;
 
     private Point collisionRelativeDistance;
 
-    public Hero(Point pos) {
+    public Hero(Point pos) {        
         super(pos);
+        onGround = false;
 
         //===  イメージ関連
         Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
@@ -49,11 +52,27 @@ public class Hero extends PlayableCharacter {
 
     @Override
     public void move() {
+        /*
+        if (onGround) {
+            position.setLocation(position.x + speed.x, position.y + speed.y);
+        } else {
+            position.setLocation(position.x + speed.x, position.y + speed.y + GameEnvironment.getGravity());
+        }
+        */
         position.setLocation(position.x + speed.x, position.y + speed.y);
         collisionObject.transfer( position.x + collisionRelativeDistance.x, position.y + collisionRelativeDistance.y);
         collRect.setX((int)(((RectangleCollisionObject)collisionObject).getRectangle().getX()));
         collRect.setY((int)(((RectangleCollisionObject)collisionObject).getRectangle().getY()));
         updateImage();
+    }
+    
+    // ジャンプ
+    public void jump() {
+        // 接地している状態の時
+        if (onGround) {
+            onGround = false;
+            position.setLocation(position.x, position.y + speed.y);
+        }
     }
 
     @Override
