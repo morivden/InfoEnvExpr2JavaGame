@@ -1,15 +1,15 @@
 package application.component.map;
 
 import application.component.system.GameEnvironment;
-import application.component.system.GameManager;
 import application.component.system.character.factory.AutoFactory;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.GameObjectList;
 import application.component.system.character.factory.PlayerFactory;
-import com.sun.javafx.geom.Point2D;
+
 import lib.TupleUtil.Tuple2;
 import lib.TupleUtil.Tuple3;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -99,7 +99,7 @@ public class MapFactory {
 
                 //== 該当するオブジェクトデータがある場合
                 GameObjectList.getOf(ch).ifPresent(gol -> {
-                    Point2D pos = new Point2D(fHol * GameEnvironment.getBlockScale(),
+                    Point pos = new Point(fHol * GameEnvironment.getBlockScale(),
                                               fVer * GameEnvironment.getBlockScale());
                     char iChar = gol.getIdentificationChar();  // 識別文字列の取得
                     // TODO java.lang.Character を要修正

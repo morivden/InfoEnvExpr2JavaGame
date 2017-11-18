@@ -10,18 +10,10 @@ import java.awt.Point;
  * @param <T> 生成するキャラクターコントローラクラス
  */
 public abstract class CharacterFactory<T extends CharacterController> {
-<<<<<<< HEAD
-    protected Point2D createPosition;   // 生成ポイント
     protected GameObjectList gameObjectList;  // ファクトリーリスト
-
-    public CharacterFactory(GameObjectList fl, Point2D createPosition) {
-=======
     protected Point createPosition;   // 生成ポイント
-    protected FactoryList factoryList;  // ファクトリーリスト
 
-    public CharacterFactory(FactoryList fl, Point createPosition) {
->>>>>>> master
-
+    public CharacterFactory(GameObjectList fl, Point createPosition) {
         gameObjectList = fl;
         this.createPosition = createPosition;
     }

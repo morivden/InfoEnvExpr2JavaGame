@@ -19,11 +19,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
     private CharacterController createdCharacterController;   // 自身が作成したキャラクターコントローラのインスタンス
 
     private PlayerFactory() {
-<<<<<<< HEAD
-        super(GameObjectList.Hero, new Point2D());
-=======
-        super(FactoryList.Hero, new Point());
->>>>>>> master
+        super(GameObjectList.Hero, new Point());
     }
 
     /**

@@ -4,6 +4,7 @@ import application.component.objects.GameObject;
 import application.component.objects.stage.implement_stage.TMPStageBlock;
 import com.sun.javafx.geom.Point2D;
 
+import java.awt.*;
 import java.util.Optional;
 
 /**
@@ -35,7 +36,7 @@ public enum GameObjectList {
      * @param pos  生成位置
      * @return game object
      */
-    public static GameObject createOf(char iChar, Point2D pos) {
+    public static GameObject createOf(char iChar, Point pos) {
         GameObjectList gol = getOf(iChar).orElse(TMPStage);
         return gol.createProcess.getInstance(pos);
     }
@@ -70,7 +71,7 @@ public enum GameObjectList {
      * @param pos キャラクターの位置
      * @return the instance
      */
-    public GameObject getInstance(Point2D pos) {
+    public GameObject getInstance(Point pos) {
         return this.createProcess.getInstance(pos);
     }
 
@@ -78,6 +79,6 @@ public enum GameObjectList {
      * ゲームオブジェクト生成用のSAMインタフェース
      */
     public interface CharacterCreator {
-        GameObject getInstance(Point2D createPos);
+        GameObject getInstance(Point createPos);
     }
 }

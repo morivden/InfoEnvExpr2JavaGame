@@ -2,15 +2,16 @@ package application.component.objects.stage.implement_stage;
 
 import application.component.objects.stage.StageObject;
 import application.component.system.GameEnvironment;
-import com.sun.javafx.geom.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
+
 public class TMPStageBlock extends StageObject {
     private Rectangle rect = new Rectangle(GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale());
 
-    public TMPStageBlock(Point2D pos) {
+    public TMPStageBlock(Point pos) {
         position = pos;
         rect.setFill(Color.AQUA);
 
