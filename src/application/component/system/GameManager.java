@@ -182,7 +182,6 @@ public class GameManager {
 
             //== 衝突オブジェクトの反映
             CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
-            System.out.println("------");
 
             //== 移動オブジェクトの更新
             player.getCharacter().move();
