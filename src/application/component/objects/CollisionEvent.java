@@ -6,7 +6,7 @@ public class CollisionEvent implements CollisionEventInterface {
     }
     
     // イベントの発火
-    public void ignite(GameObject gameObject) {
+    public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
         
     }
 }

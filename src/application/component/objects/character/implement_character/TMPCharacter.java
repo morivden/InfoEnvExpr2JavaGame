@@ -2,7 +2,9 @@ package application.component.objects.character.implement_character;
 
 import application.component.objects.character.PlayableCharacter;
 import com.sun.javafx.geom.Point2D;
+
 import javafx.scene.Node;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -12,7 +14,7 @@ public class TMPCharacter extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int RANGE = 200;
 
-    private int x_speed = 0, y_speed = 0;
+    private Point2D speed = new Point2D(0, 0);
 
     public TMPCharacter(Point2D pos) {
         position = pos;
@@ -34,19 +36,18 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public void move() {
-        position.x += x_speed;
-        position.y += y_speed;
+        // position = position.setLocation(speed.x, speed.y);
+        position.setLocation(position.x + speed.x, position.y + speed.y);
 
         updateImg();
     }
 
     public void setSpeed(int x_speed, int y_speed) {
-        this.x_speed = speedCheck(x_speed);
-        this.y_speed = speedCheck(y_speed);
+        speed.setLocation(speedCheck(x_speed), speedCheck(y_speed));
     }
 
     public int getX_speed() {
-        return x_speed;
+        return (int)speed.x;
     }
 
     public Node getImg() {
@@ -54,7 +55,7 @@ public class TMPCharacter extends PlayableCharacter {
     }
 
     public int getY_speed() {
-        return y_speed;
+        return (int)speed.y;
     }
 
     private int speedCheck(int speed) {

@@ -9,6 +9,7 @@ import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
+
 import com.sun.javafx.geom.Point2D;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;

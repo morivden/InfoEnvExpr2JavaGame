@@ -3,9 +3,12 @@ package application.component.objects;
 import java.awt.Rectangle;
 import java.util.List;
 
+import application.component.objects.character.MovableObject;
+
 public class RectangleCollisionObject extends CollisionObject {
     protected List<CollisionEvent> events;
     protected Rectangle rect1;
+    private double x_speed, y_speed;
     
     /**
      * コンストラクタ
@@ -19,9 +22,9 @@ public class RectangleCollisionObject extends CollisionObject {
      * イベントの発火
      * @param gameObject
      */
-    public void igniteEvents(GameObject gameObject) {
+    public void igniteEvents(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
         for (CollisionEvent event : events) {
-            event.ignite(gameObject);
+            event.ignite(collidedObj, gameObject, collidingObj);
         }
     }
     
@@ -33,7 +36,7 @@ public class RectangleCollisionObject extends CollisionObject {
         // collisionObjectがRectangleCollisionObjectのインスタンスであるかどうか
         if (collisionObject instanceof RectangleCollisionObject) {
             // 型キャストしてgetRectangleメソッドを呼び出す
-            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();
+            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();           
             // 矩形が重なっているか判定
             if (rect1.intersects(rect2)) {
                 return true;
