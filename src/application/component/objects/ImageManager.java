@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 public class ImageManager {
     private HashMap<ObjectStatus, Image> images;
     private ImageView imageView;
+
     public enum ObjectStatus {
         WAIT,
         IMG_LEFT,
@@ -16,7 +17,8 @@ public class ImageManager {
     }
     
     public ImageManager() {
-        
+        images = new HashMap<>();
+        imageView = new ImageView();
     }
     
     public void showImage(ObjectStatus key) {
@@ -31,5 +33,9 @@ public class ImageManager {
     public void transfer(int x, int y) {
         imageView.setX(x);
         imageView.setY(y);
+    }
+
+    public ImageView getImageView() {
+        return imageView;
     }
 }

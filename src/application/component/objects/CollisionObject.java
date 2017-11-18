@@ -29,22 +29,20 @@ public abstract class CollisionObject {
             // gameObjectをMovableObjectにキャスト
             MovableObject movableObject = (MovableObject)gameObject;
             // スピードを取ってくる
-            x_speed = movableObject.getX_speed();
-            y_speed = movableObject.getY_speed();
+            x_speed = movableObject.getXSpeed();
+            y_speed = movableObject.getYSpeed();
             
             // スピード分だけ移動させる
-            gameObject.position.setLocation(gameObject.position.x + x_speed, gameObject.position.y + y_speed);
-            
+            collisionGameObject.move(x_speed, y_speed);
             // 衝突していたらigniteEventsを呼び出す
             if (pickupCollisionObject.isCollide(collisionGameObject)) {
-                System.out.println("衝突");
+//                TODO System.out.println("衝突");
                 pickupCollisionObject.igniteEvents(pickupCollisionObject, gameObject, collisionGameObject);
                 collisionGameObject.igniteEvents(collisionGameObject, gameObject, pickupCollisionObject);
             }
-            
+
             // スピード分だけ戻す
-            gameObject.position.setLocation(gameObject.position.x - x_speed, gameObject.position.y - y_speed);
-            
+            collisionGameObject.move( -x_speed, -y_speed);
         }
     }
     
@@ -56,4 +54,6 @@ public abstract class CollisionObject {
     
     // 座標移動
     public abstract void transfer(int x, int y);
+
+    public abstract void move(int dx, int dy);
 }

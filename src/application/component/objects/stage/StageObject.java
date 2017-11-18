@@ -1,22 +1,26 @@
 package application.component.objects.stage;
 
-import java.awt.Rectangle;
-import application.component.objects.*;
+import application.component.objects.CollisionEvent;
+import application.component.objects.CollisionObject;
+import application.component.objects.GameObject;
+import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.MovableObject;
-import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.objects.character.PlayableCharacter;
 
-public abstract class StageObject extends GameObject {    
-    public StageObject() {
-        StageCollision stageCollision = new StageCollision();
+import java.awt.*;
+
+public abstract class StageObject extends GameObject {
+    public StageObject(Point pos) {
+        super(pos);
     }
-    
-    public static class StageCollision extends CollisionEvent {
+
+    public static class StageCollision implements CollisionEvent {
         // StageObject側の座標
         private int x1, y1, width1, height1;
         // MovableObject側の座標
         private int x2, y2, width2, height2;
         // TMPCharacterのスピード
-        private int x_speed, y_speed;
+        private int xSpeed, ySpeed;
         
         public StageCollision() {
             
@@ -26,12 +30,13 @@ public abstract class StageObject extends GameObject {
          * イベントの発火(衝突したときの処理)
          * @param collidedObj, gameObject, collidingOjb
          */
+        static final double ONE_ANGLE_SECTION = 360 / 8.0;
         @Override
-        public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {           
+        public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
             // gameObjectがMovableObjectのインスタンスかどうか
             if (gameObject instanceof MovableObject) {
                 // MovableObjectにキャスト
-                // MovableObject movalbeObject = ((MovableObject)gameObject);
+                // MovableObject movableObject = ((MovableObject)gameObject);
                 
                 // gameObjectからCollisionObjectを引っ張ってくる
                 //CollisionObject collisionObject = gameObject.getCollisionObject();
@@ -53,32 +58,42 @@ public abstract class StageObject extends GameObject {
                 height2 = (int)rect2.getHeight();
                 
                 // TMPCharacterにキャスト
-                TMPCharacter tmpCharacter = (TMPCharacter)gameObject;
+                PlayableCharacter tmpCharacter = (PlayableCharacter)gameObject;
+
                 // スピードを引っ張ってくる
-                x_speed = tmpCharacter.getX_speed();
-                y_speed = tmpCharacter.getY_speed();
-                
-                // x_speedとy_speedをもとにどの方向からぶつかっているか判定
-                // x方向の当たり判定
-                if (x_speed > 0) {
-                    // 左からぶつかっている場合
-                    System.out.println("左から衝突");
-                    rect1.translate(x2 - width1, y1);
-                } else if (x_speed < 0) {
-                    // 右からぶつかっている場合
-                    System.out.println("右から衝突");
-                    rect1.translate(x2 + width2, y1);
-                }
-                
-                // y方向の当たり判定                
-                if (y_speed > 0) {
+                xSpeed = tmpCharacter.getXSpeed();
+                ySpeed = tmpCharacter.getYSpeed();
+
+                // 2点の間の角度
+                double centerX1 = x1 + width1 / 2.0;
+                double centerX2 = x2 + width2 / 2.0;
+                double centerY1 = y1 + height1 / 2.0;
+                double centerY2 = y2 + height2 / 2.0;
+
+                double radian = Math.atan2(centerY2 - centerY1, centerX2 - centerX1);
+                double degree = Math.toDegrees(radian) + 180;
+
+                // y方向の当たり判定
+                if ( ySpeed > 0 && ONE_ANGLE_SECTION * 5 <= degree && degree <= ONE_ANGLE_SECTION * 7 ) {
                     // 上からぶつかっている場合
                     System.out.println("上から衝突");
-                    rect1.translate(x1, y2 - height1);
-                } else if (y_speed > 0) {
+                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed - (height1 - (y2 - y1)));
+                } else if ( ySpeed < 0 && ONE_ANGLE_SECTION <= degree && degree <= ONE_ANGLE_SECTION * 3 ) {
                     // 下からぶつかっている場合
                     System.out.println("下から衝突");
-                    rect1.translate(x1, y2 + height2);
+                    tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed + (height2 - (y1 - y2)));
+                }
+
+                // x_speedとy_speedをもとにどの方向からぶつかっているか判定
+                // x方向の当たり判定
+                if ( xSpeed > 0 && ONE_ANGLE_SECTION * 3 <= degree && degree <= ONE_ANGLE_SECTION * 5 ) {
+                    // 左からぶつかっている場合
+                    System.out.println("左から衝突");
+                    tmpCharacter.setSpeed(xSpeed - (width1 - (x2 - x1)), ySpeed);
+                } else if ( xSpeed < 0 && (ONE_ANGLE_SECTION * 7 <= degree || degree <= ONE_ANGLE_SECTION )) {
+                    // 右からぶつかっている場合
+                    System.out.println("右から衝突");
+                    tmpCharacter.setSpeed(xSpeed + (width2 - (x1 - x2)), ySpeed);
                 }
             }
         }

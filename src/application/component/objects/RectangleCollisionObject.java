@@ -1,24 +1,22 @@
 package application.component.objects;
 
-import java.awt.Rectangle;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-
-import application.component.objects.character.MovableObject;
 
 public class RectangleCollisionObject extends CollisionObject {
     protected List<CollisionEvent> events;
-    protected Rectangle rect1;
-    // private double x_speed, y_speed;
-    private int x_speed, y_speed;
-    
+    protected Rectangle rect;
+
     /**
      * コンストラクタ
      * @param x, y, width, height
      */
     public RectangleCollisionObject(int x, int y, int width, int height) {
-        rect1.setBounds(x, y, width, height);
+        rect = new Rectangle(x, y, width, height);
+        events = new ArrayList<>();
     }
-    
+
     /**
      * イベントの発火
      * @param gameObject
@@ -37,9 +35,10 @@ public class RectangleCollisionObject extends CollisionObject {
         // collisionObjectがRectangleCollisionObjectのインスタンスであるかどうか
         if (collisionObject instanceof RectangleCollisionObject) {
             // 型キャストしてgetRectangleメソッドを呼び出す
-            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();           
+            Rectangle collidingRect = ((RectangleCollisionObject)collisionObject).getRectangle();
+            
             // 矩形が重なっているか判定
-            if (rect1.intersects(rect2)) {
+            if ( rect.intersects(collidingRect) ) {
                 return true;
             }
         }
@@ -51,7 +50,7 @@ public class RectangleCollisionObject extends CollisionObject {
      * @param x, y
      */
     public void transfer(int x, int y) {
-        rect1.setLocation(x, y);
+        rect.setLocation(x, y);
     }
     
     /**
@@ -67,6 +66,20 @@ public class RectangleCollisionObject extends CollisionObject {
      * 
      */
     public Rectangle getRectangle() {
-        return rect1;
+        return rect;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("(%d, %d, %d, %d)", rect.x, rect.y, rect.width, rect.height));
+
+        return new String(sb);
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        transfer(rect.x + dx, rect.y + dy);
     }
 }

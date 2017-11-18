@@ -34,7 +34,7 @@ public class DrawPanelManager {
         drawPane.setPrefHeight(gm.getMapHeight());
         // TODO GameObject実装後、実装
         List<GameObject> gameObjects = gm.getGameObjects();
-        gameObjects.stream().forEach(go -> { drawPane.getChildren().add(go.getImg()); });
+        gameObjects.stream().forEach(go -> { drawPane.getChildren().add(go.getImage()); });
     }
 
     /**
@@ -42,13 +42,13 @@ public class DrawPanelManager {
      */
     public void inputGameObject(GameObject gameObject) {
         // TODO ImageManager実装後に、追加処理の追加
-//        drawPane.getChildren().add();
+        drawPane.getChildren().add(gameObject.getImage());
     }
 
     // TODO 一時メソッド、あとで消す
     public void inputTMP(TMPCharacter tp) {
         gameMap.addGameObject(tp);
-        drawPane.getChildren().add(tp.getImg());
+        drawPane.getChildren().add(tp.getImage());
         drawPane.getChildren().add(tp.getRange());
     }
 

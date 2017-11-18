@@ -3,7 +3,10 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.objects.CollisionObject;
 import application.component.objects.character.PlayableCharacter;
+import application.component.objects.character.implement_character.Hero;
+import application.component.objects.character.implement_character.Monster;
 import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
@@ -140,12 +143,12 @@ public class GameManager {
         // TODO 実装する
 
         // TODO 一時実装、あとで消す
-        player = new Player(new TMPCharacter(new Point(0, 0)));
-        dpm.inputTMP(player.getCharacter());
+        player = new Player(new Hero(new Point(75, 75)));
+        dpm.inputGameObject(player.getCharacter());
 
         // TODO 一時実装あとで消す
-        enemy = new Enemy(new TMPCharacter(new Point(300, 100)));
-        dpm.inputTMP((TMPCharacter) enemy.getCharacter());
+        enemy = new Enemy(new Monster(new Point(300, 100)));
+        dpm.inputGameObject(enemy.getCharacter());
     }
 
     /**
@@ -172,14 +175,19 @@ public class GameManager {
         public void run() {
             // TODO 各ゲームプロセスの実装
             //== ファクトリーの更新
+
             //== キャラクターの更新
             player.update();
             enemy.update();
+
+            //== 衝突オブジェクトの反映
+            CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
+
             //== 移動オブジェクトの更新
             player.getCharacter().move();
             enemy.getCharacter().move();
+
             //== 攻撃オブジェクトの更新
-            //== 衝突オブジェクトの反映
             //== 描画パネル(drawPane)の移動
             moveDrawPanel();
 

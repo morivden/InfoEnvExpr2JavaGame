@@ -99,8 +99,9 @@ public class MapFactory {
 
                 //== 該当するオブジェクトデータがある場合
                 GameObjectList.getOf(ch).ifPresent(gol -> {
-                    Point pos = new Point(fHol * GameEnvironment.getBlockScale(),
-                                              fVer * GameEnvironment.getBlockScale());
+                    int blockSize =  GameEnvironment.getBlockScale();
+                    Point pos = new Point(fHol * blockSize + blockSize / 2,
+                                              fVer * blockSize + blockSize / 2);
                     char iChar = gol.getIdentificationChar();  // 識別文字列の取得
                     // TODO java.lang.Character を要修正
                     //= 文字が数値であるとき、ファクトリーを生成
