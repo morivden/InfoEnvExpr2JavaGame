@@ -4,15 +4,15 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class TitleControllerMain extends Application {
-	
+        
     public static final int WINDOW_HEIGHT = 400;
     public static final int WINDOW_WIDTH = 600;
     public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) {   
-    	try {
-    		
+        try {
+                
             this.primaryStage = primaryStage;
             this.primaryStage.setWidth(WINDOW_WIDTH);
             this.primaryStage.setHeight(WINDOW_HEIGHT);
