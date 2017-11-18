@@ -68,7 +68,7 @@ public abstract class StageObject extends GameObject {
                 if ( xSpeed > 0) {
                     // 左からぶつかっている場合
                     System.out.println("左から衝突");
-                    tmpCharacter.setSpeed(xSpeed, ySpeed);
+                    tmpCharacter.setSpeed(xSpeed - (width1 - (x2 - x1)), ySpeed);
                 } else if ( xSpeed < 0) {
                     // 右からぶつかっている場合
                     System.out.println("右から衝突");

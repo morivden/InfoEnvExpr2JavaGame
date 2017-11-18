@@ -1,6 +1,6 @@
 package application.component.objects;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class RectangleCollisionObject extends CollisionObject {
         events = new ArrayList<>();
         rect.setBounds(x, y, width, height);
     }
-    
+
     /**
      * イベントの発火
      * @param gameObject
@@ -38,7 +38,7 @@ public class RectangleCollisionObject extends CollisionObject {
             // 型キャストしてgetRectangleメソッドを呼び出す
             Rectangle collidingRect = ((RectangleCollisionObject)collisionObject).getRectangle();
             // 矩形が重なっているか判定
-            if ( rect.intersects(collidingRect)) {
+            if ( rect.intersects(collidingRect) ) {
                 return true;
             }
         }

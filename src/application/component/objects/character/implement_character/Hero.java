@@ -7,6 +7,7 @@ import application.component.system.GameEnvironment;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 
@@ -15,6 +16,8 @@ public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
+
+    private Rectangle collRect;
 
     private Point collisionRelativeDistance;
 
@@ -35,6 +38,9 @@ public class Hero extends PlayableCharacter {
 //        rectCO.addEvent((o, e, a) -> System.out.println("  ヒーロー衝突"));
         collisionObject = rectCO;
 
+        // TODO 消すやつ
+        collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
+
         updateImage();
     }
 
@@ -42,6 +48,8 @@ public class Hero extends PlayableCharacter {
     public void move() {
         position.setLocation(position.x + speed.x, position.y + speed.y);
         collisionObject.transfer(position.x + speed.x, position.y + speed.y);
+        collRect.setX((int)(collRect.getX()+speed.x));
+        collRect.setY((int)(collRect.getY()+speed.y));
         updateImage();
     }
 
@@ -51,8 +59,11 @@ public class Hero extends PlayableCharacter {
     }
 
     @Override
+//    public Node getImage() {
+//        return imageManager.getImageView();
+//    }
     public Node getImage() {
-        return imageManager.getImageView();
+        return collRect;
     }
 
     @Override

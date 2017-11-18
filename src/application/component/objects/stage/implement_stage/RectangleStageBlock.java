@@ -6,11 +6,16 @@ import application.component.objects.stage.StageObject;
 import application.component.system.GameEnvironment;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 
 public class RectangleStageBlock extends StageObject {
     private static String WAIT_IMAGE = "/images/rect_stage.png";
+
+    private Rectangle collRect;
 
     private Point collisionRelativeDistance;
 
@@ -26,10 +31,16 @@ public class RectangleStageBlock extends StageObject {
         collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
 
         //=== 衝突物体関連
-        RectangleCollisionObject rectCO = new RectangleCollisionObject(pos.x, pos.y,
-                GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale());
+        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x + collisionRelativeDistance.x,
+                position.y + collisionRelativeDistance.y,
+                (int)waitImage.getWidth(), (int)waitImage.getHeight());
         rectCO.addEvent(new StageCollision());
         collisionObject = rectCO;
+
+        // TODO 消すやつ
+        collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
+        collRect.setFill(Color.RED);
+
 
         updateImage();
     }
@@ -42,7 +53,10 @@ public class RectangleStageBlock extends StageObject {
     }
 
     @Override
+//    public Node getImage() {
+//        return imageManager.getImageView();
+//    }
     public Node getImage() {
-        return imageManager.getImageView();
+        return collRect;
     }
 }
