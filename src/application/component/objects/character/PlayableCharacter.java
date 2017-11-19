@@ -48,4 +48,9 @@ public abstract class PlayableCharacter extends Character implements MovableObje
     public int getRange() {
         return DEFAULT_RANGE;
     }
+
+    /**
+     * キャラクターの状態を無効にする
+     */
+    public abstract void disable();
 }
