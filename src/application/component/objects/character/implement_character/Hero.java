@@ -18,6 +18,7 @@ public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
+    public static int DEFAULT_HP = 1;
 
     private Rectangle collRect;
 
@@ -25,6 +26,8 @@ public class Hero extends PlayableCharacter {
 
     public Hero(Point pos) {
         super(pos);
+
+        hp = DEFAULT_HP;
 
         //===  イメージ関連
         Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);

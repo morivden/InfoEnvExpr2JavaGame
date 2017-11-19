@@ -18,6 +18,8 @@ public class Monster extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
     public static int DEFAULT_RANGE = 200;
+    public static int DEFAULT_HP = 10;
+
 
     Point collisionRelativeDistance;
 
@@ -25,7 +27,8 @@ public class Monster extends PlayableCharacter {
 
     public Monster(Point pos) {
         super(pos);
-        position = pos;
+
+        hp = DEFAULT_HP;
 
         //== イメージ関連
         javafx.scene.image.Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);

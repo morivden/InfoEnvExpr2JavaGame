@@ -37,6 +37,11 @@ public class Enemy extends CharacterController {
             return;
         }
 
+        //== スピード値更新
+        updateSpeed(playerCharacterController);
+    }
+
+    private void updateSpeed(Optional<Player> playerCharacterController) {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
