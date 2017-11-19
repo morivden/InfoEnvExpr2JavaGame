@@ -17,9 +17,10 @@ import java.awt.*;
 public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
+    public static int JUMP_SPEED = -14;
     public static int MAX_SPEED = 100;
     // 接地しているかどうか
-    public boolean onGround;
+    // public boolean onGround;
 
     private Rectangle collRect;
 
@@ -52,13 +53,6 @@ public class Hero extends PlayableCharacter {
 
     @Override
     public void move() {
-        /*
-        if (onGround) {
-            position.setLocation(position.x + speed.x, position.y + speed.y);
-        } else {
-            position.setLocation(position.x + speed.x, position.y + speed.y + GameEnvironment.getGravity());
-        }
-        */
         position.setLocation(position.x + speed.x, position.y + speed.y);
         collisionObject.transfer( position.x + collisionRelativeDistance.x, position.y + collisionRelativeDistance.y);
         collRect.setX((int)(((RectangleCollisionObject)collisionObject).getRectangle().getX()));
@@ -70,8 +64,9 @@ public class Hero extends PlayableCharacter {
     public void jump() {
         // 接地している状態の時
         if (onGround) {
+            this.setSpeed(this.getXSpeed(), JUMP_SPEED);
+            // 接地状態をfalseにする
             onGround = false;
-            position.setLocation(position.x, position.y + speed.y);
         }
     }
 

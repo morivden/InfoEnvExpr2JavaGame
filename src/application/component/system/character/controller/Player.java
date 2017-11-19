@@ -15,12 +15,7 @@ public class Player extends CharacterController {
     public void update() {
         character.setSpeed(0, character.getYSpeed() + (int)GameEnvironment.getGravity());
         if ( GameManager.getKeyState(InputManager.KindOfPushedKey.UP_KEY) ) {
-            if (character.onGround) {
-                // character.setSpeed(character.getXSpeed(), -TMPCharacter.DEFAULT_SPEED);
-                character.setSpeed(character.getXSpeed(), -14);
-                character.onGround = false;
-            }
-            // character.setSpeed(character.getXSpeed(), -TMPCharacter.DEFAULT_SPEED);
+            character.jump();
         } else if ( GameManager.getKeyState(InputManager.KindOfPushedKey.DOWN_KEY) ) {
             // character.setSpeed(character.getXSpeed(), TMPCharacter.DEFAULT_SPEED);
         }

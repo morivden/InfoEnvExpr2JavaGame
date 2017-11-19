@@ -27,19 +27,6 @@ public abstract class StageObject extends GameObject {
             
         }
         
-        // 外積をもとにベクトルを用いて衝突した箇所を特定
-        public int checkCollidingPosition(Rectangle collidedRect, Rectangle collidingRect, PlayableCharacter tmpCharacter) {
-            // 移動前の状態
-            Rectangle previousCollidingRect = new Rectangle(collidingRect.x - tmpCharacter.getXSpeed(),
-                                                            collidingRect.y - tmpCharacter.getYSpeed(),
-                                                            collidingRect.width, collidingRect.height);
-            return 0;
-        }
-        
-        public int crossProduct() {
-            return 0;
-        }
-        
         /**
          * イベントの発火(衝突したときの処理)
          * @param collidedObj, gameObject, collidingOjb
