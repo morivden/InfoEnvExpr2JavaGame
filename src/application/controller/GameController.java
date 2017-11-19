@@ -69,7 +69,6 @@ public class GameController implements Initializable {
      */
     @FXML
     public void onKeyPressed(KeyEvent event) {
-        System.out.print("Pressed  ");
         changeKeyState(event, true);
     }
 
@@ -79,7 +78,6 @@ public class GameController implements Initializable {
      * @param event the event
      */
     public void onKeyReleased(KeyEvent event) {
-        System.out.print("Released: ");
         changeKeyState(event, false);
     }
 
@@ -92,20 +90,20 @@ public class GameController implements Initializable {
         switch ( event.getCode() ) {
             case UP:
                 GameManager.setKeyState(InputManager.KindOfPushedKey.UP_KEY, state);
-                System.out.println("うえ"); break;
+                break;
             case DOWN:
                 GameManager.setKeyState(InputManager.KindOfPushedKey.DOWN_KEY, state);
-                System.out.println("した"); break;
+                break;
             case LEFT:
                 GameManager.setKeyState(InputManager.KindOfPushedKey.LEFT_KEY, state);
-                System.out.println("ひだり"); break;
+                break;
             case RIGHT:
                 GameManager.setKeyState(InputManager.KindOfPushedKey.RIGHT_KEY, state);
-                System.out.println("みぎ"); break;
+                break;
             case SPACE:
                 GameManager.setKeyState(InputManager.KindOfPushedKey.SPACE_KEY, state);
             default:
-                System.out.println("なし"); break;
+                break;
         }
     }
 

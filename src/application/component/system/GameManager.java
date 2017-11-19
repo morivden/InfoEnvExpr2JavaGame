@@ -10,7 +10,6 @@ import application.component.objects.character.OffensiveObject;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.PlayerFactory;
-import application.controller.GameController;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
@@ -220,10 +219,7 @@ public class GameManager {
             dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
 
             //== 衝突オブジェクトの反映
-            List<GameObject> gol = dpm.getGameMap().getGameObjects();
-            for ( int k = 0; k < gol.size(); k++ ) {
-                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), gol.get(k));
-            }
+            reflectCollisions();
 
             //== 移動オブジェクトの更新
             MovableObject.moveMovableObjects(dpm.getGameMap().getMovableObjects());
@@ -237,6 +233,16 @@ public class GameManager {
             //== 無効キャラクターの削除
 
             //== ゲーム終了判定
+        }
+
+        /**
+         * 全ての衝突物体の反映
+         */
+        private void reflectCollisions() {
+            List<GameObject> gol = dpm.getGameMap().getGameObjects();
+            for ( int k = 0; k < gol.size(); k++ ) {
+                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), gol.get(k));
+            }
         }
 
         /**

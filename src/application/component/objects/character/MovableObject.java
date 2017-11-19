@@ -1,5 +1,7 @@
 package application.component.objects.character;
 
+import application.component.system.GameManager;
+
 import java.awt.*;
 import java.util.Iterator;
 import java.util.List;

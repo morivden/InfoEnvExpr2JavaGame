@@ -4,10 +4,8 @@ import application.component.map.GameMap;
 import application.component.objects.CollisionObject;
 import application.component.objects.GameObject;
 import application.component.objects.RectangleCollisionObject;
-import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
-import application.controller.GameControllerMain;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
@@ -21,7 +19,6 @@ public class DrawPanelManager {
 
     private GameMap gameMap;  // マップ
     private Pane drawPane;    // 描画パネル
-    private GameEnvironment gameEnvironment;     // 環境値
     private List<CharacterFactory> factoryList;  // ファクトリークラスの一覧
     private Rectangle rangeOfActivities;         // オブジェクトの有効範囲
 
@@ -67,6 +64,7 @@ public class DrawPanelManager {
      * @param y          y座標
      */
     private void transfer(int x, int y) {
+        // ルートのパネルの座標を基準とした
         int maxX = 0, maxY = 0;  // 上限
         int minX = (int)(GameController.getSceneWidth() - drawPane.getWidth());    // 下限
         int minY = (int)(GameController.getSceneHeight() - drawPane.getHeight());  // 下限
@@ -122,6 +120,11 @@ public class DrawPanelManager {
         return rangeOfActivities.contains(pos);
     }
 
+    /**
+     * 基準点を中心に取るように有効範囲を移動
+     *
+     * @param pos the pos
+     */
     public void focusPointForRangeOfActivities(Point pos) {
         // 座標の取得と算出
         int sceneHalfWidth = GameController.getSceneWidth() / 2;
@@ -137,6 +140,15 @@ public class DrawPanelManager {
      * オブジェクトの有効範囲の更新
      */
     private void transferRangeOfActivities(int x, int y) {
+        // 描画パネル上の座標を基準にした
+        int minX = -RANGE_MARGIN, minY = -RANGE_MARGIN;  // 下限
+        int maxX = (int)drawPane.getWidth() + RANGE_MARGIN;  // 上限
+        int maxY = (int)drawPane.getHeight() + RANGE_MARGIN;
+
+        // 補正
+        if ( x < minX ) { x = minX; } else if ( x > maxX ) { x = maxX; }
+        if ( y < minY ) { y = minY; } else if ( y > maxY ) { y = maxY; }
+
         // 有効範囲の設定
         rangeOfActivities = new Rectangle(x, y,
                 GameController.getSceneWidth() + RANGE_MARGIN * 2, GameController.getSceneHeight() + RANGE_MARGIN * 2);

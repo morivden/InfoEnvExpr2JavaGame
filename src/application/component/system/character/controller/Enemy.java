@@ -16,7 +16,6 @@ public class Enemy extends CharacterController {
 
     private PlayableCharacter character;
 
-
     private Random rand = new Random();
     private long previousChangeSpeedTime;  // 以前のスピード更新時間
 
@@ -34,6 +33,7 @@ public class Enemy extends CharacterController {
 
         //== キャラクターが有効範囲ない場合、無視
         if ( !GameManager.isValid(character) ) {
+            character.setSpeed(0, 0); // 停止
             return;
         }
 
@@ -60,6 +60,7 @@ public class Enemy extends CharacterController {
 
                 // 方向転換判定
                 if ( currentChangeSpeedTime - previousChangeSpeedTime > SPEED_CHANGE_INTERVAl ) {
+                    speedX += rand.nextInt(RAND_RANGE) - RAND_RANGE / 2; // ランダムに加速を付ける
                     speedX *= -1;  // 方向の反転
                     previousChangeSpeedTime = currentChangeSpeedTime;
                 }
