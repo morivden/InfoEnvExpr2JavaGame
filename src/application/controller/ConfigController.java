@@ -33,9 +33,7 @@ public class ConfigController implements Initializable {
     
 	private static final ConfigController cc;  // ConfigControllerインスタンス
     private static final Scene SCENE;
-    private static File file = new File("resources//bgm//02 Phantom.mp3");
-    private static Media media = new Media(file.toURI().toString());
-    private static MediaPlayer player = new MediaPlayer(media);
+    private static ColorAdjust screenLight = new ColorAdjust();
     
     static {
     	FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/ConfigController.fxml"));
@@ -54,8 +52,8 @@ public class ConfigController implements Initializable {
         return cc;
     }
     
-    public static MediaPlayer getPlayer() {
-        return player;
+    public static ColorAdjust getScreenLight() {
+    	return screenLight;
     }
 
     public void show() {
@@ -69,13 +67,18 @@ public class ConfigController implements Initializable {
     	TitleController.getInstance().show();
     }
     @FXML
-    public void changeVolume(MouseEvent event) {          // backButtonを押した時に実行するアクションイベント
-    	player.setVolume(volumeBar.getValue());
+    public void changeVolume(MouseEvent event) {             // VolumeのSliderを変更した時に実行するアクションイベント
+    	TitleController.getMediaPlayer().setVolume(volumeBar.getValue());
+    }
+    @FXML
+    public void changeContrast(MouseEvent event) {           // ContrastのSliderを変更した時に実行するアクションイベント
+    	screenLight.setBrightness(contrastBar.getValue());
     }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		volumeBar.setValue(player.getVolume());
-		
+		volumeBar.setValue(TitleController.getMediaPlayer().getVolume());
+		contrastBar.setValue(screenLight.getBrightness());
+		root.setEffect(screenLight);
 	}
 }
