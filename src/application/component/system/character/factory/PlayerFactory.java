@@ -1,10 +1,15 @@
 package application.component.system.character.factory;
 
+import application.component.objects.GameObject;
 import application.component.objects.character.PlayableCharacter;
+import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.system.GameManager;
 import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Player;
-import com.sun.javafx.geom.Point2D;
+import javafx.application.Platform;
+// import com.sun.javafx.geom.Point2D;
 
+import java.awt.Point;
 import java.util.Optional;
 
 /**
@@ -13,10 +18,10 @@ import java.util.Optional;
 public class PlayerFactory extends CharacterFactory<Player> {
     private static PlayerFactory ourInstance = new PlayerFactory();
 
-    private CharacterController createdCharacterController;   // 自身が作成したキャラクターコントローラのインスタンス
+    private Player createdCharacterController;   // 自身が作成したキャラクターコントローラのインスタンス
 
     private PlayerFactory() {
-        super(FactoryList.Hero, new Point2D());
+        super(GameObjectList.Hero, new Point());
     }
 
     /**
@@ -25,7 +30,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
      * @param createPosition 生成位置
      * @return
      */
-    public static PlayerFactory getInstance(Point2D createPosition) {
+    public static PlayerFactory getInstance(Point createPosition) {
         ourInstance.setCreatePosition(createPosition);  // 位置の更新
         return ourInstance;
     }
@@ -35,7 +40,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
      *
      * @param createPosition
      */
-    private static void setCreatePosition(Point2D createPosition) {
+    private static void setCreatePosition(Point createPosition) {
         ourInstance.createPosition = createPosition;
     }
 
@@ -45,19 +50,34 @@ public class PlayerFactory extends CharacterFactory<Player> {
      *
      * @return プレイヤーが操作するキャラクターのコントローラ
      */
-    public Optional<CharacterController> getPlayerCharacter() {
-        return Optional.ofNullable(createdCharacterController);
+    public static Optional<Player> getPlayerCharacterController() {
+        return Optional.ofNullable(ourInstance.createdCharacterController);
     }
 
     @Override
     public void updateAll() {
         createdCharacterController.update();
-
     }
 
     @Override
-    public Player create() {
-        return new Player(factoryList.getInstance(createPosition));
+    public Optional<Player> create() {
+        if ( createdCharacterController != null ) {
+            return Optional.empty();
+        }
+
+        GameObject newGameObject = gameObjectList.getInstance(new Point(createPosition.x, createPosition.y));
+
+        if ( !(newGameObject instanceof PlayableCharacter) ) {
+            return Optional.empty();
+        }
+
+        PlayableCharacter createP = (PlayableCharacter) newGameObject;
+
+        Platform.runLater(() -> GameManager.addGameObject(createP));  // ゲームオブジェクトの登録
+        Player player = new Player(createP);
+        register(player);  // コントローラの登録
+
+        return Optional.of(player);
     }
 
     @Override

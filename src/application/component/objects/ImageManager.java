@@ -6,22 +6,36 @@ import javafx.scene.image.ImageView;
 
 
 public class ImageManager {
-    private HashMap<String, Image> images;
+    private HashMap<ObjectStatus, Image> images;
     private ImageView imageView;
+
+    public enum ObjectStatus {
+        WAIT,
+        IMG_LEFT,
+        IMG_RIGHT,
+        JUMP
+    }
     
     public ImageManager() {
-        
+        images = new HashMap<>();
+        imageView = new ImageView();
     }
     
-    public void showImage(String key) {
-        
+    public void showImage(ObjectStatus key) {
+        Image image = images.get(key);
+        imageView.setImage(image);
     }
     
-    public void addImage(String key, Image image) {
-        
+    public void addImage(ObjectStatus key, Image image) {
+        images.put(key, image);
     }
     
-    public void transfer(double x, double y) {
-        
+    public void transfer(int x, int y) {
+        imageView.setX(x);
+        imageView.setY(y);
+    }
+
+    public ImageView getImageView() {
+        return imageView;
     }
 }

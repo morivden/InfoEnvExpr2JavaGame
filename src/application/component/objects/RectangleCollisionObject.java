@@ -1,27 +1,29 @@
 package application.component.objects;
 
-import java.awt.Rectangle;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RectangleCollisionObject extends CollisionObject {
     protected List<CollisionEvent> events;
-    protected Rectangle rect1;
-    
+    protected Rectangle rect;
+
     /**
      * コンストラクタ
      * @param x, y, width, height
      */
-    public RectangleCollisionObject(double x, double y, double width, double height) {
-        rect1.setRect(x, y, width, height);
+    public RectangleCollisionObject(int x, int y, int width, int height) {
+        rect = new Rectangle(x, y, width, height);
+        events = new ArrayList<>();
     }
-    
+
     /**
      * イベントの発火
      * @param gameObject
      */
-    public void igniteEvents(GameObject gameObject) {
+    public void igniteEvents(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
         for (CollisionEvent event : events) {
-            event.ignite(gameObject);
+            event.ignite(collidedObj, gameObject, collidingObj);
         }
     }
     
@@ -33,9 +35,10 @@ public class RectangleCollisionObject extends CollisionObject {
         // collisionObjectがRectangleCollisionObjectのインスタンスであるかどうか
         if (collisionObject instanceof RectangleCollisionObject) {
             // 型キャストしてgetRectangleメソッドを呼び出す
-            Rectangle rect2 = ((RectangleCollisionObject)collisionObject).getRectangle();
+            Rectangle collidingRect = ((RectangleCollisionObject)collisionObject).getRectangle();
+            
             // 矩形が重なっているか判定
-            if (rect1.intersects(rect2)) {
+            if ( rect.intersects(collidingRect) ) {
                 return true;
             }
         }
@@ -46,8 +49,8 @@ public class RectangleCollisionObject extends CollisionObject {
      * 指定した座標(矩形の左上指定)への移動
      * @param x, y
      */
-    public void transfer(double x, double y) {
-        rect1.setLocation((int)x, (int)y);
+    public void transfer(int x, int y) {
+        rect.setLocation(x, y);
     }
     
     /**
@@ -63,6 +66,20 @@ public class RectangleCollisionObject extends CollisionObject {
      * 
      */
     public Rectangle getRectangle() {
-        return rect1;
+        return rect;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("(%d, %d, %d, %d)", rect.x, rect.y, rect.width, rect.height));
+
+        return new String(sb);
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        transfer(rect.x + dx, rect.y + dy);
     }
 }

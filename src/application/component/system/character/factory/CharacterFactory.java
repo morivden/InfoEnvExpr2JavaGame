@@ -1,9 +1,9 @@
 package application.component.system.character.factory;
 
-import application.component.objects.GameObject;
-import application.component.objects.character.PlayableCharacter;
 import application.component.system.character.controller.CharacterController;
-import com.sun.javafx.geom.Point2D;
+// import com.sun.javafx.geom.Point2D;
+import java.awt.Point;
+import java.util.Optional;
 
 /**
  * キャラクター生成クラス
@@ -11,12 +11,11 @@ import com.sun.javafx.geom.Point2D;
  * @param <T> 生成するキャラクターコントローラクラス
  */
 public abstract class CharacterFactory<T extends CharacterController> {
-    protected Point2D createPosition;   // 生成ポイント
-    protected FactoryList factoryList;  // ファクトリーリスト
+    protected GameObjectList gameObjectList;  // ファクトリーリスト
+    protected Point createPosition;   // 生成ポイント
 
-    public CharacterFactory(FactoryList fl, Point2D createPosition) {
-
-        factoryList = fl;
+    public CharacterFactory(GameObjectList fl, Point createPosition) {
+        gameObjectList = fl;
         this.createPosition = createPosition;
     }
 
@@ -25,7 +24,7 @@ public abstract class CharacterFactory<T extends CharacterController> {
      *
      * @return  生成したキャラクターコントローラのインスタンス
      */
-    public abstract T create();
+    public abstract Optional<T> create();
 
     /**
      * 保持しているコントローラクラスのインスタンス更新メソッド

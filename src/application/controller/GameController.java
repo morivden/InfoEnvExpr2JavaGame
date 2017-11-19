@@ -52,9 +52,12 @@ public class GameController implements Initializable {
 
         gameManager = GameManager.getInstance(drawPane, 1);
         gameManager.start();
+<<<<<<< HEAD
 
         drawPane.getChildren().add(new Circle(300, 250,100));
         root.setEffect(ConfigController.getScreenLight());
+=======
+>>>>>>> f1cab5cff60b20d502bfa644fac8ee5911e344ac
     }
 
     public static GameController getInstance() {
@@ -73,7 +76,6 @@ public class GameController implements Initializable {
      */
     @FXML
     public void onKeyPressed(KeyEvent event) {
-        System.out.print("Pressed  ");
         changeKeyState(event, true);
     }
 
@@ -83,7 +85,6 @@ public class GameController implements Initializable {
      * @param event the event
      */
     public void onKeyReleased(KeyEvent event) {
-        System.out.print("Released: ");
         changeKeyState(event, false);
     }
 
@@ -95,21 +96,21 @@ public class GameController implements Initializable {
     protected void changeKeyState(KeyEvent event, boolean state) {
         switch ( event.getCode() ) {
             case UP:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.UP_KEY, state);
-                System.out.println("うえ"); break;
+                GameManager.setKeyState(InputManager.KindOfPushedKey.UP_KEY, state);
+                break;
             case DOWN:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.DOWN_KEY, state);
-                System.out.println("した"); break;
+                GameManager.setKeyState(InputManager.KindOfPushedKey.DOWN_KEY, state);
+                break;
             case LEFT:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.LEFT_KEY, state);
-                System.out.println("ひだり"); break;
+                GameManager.setKeyState(InputManager.KindOfPushedKey.LEFT_KEY, state);
+                break;
             case RIGHT:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.RIGHT_KEY, state);
-                System.out.println("みぎ"); break;
+                GameManager.setKeyState(InputManager.KindOfPushedKey.RIGHT_KEY, state);
+                break;
             case SPACE:
-                GameManager.getInputManager().set(InputManager.KindOfPushedKey.SPACE_KEY, state);
+                GameManager.setKeyState(InputManager.KindOfPushedKey.SPACE_KEY, state);
             default:
-                System.out.println("なし"); break;
+                break;
         }
     }
 
@@ -118,8 +119,8 @@ public class GameController implements Initializable {
      *
      * @return the scene width
      */
-    public static double getSceneWidth() {
-        return SCENE.getWidth();
+    public static int getSceneWidth() {
+        return (int)SCENE.getWidth();
     }
 
     /**
@@ -127,7 +128,7 @@ public class GameController implements Initializable {
      *
      * @return the scene height
      */
-    public static double getSceneHeight() {
-        return SCENE.getHeight();
+    public static int getSceneHeight() {
+        return (int)SCENE.getHeight();
     }
 }

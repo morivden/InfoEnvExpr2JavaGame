@@ -3,8 +3,20 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.objects.CollisionObject;
+import application.component.objects.GameObject;
+import application.component.objects.character.MovableObject;
+import application.component.objects.character.OffensiveObject;
+import application.component.system.character.controller.Player;
+import application.component.system.character.factory.CharacterFactory;
+import application.component.system.character.factory.PlayerFactory;
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import lib.TupleUtil;
 
+import java.awt.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,10 +36,9 @@ public class GameManager {
     private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
     private GameProcessTask gpt;    // ゲームプロセス
     private Timer gameTimer;        // ゲームプロセス用タイマー
+    private Player player;          // プレイヤーコントローラ
 
-    private GameMap gameMap;        // マップ
     private DrawPanelManager dpm;   // パネル管理
-    // TODO Playerクラスのフィールドを作成
 
     /**
      * インスタンスの取得
@@ -42,16 +53,42 @@ public class GameManager {
         return ourInstance;
     }
 
-    public static InputManager getInputManager() {
-        return inputManager;
-    }
-
     public static void setKeyState(InputManager.KindOfPushedKey key, boolean state) {
         inputManager.set(key, state);
     }
 
     public static boolean getKeyState(InputManager.KindOfPushedKey key) {
         return inputManager.get(key);
+    }
+
+    /**
+     * ゲーム情報、描画画面へのゲームオブジェクトの追加
+     *
+     * @param go
+     */
+    public static void addGameObject(GameObject go) {
+        ourInstance.dpm.inputGameObject(go);
+    }
+
+    /**
+     * ゲームオブジェクトが有効範囲にあるか判定
+     *
+     * @param go
+     * @return
+     */
+    public static boolean isValid(GameObject go) {
+        return ourInstance.dpm.checkBeingShown(go);
+    }
+
+    public static boolean isValid(Point pos) {
+        return ourInstance.dpm.checkBeingShown(pos);
+    }
+
+    /**
+     * プレーヤーコントローラの取得
+     */
+    public static Optional<Player> getPlayerCharacterController() {
+         return Optional.of(ourInstance.player);
     }
 
     /**
@@ -113,22 +150,33 @@ public class GameManager {
      * ゲーム内要素の初期化
      */
     private void initializeGameComponent(int stageNum) {
+        TupleUtil.Tuple3<GameMap, GameEnvironment, List<CharacterFactory>> gameInfo = null;
         try {
-            gameMap = MapFactory.createMap(stageNum);
-        } catch ( IllegalMapDataException | IllegalArgumentException e ) {
+            gameInfo = MapFactory.createMap(stageNum);
+            inputObjectsToPane(gameInfo._1, gameInfo._2, gameInfo._3);    // 描画パネル関連の初期化
+        } catch ( IllegalMapDataException | IllegalArgumentException | NotExistPlayerException e ) {
             e.printStackTrace();
-            // TODO 例外が発生した場合の仮マップを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
+            // TODO 例外が発生した場合のデフォルトデータを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
-        // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-        inputObjectsToPane();    // 描画パネル関連の初期化
     }
 
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
-    private void inputObjectsToPane() {
-        dpm = new DrawPanelManager(drawPane);
-        // TODO 実装する
+    private void inputObjectsToPane(GameMap gm, GameEnvironment ge, List<CharacterFactory> factoryList) throws NotExistPlayerException {
+        dpm = new DrawPanelManager(gm, factoryList, drawPane);
+
+        //== プレイヤーコントローラの有無のチェックと取得
+        for ( CharacterFactory cf : factoryList ) {
+            if ( cf instanceof PlayerFactory ) {
+                Optional<Player> ply = cf.create();
+                player = ply.get();
+            }
+        }
+        //= プレイヤーがマップ上に存在しないとき
+        if ( player == null ) {
+            throw new NotExistPlayerException();
+        }
     }
 
     /**
@@ -148,39 +196,80 @@ public class GameManager {
     }
 
     /**
+     * プレイヤーコントローラが存在しないとき発生する例外
+     */
+    private class NotExistPlayerException extends Exception {
+
+    }
+
+    /**
      * ゲーム部クラス
      */
     private class GameProcessTask extends TimerTask {
         @Override
         public void run() {
             // TODO 各ゲームプロセスの実装
+            //== 有効範囲の更新
+            moveRangeOfActivities();
+
             //== ファクトリーの更新
+            dpm.getFactoryList().stream().forEach(cf -> cf.create());
+
             //== キャラクターの更新
-            //== 移動オブジェクトの更新
-            //== 攻撃オブジェクトの更新
+            dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
+
             //== 衝突オブジェクトの反映
+            reflectCollisions();
+
+            //== 移動オブジェクトの更新
+            MovableObject.moveMovableObjects(dpm.getGameMap().getMovableObjects());
+
+            //== 攻撃オブジェクトの更新
+            OffensiveObject.attackOffensiveObjects(dpm.getGameMap().getOffensiveObjects());
+
             //== 描画パネル(drawPane)の移動
             moveDrawPanel();
 
             //== 無効キャラクターの削除
+
             //== ゲーム終了判定
         }
 
+        /**
+         * 全ての衝突物体の反映
+         */
+        private void reflectCollisions() {
+            List<GameObject> gol = dpm.getGameMap().getGameObjects();
+            for ( int k = 0; k < gol.size(); k++ ) {
+                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), gol.get(k));
+            }
+        }
+
+        /**
+         * 有効範囲の移動
+         */
+        private void moveRangeOfActivities(){
+            // プレイヤーの位置の取得
+            Point characterPos = new Point();
+            getPlayerCharacterController().ifPresent(ply -> {
+                characterPos.setLocation(ply.getCharacter().getPosition());
+            });
+
+            dpm.focusPointForRangeOfActivities(characterPos);
+        }
+
+        /**
+         * 描画パネルの移動
+         */
         private void moveDrawPanel() {
-            double nextX = drawPane.getTranslateX();
-            double nextY = drawPane.getTranslateY();
-            // TODO 今後、Playerのキャラクターの座標に追随するように変更予定
-            if ( inputManager.get(InputManager.KindOfPushedKey.UP_KEY) ) {
-                nextY -= 10;
-            } else if ( inputManager.get(InputManager.KindOfPushedKey.DOWN_KEY) ) {
-                nextY += 10;
-            }
-            if ( inputManager.get(InputManager.KindOfPushedKey.LEFT_KEY) ) {
-                nextX -= 10;
-            } else if ( inputManager.get(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
-                nextX += 10;
-            }
-            dpm.transfer(nextX, nextY);
+            // プレイヤーの位置の取得
+            Point characterPos = new Point();
+            getPlayerCharacterController().ifPresent(ply -> {
+                characterPos.setLocation(ply.getCharacter().getPosition());
+            });
+
+            // 移動
+            Platform.runLater(() -> dpm.focusPoint(characterPos));
         }
     }
 }
