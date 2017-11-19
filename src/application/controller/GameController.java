@@ -54,6 +54,7 @@ public class GameController implements Initializable {
         gameManager.start();
 
         drawPane.getChildren().add(new Circle(300, 250,100));
+        root.setEffect(ConfigController.getScreenLight());
     }
 
     public static GameController getInstance() {

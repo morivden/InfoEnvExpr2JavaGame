@@ -47,7 +47,6 @@ public class ConfigController implements Initializable {
         }
         Parent parent = fxmlLoader.getRoot();
         Scene scene = new Scene(parent);
-        player.play();
         SCENE = scene;
         cc = fxmlLoader.getController();
     }
