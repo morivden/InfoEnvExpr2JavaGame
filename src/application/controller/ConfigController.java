@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import java.io.IOException;
+import java.io.File;
+import javafx.scene.media.*;
 
 public class ConfigController {
 
@@ -23,6 +25,9 @@ public class ConfigController {
     
 	private static final ConfigController cc;  // ConfigControllerインスタンス
     private static final Scene SCENE;
+    private static File file = new File("resources//bgm//02 Phantom.mp3");
+    private static Media media = new Media(file.toURI().toString());
+    private static MediaPlayer player = new MediaPlayer(media);
     
     static {
     	FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/ConfigController.fxml"));
@@ -33,7 +38,7 @@ public class ConfigController {
         }
         Parent parent = fxmlLoader.getRoot();
         Scene scene = new Scene(parent);
-
+        player.play();
         SCENE = scene;
         cc = fxmlLoader.getController();
     }
