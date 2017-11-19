@@ -22,8 +22,11 @@ import javafx.scene.media.*;
 import javafx.scene.control.Slider;
 import javafx.beans.value.ObservableValue;
 
+import javafx.scene.effect.ColorAdjust;
+
 public class ConfigController implements Initializable {
 
+    @FXML private Pane root;
     @FXML private Text config;
     @FXML private Text volume;
     @FXML private Text contrast;
