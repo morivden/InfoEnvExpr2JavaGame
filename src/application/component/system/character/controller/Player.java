@@ -27,6 +27,7 @@ public class Player extends CharacterController {
         }
     }
 
+    @Override
     public PlayableCharacter getCharacter() {
         return character;
     }

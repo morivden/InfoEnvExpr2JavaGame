@@ -109,7 +109,7 @@ public class MapFactory {
                         //== '0' のときはプレイヤーとして
                         if ( iChar == '0' ) {
                             // プレイヤー
-                            factoryList.add(PlayerFactory.getInstance(pos));
+                            factoryList.add(0, PlayerFactory.getInstance(pos));
                         } else {
                             // エネミー
                             factoryList.add(new AutoFactory(gol, pos));

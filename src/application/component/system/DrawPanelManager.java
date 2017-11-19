@@ -1,26 +1,40 @@
 package application.component.system;
 
 import application.component.map.GameMap;
+import application.component.objects.CollisionObject;
 import application.component.objects.GameObject;
+import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.util.List;
 
 /**
  * 描画パネル管理クラス
  */
 public class DrawPanelManager {
+    public static int RANGE_MARGIN = 100;  // 有効範囲の外側への余白
+
     private GameMap gameMap;  // マップ
     private Pane drawPane;    // 描画パネル
-    private GameEnvironment gameEnvironment;  // 環境値
+    private GameEnvironment gameEnvironment;     // 環境値
+    private List<CharacterFactory> factoryList;  // ファクトリークラスの一覧
+    private Rectangle rangeOfActivities;         // オブジェクトの有効範囲
 
-    public DrawPanelManager(GameMap gameMap, Pane drawPane) {
+    public DrawPanelManager(GameMap gameMap, List<CharacterFactory> factoryList, Pane drawPane) {
         this.gameMap = gameMap;
+        this.factoryList = factoryList;
         this.drawPane = drawPane;
 
-        inputMap(gameMap);
+        // 有効範囲の設定
+        rangeOfActivities = new Rectangle(0, 0,
+                (int)drawPane.getWidth() + RANGE_MARGIN * 2, (int)drawPane.getHeight() + RANGE_MARGIN * 2);
+
+        updateRangeOfActivities(); // 有効範囲の更新
+        inputMap(gameMap);         // オブジェクトの登録
     }
 
     /**
@@ -41,7 +55,7 @@ public class DrawPanelManager {
      * オブジェクトの反映
      */
     public void inputGameObject(GameObject gameObject) {
-        // TODO ImageManager実装後に、追加処理の追加
+        gameMap.addGameObject(gameObject);
         drawPane.getChildren().add(gameObject.getImage());
     }
 
@@ -74,6 +88,59 @@ public class DrawPanelManager {
 
         // 格納
         drawPane.setLayoutX(x);
-        drawPane.setLayoutY(y);;
+        drawPane.setLayoutY(y);
+
+        // 有効範囲の更新
+        updateRangeOfActivities();
+    }
+
+    /**
+     * 指定のゲームオブジェクトが画面上に写っているか判定
+     *
+     * @param go the go
+     * @return the boolean
+     */
+    public boolean checkBeingShown(GameObject go) {
+        CollisionObject co = go.getCollisionObject();
+
+        // 矩形衝突物体のとき、判定
+        if ( co instanceof RectangleCollisionObject ) {
+            return ((RectangleCollisionObject) co).getRectangle().intersects(rangeOfActivities);
+        }
+
+        return false;
+    }
+
+    public boolean checkBeingShown(Point pos) {
+        return rangeOfActivities.contains(pos);
+    }
+
+    /**
+     * オブジェクトの有効範囲の更新
+     */
+    private void updateRangeOfActivities() {
+        // 座標の算出
+        int rangePosX = (int)drawPane.getLayoutX() - RANGE_MARGIN;
+        int rangePosY = (int)drawPane.getLayoutY() - RANGE_MARGIN;
+
+        rangeOfActivities.setLocation(rangePosX, rangePosY);
+    }
+
+    /**
+     * ファクトリーリストの取得
+     *
+     * @return
+     */
+    public List<CharacterFactory> getFactoryList() {
+        return factoryList;
+    }
+
+    /**
+     * ファクトリーの追加
+     *
+     * @param cf
+     */
+    public void addFactory(CharacterFactory cf) {
+        factoryList.add(cf);
     }
 }

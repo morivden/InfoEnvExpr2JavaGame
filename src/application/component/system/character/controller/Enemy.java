@@ -1,8 +1,6 @@
 package application.component.system.character.controller;
 
-import application.component.objects.character.MovableObject;
 import application.component.objects.character.PlayableCharacter;
-import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.GameManager;
 // import com.sun.javafx.geom.Point2D;
 
@@ -18,7 +16,7 @@ public class Enemy extends CharacterController {
 
     @Override
     public void update() {
-        Optional<PlayableCharacter> playerCharacter = GameManager.getPlayerCharacter();
+        Optional<PlayableCharacter> playerCharacter = Optional.of(GameManager.getPlayerCharacterController().get().getCharacter());
 
         double speedX = 0;
 
@@ -39,6 +37,7 @@ public class Enemy extends CharacterController {
         character.setSpeed((int)speedX, 0);
     }
 
+    @Override
     public PlayableCharacter getCharacter() {
         return character;
     }

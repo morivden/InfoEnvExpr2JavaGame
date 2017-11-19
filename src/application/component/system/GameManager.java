@@ -4,19 +4,20 @@ import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
 import application.component.objects.CollisionObject;
-import application.component.objects.character.PlayableCharacter;
-import application.component.objects.character.implement_character.Hero;
-import application.component.objects.character.implement_character.Monster;
-import application.component.objects.character.implement_character.TMPCharacter;
+import application.component.objects.GameObject;
+import application.component.objects.character.MovableObject;
+import application.component.objects.character.OffensiveObject;
+import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
+import application.component.system.character.factory.PlayerFactory;
 import application.controller.GameController;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
 
+import java.awt.*;
 import java.util.List;
-import java.awt.Point;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,7 +63,35 @@ public class GameManager {
         return inputManager.get(key);
     }
 
-    public static Optional<PlayableCharacter> getPlayerCharacter() { return Optional.ofNullable(ourInstance.player.getCharacter()); }
+    /**
+     * ゲーム情報、描画画面へのゲームオブジェクトの追加
+     *
+     * @param go
+     */
+    public static void addGameObject(GameObject go) {
+        ourInstance.dpm.inputGameObject(go);
+    }
+
+    /**
+     * ゲームオブジェクトが有効範囲にあるか判定
+     *
+     * @param go
+     * @return
+     */
+    public static boolean isValid(GameObject go) {
+        return ourInstance.dpm.checkBeingShown(go);
+    }
+
+    public static boolean isValid(Point pos) {
+        return ourInstance.dpm.checkBeingShown(pos);
+    }
+
+    /**
+     * プレーヤーコントローラの取得
+     */
+    public static Optional<Player> getPlayerCharacterController() {
+         return Optional.of(ourInstance.player);
+    }
 
     /**
      * 開始メソッド
@@ -126,29 +155,31 @@ public class GameManager {
         TupleUtil.Tuple3<GameMap, GameEnvironment, List<CharacterFactory>> gameInfo = null;
         try {
             gameInfo = MapFactory.createMap(stageNum);
-        } catch ( IllegalMapDataException | IllegalArgumentException e ) {
+            inputObjectsToPane(gameInfo._1, gameInfo._2, gameInfo._3);    // 描画パネル関連の初期化
+        } catch ( IllegalMapDataException | IllegalArgumentException | NotExistPlayerException e ) {
             e.printStackTrace();
             // TODO 例外が発生した場合のデフォルトデータを用意する。仮マップは、GameFactoryクラスかGameMapクラスのクラスメソッドから取得する
         }
-        // TODO 生成したMapクラスのインスタンスからPlayerクラスのインスタンスを取得し、Playerフィールドに格納
-        inputObjectsToPane(gameInfo._1, gameInfo._2, gameInfo._3);    // 描画パネル関連の初期化
     }
 
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
     private Enemy enemy;
-    private void inputObjectsToPane(GameMap gm, GameEnvironment ge, List<CharacterFactory> factryList) {
-        dpm = new DrawPanelManager(gm, drawPane);
-        // TODO 実装する
+    private void inputObjectsToPane(GameMap gm, GameEnvironment ge, List<CharacterFactory> factoryList) throws NotExistPlayerException {
+        dpm = new DrawPanelManager(gm, factoryList, drawPane);
 
-        // TODO 一時実装、あとで消す
-        player = new Player(new Hero(new Point(75, 75)));
-        dpm.inputGameObject(player.getCharacter());
-
-        // TODO 一時実装あとで消す
-        enemy = new Enemy(new Monster(new Point(300, 100)));
-        dpm.inputGameObject(enemy.getCharacter());
+        //== プレイヤーコントローラの有無のチェックと取得
+        for ( CharacterFactory cf : factoryList ) {
+            if ( cf instanceof PlayerFactory ) {
+                Optional<Player> ply = cf.create();
+                player = ply.get();
+            }
+        }
+        //= プレイヤーがマップ上に存在しないとき
+        if ( player == null ) {
+            throw new NotExistPlayerException();
+        }
     }
 
     /**
@@ -168,6 +199,13 @@ public class GameManager {
     }
 
     /**
+     * プレイヤーコントローラが存在しないとき発生する例外
+     */
+    private class NotExistPlayerException extends Exception {
+
+    }
+
+    /**
      * ゲーム部クラス
      */
     private class GameProcessTask extends TimerTask {
@@ -175,19 +213,23 @@ public class GameManager {
         public void run() {
             // TODO 各ゲームプロセスの実装
             //== ファクトリーの更新
+            dpm.getFactoryList().stream().forEach(cf -> cf.create());
 
             //== キャラクターの更新
-            player.update();
-            enemy.update();
+            dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
 
             //== 衝突オブジェクトの反映
-            CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
+            getPlayerCharacterController().ifPresent(ply -> {
+                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), ply.getCharacter());
+            });
+
 
             //== 移動オブジェクトの更新
-            player.getCharacter().move();
-            enemy.getCharacter().move();
+            MovableObject.moveMovableObjects(dpm.getGameMap().getMovableObjects());
 
             //== 攻撃オブジェクトの更新
+            OffensiveObject.attackOffensiveObjects(dpm.getGameMap().getOffensiveObjects());
+
             //== 描画パネル(drawPane)の移動
             moveDrawPanel();
 
@@ -203,7 +245,11 @@ public class GameManager {
             int drawPaneHalfWidth = GameController.getSceneWidth() / 2;
             int drawPaneHalfHeight = GameController.getSceneHeight() / 2;
 
-            Point characterPos = player.getCharacter().getPosition();
+            // プレイヤーの位置による縫製
+            Point characterPos = new Point();
+            getPlayerCharacterController().ifPresent(ply -> {
+                characterPos.setLocation(ply.getCharacter().getPosition());
+            });
 
             int drawPaneX =  drawPaneHalfWidth - characterPos.x;
             int drawPaneY =  drawPaneHalfHeight - characterPos.y;

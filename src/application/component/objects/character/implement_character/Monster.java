@@ -1,10 +1,13 @@
 package application.component.objects.character.implement_character;
 
+import application.component.objects.DammyCollisionObject;
 import application.component.objects.ImageManager;
 import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
@@ -23,11 +26,21 @@ public class Monster extends PlayableCharacter {
         super(pos);
         position = pos;
 
+        //== イメージ関連
         javafx.scene.image.Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
         imageManager.addImage(ImageManager.ObjectStatus.WAIT, waitImage);
         imageManager.showImage(ImageManager.ObjectStatus.WAIT);
 
+        //= 索敵範囲関連
+        range.setStroke(Color.color(0, 0, 0.8, 0.5));
+        range.setFill(Color.TRANSPARENT);
+        range.setCenterX(pos.x);
+        range.setCenterY(pos.y);
+
         collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
+
+        //== 当たり判定関連
+        collisionObject = new DammyCollisionObject();
 
         updateImage();
     }
@@ -35,6 +48,8 @@ public class Monster extends PlayableCharacter {
     @Override
     public void move() {
         position.setLocation(position.x + speed.x, position.y + speed.y);
+        range.setCenterX(position.x);
+        range.setCenterY(position.y);
         updateImage();
     }
 
@@ -45,7 +60,7 @@ public class Monster extends PlayableCharacter {
 
     @Override
     public Node getImage() {
-        return imageManager.getImageView();
+        return new Group(imageManager.getImageView(), range);
     }
 
     @Override
