@@ -6,35 +6,67 @@ import application.component.system.GameManager;
 
 import java.awt.Point;
 import java.util.Optional;
+import java.util.Random;
 
 public class Enemy extends CharacterController {
+    public static final int SPEED_CHANGE_INTERVAl = 2000;  // 方向転換の間隔 (ms)
+    public static final double ACCELERATE_VALUE = 0.5;     // 加速値
+    public final int DEFAULT_WAIT_SPEED;                   // 待機状態の移動スピード
+    public final int RAND_RANGE = 6;
+
     private PlayableCharacter character;
+
+
+    private Random rand = new Random();
+    private long previousChangeSpeedTime;  // 以前のスピード更新時間
+
+    int speedX;  // 現在のX方向のスピード
 
     public Enemy(PlayableCharacter character) {
         this.character = character;
+        DEFAULT_WAIT_SPEED = character.getDefaultSpeed() / 5;
+        speedX = DEFAULT_WAIT_SPEED;
     }
 
     @Override
     public void update() {
-        Optional<PlayableCharacter> playerCharacter = Optional.of(GameManager.getPlayerCharacterController().get().getCharacter());
+        Optional<Player> playerCharacterController = GameManager.getPlayerCharacterController();
 
-        double speedX = 0;
+        //== キャラクターが有効範囲ない場合、無視
+        if ( !GameManager.isValid(character) ) {
+            return;
+        }
 
-        if ( playerCharacter.isPresent() ) {
-            Point playerPos = playerCharacter.get().getPosition();
-            if ( playerPos.distance(character.getPosition()) < 200 ) {
-                double distanceX = playerPos.x - character.getPosition().x;
-                speedX = character.getDefaultSpeed() * Math.signum(distanceX);
+        if ( playerCharacterController.isPresent() ) {
+            Point playerPos = playerCharacterController.get().getCharacter().getPosition();
+            //== プレイヤーキャラクターが索敵範囲にいる場合
+            if ( playerPos.distance(character.getPosition()) < character.getRange() ) {
+                int distanceX = playerPos.x - character.getPosition().x;
+                speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
                 }
+                speedX *= ACCELERATE_VALUE;  // 原則処理
+            } else {  //== 索敵範囲にいない場合
+                long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
 
-                speedX *= 0.5;
+                // 前回のスピードに基づいて、移動方向を設定
+                if ( speedX < 0 ) {
+                    speedX = -DEFAULT_WAIT_SPEED;
+                } else {
+                    speedX = DEFAULT_WAIT_SPEED;
+                }
+
+                // 方向転換判定
+                if ( currentChangeSpeedTime - previousChangeSpeedTime > SPEED_CHANGE_INTERVAl ) {
+                    speedX *= -1;  // 方向の反転
+                    previousChangeSpeedTime = currentChangeSpeedTime;
+                }
             }
         }
 
-        character.setSpeed((int)speedX, 0);
+        character.setSpeed(speedX, 0);
     }
 
     @Override

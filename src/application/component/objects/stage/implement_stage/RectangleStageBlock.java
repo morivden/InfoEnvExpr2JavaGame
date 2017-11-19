@@ -52,10 +52,10 @@ public class RectangleStageBlock extends StageObject {
     }
 
     @Override
-//    public Node getImage() {
-//        return imageManager.getImageView();
-//    }
     public Node getImage() {
-        return collRect;
+        return imageManager.getImageView();
     }
+//    public Node getImage() {
+//        return collRect;
+//    }
 }

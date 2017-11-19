@@ -39,11 +39,13 @@ public class AutoFactory extends CharacterFactory<Enemy> {
         long currentCreateTime = System.currentTimeMillis();  // 現在の生成時間
 
         // 生成可能判定
-        if ( !(createdCharacterController.size() <= MAX_NUMBER_OF_CREATE_CHARACTER &&
+        if ( !(createdCharacterController.size() < MAX_NUMBER_OF_CREATE_CHARACTER &&
                 currentCreateTime - previousCreateTime > COOL_TIME_OF_CREATING &&
-                !GameManager.isValid(createPosition)) ) {
+                GameManager.isValid(createPosition)) ) {
             return Optional.empty();
         }
+
+        System.out.println(createdCharacterController.size());
 
         GameObject newGameObject = gameObjectList.getInstance(new Point(createPosition.x, createPosition.y));
 

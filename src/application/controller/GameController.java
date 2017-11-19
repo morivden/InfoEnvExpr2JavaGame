@@ -52,9 +52,6 @@ public class GameController implements Initializable {
 
         gameManager = GameManager.getInstance(drawPane, 1);
         gameManager.start();
-
-        // TODO あとで消す、位置確認用の球ノード
-        drawPane.getChildren().add(new Circle(400/2, 600/2,100));
     }
 
     public static GameController getInstance() {

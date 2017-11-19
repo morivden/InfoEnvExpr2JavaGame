@@ -210,6 +210,9 @@ public class GameManager {
         @Override
         public void run() {
             // TODO 各ゲームプロセスの実装
+            //== 有効範囲の更新
+            moveRangeOfActivities();
+
             //== ファクトリーの更新
             dpm.getFactoryList().stream().forEach(cf -> cf.create());
 
@@ -217,7 +220,10 @@ public class GameManager {
             dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
 
             //== 衝突オブジェクトの反映
-            CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
+            List<GameObject> gol = dpm.getGameMap().getGameObjects();
+            for ( int k = 0; k < gol.size(); k++ ) {
+                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), gol.get(k));
+            }
 
             //== 移動オブジェクトの更新
             MovableObject.moveMovableObjects(dpm.getGameMap().getMovableObjects());
@@ -229,28 +235,35 @@ public class GameManager {
             moveDrawPanel();
 
             //== 無効キャラクターの削除
+
             //== ゲーム終了判定
+        }
+
+        /**
+         * 有効範囲の移動
+         */
+        private void moveRangeOfActivities(){
+            // プレイヤーの位置の取得
+            Point characterPos = new Point();
+            getPlayerCharacterController().ifPresent(ply -> {
+                characterPos.setLocation(ply.getCharacter().getPosition());
+            });
+
+            dpm.focusPointForRangeOfActivities(characterPos);
         }
 
         /**
          * 描画パネルの移動
          */
         private void moveDrawPanel() {
-            // 座標の取得と算出
-            int drawPaneHalfWidth = GameController.getSceneWidth() / 2;
-            int drawPaneHalfHeight = GameController.getSceneHeight() / 2;
-
-            // プレイヤーの位置による縫製
+            // プレイヤーの位置の取得
             Point characterPos = new Point();
             getPlayerCharacterController().ifPresent(ply -> {
                 characterPos.setLocation(ply.getCharacter().getPosition());
             });
 
-            int drawPaneX =  drawPaneHalfWidth - characterPos.x;
-            int drawPaneY =  drawPaneHalfHeight - characterPos.y;
-
             // 移動
-            Platform.runLater(() -> dpm.transfer(drawPaneX, drawPaneY));
+            Platform.runLater(() -> dpm.focusPoint(characterPos));
         }
     }
 }

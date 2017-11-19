@@ -30,11 +30,6 @@ public class DrawPanelManager {
         this.factoryList = factoryList;
         this.drawPane = drawPane;
 
-        // 有効範囲の設定
-        rangeOfActivities = new Rectangle(0, 0,
-                (int)drawPane.getWidth() + RANGE_MARGIN * 2, (int)drawPane.getHeight() + RANGE_MARGIN * 2);
-
-        updateRangeOfActivities(); // 有効範囲の更新
         inputMap(gameMap);         // オブジェクトの登録
     }
 
@@ -68,10 +63,10 @@ public class DrawPanelManager {
      * パネル(の左上端座標)を親ノードのローカル座標上の指定の座標に移動
      * また、移動時には、パネルが画面全てを覆うように補正を行う。
      *
-     * @param x x座標
-     * @param y y座標
+     * @param x          x座標
+     * @param y          y座標
      */
-    public void transfer(int x, int y) {
+    private void transfer(int x, int y) {
         int maxX = 0, maxY = 0;  // 上限
         int minX = (int)(GameController.getSceneWidth() - drawPane.getWidth());    // 下限
         int minY = (int)(GameController.getSceneHeight() - drawPane.getHeight());  // 下限
@@ -83,13 +78,27 @@ public class DrawPanelManager {
         // 格納
         drawPane.setTranslateX(x);
         drawPane.setTranslateY(y);
-
-        // 有効範囲の更新
-        updateRangeOfActivities();
     }
 
-    public void transfer(Point pos) {
+    private void transfer(Point pos) {
         transfer(pos.x, pos.y);
+    }
+
+    /**
+     * 基準点を中心に取るように描画パネルを移動
+     *
+     * @param pos the pos
+     */
+    public void focusPoint(Point pos) {
+        // 座標の取得と算出
+        int sceneHalfWidth = GameController.getSceneWidth() / 2;
+        int sceneHalfHeight = GameController.getSceneHeight() / 2;
+
+        int drawPaneX =  sceneHalfWidth - pos.x;
+        int drawPaneY =  sceneHalfHeight - pos.y;
+
+        // 描画パネルの移動　
+        transfer(drawPaneX, drawPaneY);
     }
 
     /**
@@ -104,24 +113,33 @@ public class DrawPanelManager {
         // 矩形衝突物体のとき、判定
         if ( co instanceof RectangleCollisionObject ) {
             return ((RectangleCollisionObject) co).getRectangle().intersects(rangeOfActivities);
+        } else {  // それ以外のときは、キャラクターの中心座標で判定
+            return rangeOfActivities.contains(go.getPosition());
         }
-
-        return false;
     }
 
     public boolean checkBeingShown(Point pos) {
         return rangeOfActivities.contains(pos);
     }
 
+    public void focusPointForRangeOfActivities(Point pos) {
+        // 座標の取得と算出
+        int sceneHalfWidth = GameController.getSceneWidth() / 2;
+        int sceneHalfHeight = GameController.getSceneHeight() / 2;
+
+        int rangeX =  pos.x - sceneHalfWidth - RANGE_MARGIN;
+        int rangeY =  pos.y - sceneHalfHeight - RANGE_MARGIN;
+
+        transferRangeOfActivities(rangeX, rangeY);
+    }
+
     /**
      * オブジェクトの有効範囲の更新
      */
-    private void updateRangeOfActivities() {
-        // 座標の算出
-        int rangePosX = (int)drawPane.getLayoutX() - RANGE_MARGIN;
-        int rangePosY = (int)drawPane.getLayoutY() - RANGE_MARGIN;
-
-        rangeOfActivities.setLocation(rangePosX, rangePosY);
+    private void transferRangeOfActivities(int x, int y) {
+        // 有効範囲の設定
+        rangeOfActivities = new Rectangle(x, y,
+                GameController.getSceneWidth() + RANGE_MARGIN * 2, GameController.getSceneHeight() + RANGE_MARGIN * 2);
     }
 
     /**
