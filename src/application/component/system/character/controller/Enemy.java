@@ -12,7 +12,7 @@ public class Enemy extends CharacterController {
     public static final int SPEED_CHANGE_INTERVAl = 2000;  // 方向転換の間隔 (ms)
     public static final double ACCELERATE_VALUE = 0.5;     // 加速値
     public final int DEFAULT_WAIT_SPEED;                   // 待機状態の移動スピード
-    public final int RAND_RANGE = 6;
+    public final int RAND_RANGE = 6;                       // ランダム値の振れ幅
 
     private PlayableCharacter character;
 

@@ -91,6 +91,11 @@ public class Monster extends PlayableCharacter {
     }
 
     @Override
+    public void disable() {
+
+    }
+
+    @Override
     protected Point getCollisionRelativeDistance() {
         return collisionRelativeDistance;
     }
