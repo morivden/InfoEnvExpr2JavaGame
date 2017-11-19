@@ -4,6 +4,7 @@ import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -11,10 +12,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.scene.input.MouseEvent;
+
 import java.io.File;
 import javafx.scene.media.*;
+import javafx.scene.control.Slider;
+import javafx.beans.value.ObservableValue;
 
-public class ConfigController {
+public class ConfigController implements Initializable {
 
     @FXML private Text config;
     @FXML private Text volume;
@@ -45,13 +53,29 @@ public class ConfigController {
     public static ConfigController getInstance() {
         return cc;
     }
+    
+    public static MediaPlayer getPlayer() {
+        return player;
+    }
 
     public void show() {
         //ConfigControllerMain.primaryStage.setScene(SCENE);
         TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
+    
+    
     @FXML
     public void clickBackButton(ActionEvent event) {          // backButtonを押した時に実行するアクションイベント
     	TitleController.getInstance().show();
     }
+    @FXML
+    public void changeVolume(MouseEvent event) {          // backButtonを押した時に実行するアクションイベント
+    	player.setVolume(volumeBar.getValue());
+    }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		volumeBar.setValue(player.getVolume());
+		
+	}
 }
