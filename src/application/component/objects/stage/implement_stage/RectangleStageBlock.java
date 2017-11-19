@@ -39,7 +39,7 @@ public class RectangleStageBlock extends StageObject {
 
         // TODO 消すやつ
         collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
-        collRect.setFill(Color.RED);
+        collRect.setFill(Color.YELLOW);
 
         updateImage();
     }
@@ -52,10 +52,10 @@ public class RectangleStageBlock extends StageObject {
     }
 
     @Override
-//    public Node getImage() {
-//        return imageManager.getImageView();
-//    }
     public Node getImage() {
-        return collRect;
+        return imageManager.getImageView();
     }
+//    public Node getImage() {
+//        return collRect;
+//    }
 }
