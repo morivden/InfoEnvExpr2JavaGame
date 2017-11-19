@@ -7,6 +7,7 @@ import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.character.factory.CharacterFactory;
 import application.controller.GameController;
+import application.controller.GameControllerMain;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
@@ -48,7 +49,7 @@ public class DrawPanelManager {
         drawPane.setPrefHeight(gm.getMapHeight());
         // TODO GameObject実装後、実装
         List<GameObject> gameObjects = gm.getGameObjects();
-        gameObjects.stream().forEach(go -> { drawPane.getChildren().add(go.getImage()); });
+        gameObjects.stream().forEach(go -> drawPane.getChildren().add(go.getImage()));
     }
 
     /**
@@ -57,13 +58,6 @@ public class DrawPanelManager {
     public void inputGameObject(GameObject gameObject) {
         gameMap.addGameObject(gameObject);
         drawPane.getChildren().add(gameObject.getImage());
-    }
-
-    // TODO 一時メソッド、あとで消す
-    public void inputTMP(TMPCharacter tp) {
-        gameMap.addGameObject(tp);
-        drawPane.getChildren().add(tp.getImage());
-        drawPane.getChildren().add(tp.getRange());
     }
 
     public GameMap getGameMap() {
@@ -87,11 +81,15 @@ public class DrawPanelManager {
         if ( y < minY ) { y = minY; } else if ( y > maxY ) { y = maxY; }
 
         // 格納
-        drawPane.setLayoutX(x);
-        drawPane.setLayoutY(y);
+        drawPane.setTranslateX(x);
+        drawPane.setTranslateY(y);
 
         // 有効範囲の更新
         updateRangeOfActivities();
+    }
+
+    public void transfer(Point pos) {
+        transfer(pos.x, pos.y);
     }
 
     /**

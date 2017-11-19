@@ -4,6 +4,7 @@ import java.awt.*;
 
 public abstract class PlayableCharacter extends Character implements MovableObject, OffensiveObject {
     protected Point speed = new Point();  // キャラクタの移動スピード
+    public final int DEFAULT_SPEED = 10;  // 標準のスピード
 
     public PlayableCharacter(Point pos) {
         super(pos);

@@ -7,12 +7,11 @@ import application.component.objects.CollisionObject;
 import application.component.objects.GameObject;
 import application.component.objects.character.MovableObject;
 import application.component.objects.character.OffensiveObject;
-import application.component.system.character.controller.CharacterController;
-import application.component.system.character.controller.Enemy;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.PlayerFactory;
 import application.controller.GameController;
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
 
@@ -165,7 +164,6 @@ public class GameManager {
     /**
      * GameMapクラスのインスタンスが持つGaneObjectoのインスタンスのImageViewをdrawPaneに登録する
      */
-    private Enemy enemy;
     private void inputObjectsToPane(GameMap gm, GameEnvironment ge, List<CharacterFactory> factoryList) throws NotExistPlayerException {
         dpm = new DrawPanelManager(gm, factoryList, drawPane);
 
@@ -219,10 +217,7 @@ public class GameManager {
             dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
 
             //== 衝突オブジェクトの反映
-            getPlayerCharacterController().ifPresent(ply -> {
-                CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), ply.getCharacter());
-            });
-
+            CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), player.getCharacter());
 
             //== 移動オブジェクトの更新
             MovableObject.moveMovableObjects(dpm.getGameMap().getMovableObjects());
@@ -255,7 +250,7 @@ public class GameManager {
             int drawPaneY =  drawPaneHalfHeight - characterPos.y;
 
             // 移動
-            dpm.transfer(drawPaneX, drawPaneY);
+            Platform.runLater(() -> dpm.transfer(drawPaneX, drawPaneY));
         }
     }
 }
