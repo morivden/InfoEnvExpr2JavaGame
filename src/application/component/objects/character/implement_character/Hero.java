@@ -85,7 +85,8 @@ public class Hero extends PlayableCharacter {
 //        return imageManager.getImageView();
 //    }
     public Node getImage() {
-        return new Group(collRect, imageManager.getImageView());
+//        return new Group(collRect, imageManager.getImageView());
+        return imageManager.getImageView();
     }
 
     @Override

@@ -17,7 +17,8 @@ public abstract class CollisionObject {
         // GameObjectからCollisionObjectを取り出す
         CollisionObject collisionGameObject = gameObject.getCollisionObject();
         // チェックしたいGameObjectをList<GameObject> goからピックアップ
-        for (GameObject pickupGameObject : go) {
+        for ( int k = 0; k < go.size(); k++ ) {
+            GameObject pickupGameObject = go.get(k);
             // 同じGameObjectまたはMovableObject以外ならcontinue
             if (pickupGameObject == gameObject || !(gameObject instanceof MovableObject)) {
                 continue;

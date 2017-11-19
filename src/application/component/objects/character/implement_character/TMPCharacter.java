@@ -32,10 +32,6 @@ public class TMPCharacter extends PlayableCharacter {
         range.setTranslateY(position.y);
     }
 
-    public Circle getRange() {
-        return range;
-    }
-
     public void move() {
         // position = position.setLocation(speed.x, speed.y);
         position.setLocation(position.x + speed.x, position.y + speed.y);

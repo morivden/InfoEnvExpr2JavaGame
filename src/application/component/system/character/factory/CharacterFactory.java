@@ -3,6 +3,7 @@ package application.component.system.character.factory;
 import application.component.system.character.controller.CharacterController;
 // import com.sun.javafx.geom.Point2D;
 import java.awt.Point;
+import java.util.Optional;
 
 /**
  * キャラクター生成クラス
@@ -23,7 +24,7 @@ public abstract class CharacterFactory<T extends CharacterController> {
      *
      * @return  生成したキャラクターコントローラのインスタンス
      */
-    public abstract T create();
+    public abstract Optional<T> create();
 
     /**
      * 保持しているコントローラクラスのインスタンス更新メソッド

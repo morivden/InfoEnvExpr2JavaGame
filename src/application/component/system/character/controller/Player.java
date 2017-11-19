@@ -1,7 +1,6 @@
 package application.component.system.character.controller;
 
 import application.component.objects.character.PlayableCharacter;
-import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 import application.component.system.InputManager;
@@ -27,12 +26,13 @@ public class Player extends CharacterController {
         }
 
         if ( GameManager.getKeyState(InputManager.KindOfPushedKey.LEFT_KEY) ) {
-            character.setSpeed(-TMPCharacter.DEFAULT_SPEED, character.getYSpeed());
+            character.setSpeed(-character.DEFAULT_SPEED, character.getYSpeed());
         } else if ( GameManager.getKeyState(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
-            character.setSpeed(TMPCharacter.DEFAULT_SPEED, character.getYSpeed());
+            character.setSpeed(character.DEFAULT_SPEED, character.getYSpeed());
         }
     }
 
+    @Override
     public PlayableCharacter getCharacter() {
         return character;
     }

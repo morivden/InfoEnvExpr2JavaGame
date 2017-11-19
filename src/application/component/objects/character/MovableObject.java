@@ -1,6 +1,9 @@
 package application.component.objects.character;
 
+import application.component.system.GameManager;
+
 import java.awt.*;
+import java.util.Iterator;
 import java.util.List;
 
 public interface MovableObject {
@@ -11,7 +14,9 @@ public interface MovableObject {
      * @param movableObjects
      */
     static void moveMovableObjects(List<MovableObject> movableObjects) {
-        movableObjects.stream().forEach(mo -> mo.move());
+        for ( int k = 0; k < movableObjects.size(); k++ ) {
+            movableObjects.get(k).move();
+        }
     }
 
     /**

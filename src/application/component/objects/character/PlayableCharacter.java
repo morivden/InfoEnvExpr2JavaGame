@@ -3,8 +3,11 @@ package application.component.objects.character;
 import java.awt.*;
 
 public abstract class PlayableCharacter extends Character implements MovableObject, OffensiveObject {
+
     protected Point speed = new Point();  // キャラクタの移動スピード
-    public boolean onGround;
+    public final int DEFAULT_SPEED = 10;   // 標準のスピード
+    public final int DEFAULT_RANGE = 200;  // 標準索敵範囲
+    public boolean onGround;              // 接地しているかどうか
 
     public PlayableCharacter(Point pos) {
         super(pos);
@@ -41,5 +44,14 @@ public abstract class PlayableCharacter extends Character implements MovableObje
         sb.append(String.format("CollisionPosition: %s\n", collisionObject.toString()));
 
         return new String(sb);
+    }
+
+    /**
+     * 索敵範囲を取得
+     *
+     * @return
+     */
+    public int getRange() {
+        return DEFAULT_RANGE;
     }
 }
