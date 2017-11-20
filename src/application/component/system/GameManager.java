@@ -283,7 +283,6 @@ public class GameManager {
 
             // 移動
             dpm.focusPoint(characterPos);
-//            Platform.runLater(() -> );
         }
     }
 }

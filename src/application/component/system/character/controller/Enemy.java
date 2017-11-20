@@ -41,7 +41,7 @@ public class Enemy extends CharacterController {
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
                 }
-                speedX *= ACCELERATE_VALUE;  // 原則処理
+                speedX *= ACCELERATE_VALUE;  // 減速処理
             } else {  //== 索敵範囲にいない場合
                 long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
 
@@ -84,7 +84,6 @@ public class Enemy extends CharacterController {
         } else if ( !GameManager.isValid(character) ) {  // 画面外に出たとき
             character.kill();
         }
-
     }
 
     @Override
