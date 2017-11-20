@@ -59,15 +59,15 @@ public class SelectStageController implements Initializable {
 
 	@FXML
     public void clickButton1(ActionEvent event) {               // stage1Buttonを押した時に実行するアクションイベント
-    	GameController.getInstance().show();
+    	GameController.getInstance(1).show();
     }
     @FXML
     public void clickButton2(ActionEvent event) {          // stage2Buttonを押した時に実行するアクションイベント
-    	ConfigController.getInstance().show();
+    	GameController.getInstance(2).show();
     }
     @FXML
     public void clickButton3(ActionEvent event) {          // stag3Buttonを押した時に実行するアクションイベント
-    	SelectStageController.getInstance().show();
+    	GameController.getInstance(3).show();
     }
     
 	@Override
