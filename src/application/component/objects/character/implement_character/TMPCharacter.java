@@ -90,4 +90,8 @@ public class TMPCharacter extends PlayableCharacter {
     protected Point getCollisionRelativeDistance() {
         return null;
     }
+    
+    public void updateImage() {
+        
+    }
 }

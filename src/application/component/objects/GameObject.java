@@ -29,4 +29,14 @@ public abstract class GameObject {
     public CollisionObject getCollisionObject() {
         return collisionObject;
     }
+
+    /**
+     * 画像状態の更新
+     */
+    public abstract void updateImage();
+
+    /**
+     * 画像の移動
+     */
+    protected abstract void moveImage();
 }
