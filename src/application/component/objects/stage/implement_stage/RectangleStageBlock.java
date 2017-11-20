@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 import java.awt.*;
 
 public class RectangleStageBlock extends StageObject {
-    private static String WAIT_IMAGE = "/images/rect_stage.png";
+    private static String WAIT_IMAGE = "/images/block/block.png";
 
     private Rectangle collRect;
 

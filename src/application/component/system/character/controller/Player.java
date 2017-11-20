@@ -4,7 +4,6 @@ import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 import application.component.system.InputManager;
-import jdk.internal.org.objectweb.asm.commons.GeneratorAdapter;
 
 public class Player extends CharacterController {
     private PlayableCharacter character;

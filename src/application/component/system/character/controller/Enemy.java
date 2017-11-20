@@ -1,6 +1,7 @@
 package application.component.system.character.controller;
 
 import application.component.objects.character.PlayableCharacter;
+import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 
 import java.awt.*;
@@ -19,11 +20,14 @@ public class Enemy extends CharacterController {
     private long previousChangeSpeedTime;  // 以前のスピード更新時間
 
     int speedX;  // 現在のX方向のスピード
+    int speedY;  // 現在のY方向のスピード
 
     public Enemy(PlayableCharacter character) {
         this.character = character;
         DEFAULT_WAIT_SPEED = character.getDefaultSpeed() / 5;
         speedX = DEFAULT_WAIT_SPEED;
+        speedY = DEFAULT_WAIT_SPEED + (int)GameEnvironment.getGravity();
+        this.character.setOnGround(false);
     }
 
     @Override
@@ -33,9 +37,25 @@ public class Enemy extends CharacterController {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
-            if ( playerPos.distance(character.getPosition()) < character.getRange() ) {
+            if ( playerPos.distance(character.getPosition()) < character.getRange()) {
                 int distanceX = playerPos.x - character.getPosition().x;
+                int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
+                // 敵キャラが接地している時
+                if (character.isOnGround()) {
+                    // プレイヤーが敵キャラよりも上にいる時
+                    if (distanceY < 0 && character.getYSpeed() == 0) {
+                        System.out.println("プレイヤーを追ってジャンプ");
+                        speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
+                        character.setOnGround(false);
+                    }
+                } else {
+                    // 敵キャラが接地していない時
+                    // プレイヤーが敵キャラよりも下にいる場合
+                    if (distanceY > 0) {
+                        speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
+                    }
+                }
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
@@ -45,6 +65,16 @@ public class Enemy extends CharacterController {
                 character.updateImage();
             } else {  //== 索敵範囲にいない場合
                 long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
+                /*
+                // 敵が接地している時
+                if (character.isOnGround()) {
+                    speedY = 0;
+                } else {
+                    // 接地していない時
+                    speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
+                }
+                */
+                speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
 
                 // 前回のスピードに基づいて、移動方向を設定
                 if ( speedX < 0 ) {
@@ -64,7 +94,7 @@ public class Enemy extends CharacterController {
             }
         }
 
-        character.setSpeed(speedX, 0);
+        character.setSpeed(speedX, speedY);
         character.updateImage();
     }
 

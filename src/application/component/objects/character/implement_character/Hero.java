@@ -33,8 +33,8 @@ public class Hero extends PlayableCharacter {
 
     public Hero(Point pos) {        
         super(pos);
-        onGround = false;
-       
+        this.setOnGround(false);
+
         hp = DEFAULT_HP;
 
         //===  イメージ関連
@@ -80,10 +80,10 @@ public class Hero extends PlayableCharacter {
     // ジャンプ
     public void jump() {
         // 接地している状態の時
-        if (onGround && this.getYSpeed() == GameEnvironment.getGravity()) {
+        if (this.isOnGround() && this.getYSpeed() == GameEnvironment.getGravity()) {
             this.setSpeed(this.getXSpeed(), JUMP_SPEED);
             // 接地状態をfalseにする
-            onGround = false;
+            this.setOnGround(false);
         }
     }
 
