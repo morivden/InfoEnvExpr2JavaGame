@@ -4,6 +4,7 @@ import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 import application.component.system.InputManager;
+import jdk.internal.org.objectweb.asm.commons.GeneratorAdapter;
 
 public class Player extends CharacterController {
     private PlayableCharacter character;
@@ -32,12 +33,14 @@ public class Player extends CharacterController {
 
     @Override
     protected boolean checkUpdateValid() {
-        return true;
+        //== 寿命が設定されているかで判定
+        return !character.getLifeTime().isPresent();
     }
 
     @Override
     protected void notUpdate() {
-
+        // 重力をうけつつ、落下
+        character.setSpeed(0, character.getYSpeed() + (int)GameEnvironment.getGravity());
     }
 
     @Override

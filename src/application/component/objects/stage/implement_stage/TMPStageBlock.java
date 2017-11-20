@@ -32,4 +32,9 @@ public class TMPStageBlock extends StageObject {
     public void updateImage() {
         
     }
+
+    @Override
+    protected void moveImage() {
+
+    }
 }

@@ -1,5 +1,11 @@
 package application.component.objects.character;
 
+import application.component.objects.CollisionEvent;
+import application.component.objects.CollisionObject;
+import application.component.objects.GameObject;
+import application.component.system.character.controller.Player;
+import application.component.system.character.factory.PlayerFactory;
+
 import java.awt.*;
 import java.util.Optional;
 
@@ -31,6 +37,9 @@ public abstract class PlayableCharacter extends Character implements MovableObje
         return speed.y;
     }
 
+    /**
+     * 画像の移動
+     */
     protected void moveImage() {
         Point relDist = getCollisionRelativeDistance();
         imageManager.transfer(position.x + relDist.x, position.y + relDist.y);
@@ -81,5 +90,24 @@ public abstract class PlayableCharacter extends Character implements MovableObje
      */
     public void kill() {
         lifeTime = Optional.of(0l);
+    }
+
+    /**
+     * プレイヤーのキャラクターがダメージを受ける衝突イベント
+     */
+    protected class PlayerDamageCollision implements CollisionEvent {
+        private final int damageVal;
+        public PlayerDamageCollision(int damage) {
+            this.damageVal = damage;
+        }
+
+        @Override
+        public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
+            Optional<Player> player = PlayerFactory.getPlayerCharacterController();
+            if ( player.isPresent() && gameObject == player.get().getCharacter() ) {
+                System.out.println(player.get().getCharacter().getHp());
+                player.get().getCharacter().damage(damageVal);
+            }
+        }
     }
 }
