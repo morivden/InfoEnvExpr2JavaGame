@@ -38,11 +38,15 @@ public class Enemy extends CharacterController {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
-            if ( playerPos.distance(character.getPosition()) < character.getRange() && this.character.isOnGround()) {
+            if ( playerPos.distance(character.getPosition()) < character.getRange()) {
                 int distanceX = playerPos.x - character.getPosition().x;
                 int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
-                speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                if (character.isOnGround()) {
+                    speedY = (int)GameEnvironment.getGravity();
+                } else {
+                    speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                }
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
