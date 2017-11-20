@@ -65,7 +65,7 @@ public class TitleController implements Initializable {
     
     @FXML
     public void clickStartButton(ActionEvent event) {          // startButtonを押した時に実行するアクションイベント
-    	GameController.getInstance().show();
+    	SelectStageController.getInstance().show();
     }
     @FXML
     public void clickConfigButton(ActionEvent event) {          // configButtonを押した時に実行するアクションイベント
