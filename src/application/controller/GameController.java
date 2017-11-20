@@ -53,7 +53,7 @@ public class GameController implements Initializable {
     }
 
     public static GameController getInstance() {
-        gc.gameManager = GameManager.getInstance(gc.drawPane, 1);
+        gc.gameManager = GameManager.getInstance(gc.drawPane, 3);
         gc.gameManager.start();
         return gc;
     }

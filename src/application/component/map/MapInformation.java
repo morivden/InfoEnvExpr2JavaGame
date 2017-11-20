@@ -3,7 +3,9 @@ package application.component.map;
 import java.net.URL;
 
 public enum MapInformation {
-    STAGE1(ClassLoader.getSystemResource("map/stage1.dat"));
+    STAGE1(ClassLoader.getSystemResource("map/stage1.dat")),
+    STAGE2(ClassLoader.getSystemResource("map/stage2.dat")),
+    STAGE3(ClassLoader.getSystemResource("map/stage3.dat"));
 
     private final URL url;  // ステージのリソース位置
 

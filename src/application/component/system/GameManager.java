@@ -263,6 +263,7 @@ public class GameManager {
         private void reflectCollisions() {
             List<GameObject> gol = dpm.getGameMap().getGameObjects();
             for ( int k = 0; k < gol.size(); k++ ) {
+                if ( !isValid(gol.get(k)) ) { continue; }
                 CollisionObject.checkCollisions(dpm.getGameMap().getGameObjects(), gol.get(k));
             }
         }
@@ -283,6 +284,8 @@ public class GameManager {
         /**
          * 描画パネルの移動
          */
+        private long preUpdateTime = 0;
+        private final long UPDATE_INTERVAL = 500;
         private void moveDrawPanel() {
             // プレイヤーの位置の取得
             Point characterPos = new Point();
