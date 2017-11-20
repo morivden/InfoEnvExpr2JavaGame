@@ -4,7 +4,9 @@ import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.stage.StageObject;
 import application.component.system.GameEnvironment;
+import application.component.system.GameManager;
 import application.component.system.character.factory.PlayerFactory;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -28,7 +30,7 @@ public class GoalBlock extends StageObject {
         rectCO.addEvent((ed, go, ing) -> {
             PlayerFactory.getPlayerCharacterController().ifPresent(player -> {
                 if ( go == player.getCharacter() ) {
-                    // TODO　GameManagerに対して、ゲームクリアリクエストを送る処理を追加する
+                    Platform.runLater(() -> GameManager.requestGoal());
                     System.out.println("ゴール");
                 }
             });

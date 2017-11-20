@@ -37,7 +37,7 @@ public class DrawPanelManager {
      * @param gm the gm
      */
     private void inputMap(GameMap gm) {
-        drawPane.getChildren().removeAll();  // 既存要素の削除
+        drawPane.getChildren().clear();  // 既存要素の削除
         drawPane.setPrefWidth(gm.getMapWidth());
         drawPane.setPrefHeight(gm.getMapHeight());
         // TODO GameObject実装後、実装
