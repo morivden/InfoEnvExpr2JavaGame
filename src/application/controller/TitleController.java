@@ -44,6 +44,7 @@ public class TitleController implements Initializable {
         }
         Parent parent = fxmlLoader.getRoot();
         Scene scene = new Scene(parent);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
 
         SCENE = scene;
