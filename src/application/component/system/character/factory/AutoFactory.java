@@ -65,6 +65,22 @@ public class AutoFactory extends CharacterFactory<Enemy> {
     }
 
     @Override
+    public void checkLifeTile() {
+        for ( CharacterController cc : createdCharacterController ) {
+            PlayableCharacter character = cc.getCharacter();  // キャラクター
+
+            // 指定のキャラクターに寿命が設定されているか、どうか
+            // また、寿命が尽きているかどうか判定し、
+            // 満たされる場合、キャラクターの破棄を行う
+            if ( character.getLifeTime().isPresent() &&
+                    System.currentTimeMillis() >  character.getLifeTime().get() ) {
+                createdCharacterController.remove(cc);  // リストから排除
+                GameManager.removeGameObject(character);  // 削除依頼
+            }
+        }
+    }
+
+    @Override
     protected void register(Enemy cc) {
         createdCharacterController.add(cc);
     }

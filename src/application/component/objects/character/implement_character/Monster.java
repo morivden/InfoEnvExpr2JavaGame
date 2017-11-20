@@ -59,6 +59,10 @@ public class Monster extends PlayableCharacter {
         range.setCenterY(position.y);
         updateImage();
     }
+    
+    public void jump() {
+        
+    }
 
     @Override
     public void attack() {

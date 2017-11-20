@@ -19,6 +19,7 @@ import java.util.Optional;
 public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/hero.png";
     public static int DEFAULT_SPEED = 10;
+    public static int JUMP_SPEED = -14;
     public static int MAX_SPEED = 100;
     public static int DEFAULT_HP = 1;
 
@@ -26,8 +27,9 @@ public class Hero extends PlayableCharacter {
 
     private Point collisionRelativeDistance;
 
-    public Hero(Point pos) {
+    public Hero(Point pos) {        
         super(pos);
+        onGround = false;
 
         hp = DEFAULT_HP;
 
@@ -59,6 +61,16 @@ public class Hero extends PlayableCharacter {
         collRect.setX((int)(((RectangleCollisionObject)collisionObject).getRectangle().getX()));
         collRect.setY((int)(((RectangleCollisionObject)collisionObject).getRectangle().getY()));
         updateImage();
+    }
+    
+    // ジャンプ
+    public void jump() {
+        // 接地している状態の時
+        if (onGround) {
+            this.setSpeed(this.getXSpeed(), JUMP_SPEED);
+            // 接地状態をfalseにする
+            onGround = false;
+        }
     }
 
     @Override

@@ -52,6 +52,15 @@ public class DrawPanelManager {
         drawPane.getChildren().add(gameObject.getImage());
     }
 
+    /**
+     * オブジェクトの排除
+     * @param gameObject
+     */
+    public void removeGameObject(GameObject gameObject) {
+        gameMap.deleteGameObject(gameObject);
+        drawPane.getChildren().remove(gameObject.getImage());
+    }
+
     public GameMap getGameMap() {
         return gameMap;
     }

@@ -59,7 +59,8 @@ public class GameController implements Initializable {
     }
 
     public void show() {
-        GameControllerMain.primaryStage.setScene(SCENE);
+        // GameControllerMain.primaryStage.setScene(SCENE);
+    	TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
 
     /**

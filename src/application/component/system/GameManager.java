@@ -70,6 +70,10 @@ public class GameManager {
         ourInstance.dpm.inputGameObject(go);
     }
 
+    public static void removeGameObject(GameObject go) {
+        ourInstance.dpm.removeGameObject(go);
+    }
+
     /**
      * ゲームオブジェクトが有効範囲にあるか判定
      *
@@ -231,7 +235,7 @@ public class GameManager {
             moveDrawPanel();
 
             //== 無効キャラクターの削除
-
+            dpm.getFactoryList().forEach(fac -> fac.checkLifeTile());
 
             //== ゲーム終了判定
         }

@@ -81,6 +81,16 @@ public class PlayerFactory extends CharacterFactory<Player> {
     }
 
     @Override
+    public void checkLifeTile() {
+        PlayableCharacter character = createdCharacterController.getCharacter();
+        if ( character.getLifeTime().isPresent() &&
+                System.currentTimeMillis() >  character.getLifeTime().get() ) {
+            createdCharacterController = null;  // 除去
+            GameManager.removeGameObject(character);  // 削除依頼
+        }
+    }
+
+    @Override
     protected void register(Player cc) {
         createdCharacterController = cc;
     }
