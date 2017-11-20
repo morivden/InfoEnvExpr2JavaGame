@@ -13,7 +13,6 @@
       <Button fx:id="configBottun" layoutX="274.0" layoutY="307.0" mnemonicParsing="false" onAction="#clickConfigButton" text="Config" />
       <Text fx:id="textTitle" layoutX="102.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't Stop! Keep Going!">
          <font>
-            <!--  <Font name="Yukarimobile" size="39.0" /> -->
             <Font name="Yuppy SC Regular" size="39.0" />
          </font>
       </Text>
