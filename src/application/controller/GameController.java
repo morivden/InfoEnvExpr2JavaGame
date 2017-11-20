@@ -10,14 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameController implements Initializable {
 
@@ -59,8 +55,7 @@ public class GameController implements Initializable {
     }
 
     public void show() {
-        // GameControllerMain.primaryStage.setScene(SCENE);
-    	TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
+        TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
 
     /**
@@ -114,7 +109,7 @@ public class GameController implements Initializable {
      * @return the scene width
      */
     public static int getSceneWidth() {
-        return (int)SCENE.getWidth();
+        return (int) SCENE.getWidth();
     }
 
     /**
@@ -123,6 +118,6 @@ public class GameController implements Initializable {
      * @return the scene height
      */
     public static int getSceneHeight() {
-        return (int)SCENE.getHeight();
+        return (int) SCENE.getHeight();
     }
 }

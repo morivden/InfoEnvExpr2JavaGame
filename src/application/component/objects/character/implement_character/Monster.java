@@ -1,31 +1,35 @@
 package application.component.objects.character.implement_character;
 
-import application.component.objects.DammyCollisionObject;
 import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
-import javafx.scene.Group;
+import application.component.system.character.controller.CharacterController;
+import application.component.system.character.controller.Player;
+import application.component.system.character.factory.PlayerFactory;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
+import java.util.Optional;
 
 public class Monster extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/monster.png";
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
     public static int DEFAULT_RANGE = 200;
+    public static int DEFAULT_HP = 10;
 
-    Point collisionRelativeDistance;
+    private Point collisionRelativeDistance;
 
     private Circle range = new Circle(DEFAULT_RANGE);
 
     public Monster(Point pos) {
         super(pos);
-        position = pos;
+
+        hp = DEFAULT_HP;
 
         //== イメージ関連
         javafx.scene.image.Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
@@ -68,7 +72,7 @@ public class Monster extends PlayableCharacter {
 
     @Override
     public Node getImage() {
-        return new Group(imageManager.getImageView(), range);
+        return imageManager.getImageView();
     }
 
     @Override

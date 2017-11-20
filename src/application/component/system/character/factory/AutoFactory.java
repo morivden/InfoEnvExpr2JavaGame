@@ -45,8 +45,6 @@ public class AutoFactory extends CharacterFactory<Enemy> {
             return Optional.empty();
         }
 
-        System.out.println(createdCharacterController.size());
-
         GameObject newGameObject = gameObjectList.getInstance(new Point(createPosition.x, createPosition.y));
 
         // 生成オブジェクトがPlayableObjectか判定
@@ -62,6 +60,23 @@ public class AutoFactory extends CharacterFactory<Enemy> {
         previousCreateTime = currentCreateTime;  // 前回の生成時間の更新
 
         return Optional.of(enemy);
+    }
+
+    @Override
+    public void checkLifeTile() {
+        for ( int k = 0; k < createdCharacterController.size(); k++ ) {
+            CharacterController cc = createdCharacterController.get(k);
+            PlayableCharacter character = cc.getCharacter();  // キャラクター
+
+            // 指定のキャラクターに寿命が設定されているか、どうか
+            // また、寿命が尽きているかどうか判定し、
+            // 満たされる場合、キャラクターの破棄を行う
+            if ( character.getLifeTime().isPresent() &&
+                    System.currentTimeMillis() >  character.getLifeTime().get() ) {
+                Platform.runLater(() -> GameManager.removeGameObject(character));  // 削除依頼
+                createdCharacterController.remove(cc);  // リストから排除
+            }
+        }
     }
 
     @Override

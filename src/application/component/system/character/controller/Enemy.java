@@ -12,7 +12,7 @@ public class Enemy extends CharacterController {
     public static final int SPEED_CHANGE_INTERVAl = 2000;  // 方向転換の間隔 (ms)
     public static final double ACCELERATE_VALUE = 0.5;     // 加速値
     public final int DEFAULT_WAIT_SPEED;                   // 待機状態の移動スピード
-    public final int RAND_RANGE = 6;
+    public final int RAND_RANGE = 6;                       // ランダム値の振れ幅
 
     private PlayableCharacter character;
 
@@ -28,14 +28,8 @@ public class Enemy extends CharacterController {
     }
 
     @Override
-    public void update() {
+    protected void updateSpeed() {
         Optional<Player> playerCharacterController = GameManager.getPlayerCharacterController();
-
-        //== キャラクターが有効範囲ない場合、無視
-        if ( !GameManager.isValid(character) ) {
-            character.setSpeed(0, 0); // 停止
-            return;
-        }
 
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
@@ -68,6 +62,29 @@ public class Enemy extends CharacterController {
         }
 
         character.setSpeed(speedX, 0);
+    }
+
+    @Override
+    protected boolean checkUpdateValid() {
+        //== キャラクターが有効範囲内に存在するか
+        // かつ、寿命が設定されているかで判定
+        return !character.getLifeTime().isPresent();
+    }
+
+    @Override
+    protected void notUpdate() {
+        character.setSpeed(0, 0); // 停止
+    }
+
+    @Override
+    protected void updateLifeTime() {
+        // HPがなくなったとき
+        if ( character.getHp() < 1 ) {
+            character.disable();
+        } else if ( !GameManager.isValid(character) ) {  // 画面外に出たとき
+            character.kill();
+        }
+
     }
 
     @Override

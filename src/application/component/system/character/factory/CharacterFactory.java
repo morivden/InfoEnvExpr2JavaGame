@@ -32,6 +32,11 @@ public abstract class CharacterFactory<T extends CharacterController> {
     public abstract void updateAll();
 
     /**
+     * 保持しているコントローラクラスのキャラクタークラスのインスタンス
+     */
+    public abstract void checkLifeTile();
+
+    /**
      * キャラクターコントローラの登録
      *
      * @param cc the cc
