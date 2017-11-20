@@ -37,19 +37,23 @@ public class Enemy extends CharacterController {
 
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
+            speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
             //== プレイヤーキャラクターが索敵範囲にいる場合
             if ( playerPos.distance(character.getPosition()) < character.getRange()) {
                 int distanceX = playerPos.x - character.getPosition().x;
                 int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
-                if (character.isOnGround() && distanceY > 0.0 && character.getYSpeed() == 0) {
-                    // speedY = (int)GameEnvironment.getGravity();
-                    speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
-                    character.setOnGround(false);
+                // 敵キャラが接地している時
+                if (character.isOnGround()) {
+                    // プレイヤーが敵キャラよりも上にいる時
+                    if (distanceY < 0 && character.getYSpeed() == 0) {
+                        System.out.println("プレイヤーを追ってジャンプ");
+                        speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                        character.setOnGround(false);
+                    }
                 } else {
                     speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
                 }
-                System.out.println(character.getYSpeed());
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
