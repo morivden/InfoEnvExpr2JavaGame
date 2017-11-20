@@ -66,7 +66,7 @@ public class Hero extends PlayableCharacter {
     // ジャンプ
     public void jump() {
         // 接地している状態の時
-        if ( onGround ) {
+        if (onGround && this.getYSpeed() == GameEnvironment.getGravity()) {
             this.setSpeed(this.getXSpeed(), JUMP_SPEED);
             // 接地状態をfalseにする
             onGround = false;
