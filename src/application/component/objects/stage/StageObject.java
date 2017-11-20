@@ -6,6 +6,7 @@ import application.component.objects.GameObject;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.MovableObject;
 import application.component.objects.character.PlayableCharacter;
+import application.component.system.GameEnvironment;
 
 import java.awt.*;
 
@@ -76,23 +77,24 @@ public abstract class StageObject extends GameObject {
                 // y方向の当たり判定
                 if ( ySpeed > 0 && ONE_ANGLE_SECTION * 5 <= degree && degree <= ONE_ANGLE_SECTION * 7 ) {
                     // 上からぶつかっている場合
-                    System.out.println("上から衝突");
+//                    System.out.println("上から衝突");
                     tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed - (height1 - (y2 - y1)));
+                    tmpCharacter.onGround = true;
                 } else if ( ySpeed < 0 && ONE_ANGLE_SECTION <= degree && degree <= ONE_ANGLE_SECTION * 3 ) {
                     // 下からぶつかっている場合
-                    System.out.println("下から衝突");
+//                    System.out.println("下から衝突");
                     tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed + (height2 - (y1 - y2)));
                 }
-
+                
                 // x_speedとy_speedをもとにどの方向からぶつかっているか判定
                 // x方向の当たり判定
                 if ( xSpeed > 0 && ONE_ANGLE_SECTION * 3 <= degree && degree <= ONE_ANGLE_SECTION * 5 ) {
                     // 左からぶつかっている場合
-                    System.out.println("左から衝突");
+//                    System.out.println("左から衝突");
                     tmpCharacter.setSpeed(xSpeed - (width1 - (x2 - x1)), ySpeed);
                 } else if ( xSpeed < 0 && (ONE_ANGLE_SECTION * 7 <= degree || degree <= ONE_ANGLE_SECTION )) {
                     // 右からぶつかっている場合
-                    System.out.println("右から衝突");
+//                    System.out.println("右から衝突");
                     tmpCharacter.setSpeed(xSpeed + (width2 - (x1 - x2)), ySpeed);
                 }
             }

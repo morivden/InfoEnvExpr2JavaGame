@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final int WINDOW_HEIGHT = 400;
-    public static final int WINDOW_WIDTH = 400;
+    public static final int WINDOW_WIDTH = 600;
 
     @Override
     public void start(Stage primaryStage) {
