@@ -37,7 +37,6 @@ public class Enemy extends CharacterController {
 
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
-            speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
             //== プレイヤーキャラクターが索敵範囲にいる場合
             if ( playerPos.distance(character.getPosition()) < character.getRange()) {
                 int distanceX = playerPos.x - character.getPosition().x;
@@ -48,11 +47,17 @@ public class Enemy extends CharacterController {
                     // プレイヤーが敵キャラよりも上にいる時
                     if (distanceY < 0 && character.getYSpeed() == 0) {
                         System.out.println("プレイヤーを追ってジャンプ");
-                        speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                        speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
                         character.setOnGround(false);
+                    } else {
+                        
                     }
                 } else {
-                    speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                    // 敵キャラが接地していない時
+                    // プレイヤーが敵キャラよりも下にいる場合
+                    if (distanceY > 0) {
+                        speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
+                    }
                 }
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
@@ -61,6 +66,7 @@ public class Enemy extends CharacterController {
                 speedX *= ACCELERATE_VALUE;  // 減速処理
             } else {  //== 索敵範囲にいない場合
                 long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
+                speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
 
                 // 前回のスピードに基づいて、移動方向を設定
                 if ( speedX < 0 ) {
