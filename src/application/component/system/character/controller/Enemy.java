@@ -64,6 +64,15 @@ public class Enemy extends CharacterController {
                 speedX *= ACCELERATE_VALUE;  // 減速処理
             } else {  //== 索敵範囲にいない場合
                 long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
+                /*
+                // 敵が接地している時
+                if (character.isOnGround()) {
+                    speedY = 0;
+                } else {
+                    // 接地していない時
+                    speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
+                }
+                */
                 speedY = character.getDefaultSpeed() + (int)GameEnvironment.getGravity();
 
                 // 前回のスピードに基づいて、移動方向を設定
