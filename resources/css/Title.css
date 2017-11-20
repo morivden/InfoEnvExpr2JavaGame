@@ -1,0 +1,11 @@
+.root {
+	-fx-background-image: url("../images/background/background1.png");
+}
+
+@font-face {
+   font-family: Elianto-Regular;
+   src: url("../font/Elianto-Regular.ttf"); 
+}
+.gameTitle {
+	-fx-font-family: Elianto-Regular;
+}
