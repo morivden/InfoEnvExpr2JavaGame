@@ -36,10 +36,10 @@ public class GoalBlock extends StageObject {
             });
         });
 
-        updateImage();
+        moveImage();
     }
 
-    private void updateImage() {
+    private void moveImage() {
         int posX = (int)(position.x - imageManager.getImageView().getImage().getWidth()/2);
         int posY = (int)(position.y - imageManager.getImageView().getImage().getHeight()/2);
 
@@ -49,5 +49,9 @@ public class GoalBlock extends StageObject {
     @Override
     public Node getImage() {
         return imageManager.getImageView();
+    }
+    
+    public void updateImage() {
+        
     }
 }

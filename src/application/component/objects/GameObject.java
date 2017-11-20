@@ -29,4 +29,6 @@ public abstract class GameObject {
     public CollisionObject getCollisionObject() {
         return collisionObject;
     }
+    
+    public abstract void updateImage();
 }
