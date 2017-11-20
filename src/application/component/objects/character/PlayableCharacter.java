@@ -1,6 +1,7 @@
 package application.component.objects.character;
 
 import java.awt.*;
+import java.util.Optional;
 
 public abstract class PlayableCharacter extends Character implements MovableObject, OffensiveObject {
 
@@ -53,5 +54,24 @@ public abstract class PlayableCharacter extends Character implements MovableObje
      */
     public int getRange() {
         return DEFAULT_RANGE;
+    }
+
+    /**
+     * キャラクターの状態を無効にする
+     */
+    public void disable() {
+        // まだ、寿命が設定されていないとき
+        if ( !lifeTime.isPresent() ) {
+            // このインスタンスがゲームから排除される時間の設定
+            lifeTime = Optional.of(System.currentTimeMillis() + DISABLE_STAY_TIME);
+            // TODO 画像の切り替え処理を追加する
+        }
+    }
+
+    /**
+     * キャラクターを即無効にする
+     */
+    public void kill() {
+        lifeTime = Optional.of(0l);
     }
 }

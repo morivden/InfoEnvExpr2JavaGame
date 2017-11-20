@@ -13,8 +13,7 @@ public class GameControllerMain extends Application {
     public void start(Stage primaryStage) {
         try {
             this.primaryStage = primaryStage;
-            this.primaryStage.setWidth(WINDOW_WIDTH);
-            this.primaryStage.setHeight(WINDOW_HEIGHT);
+
             this.primaryStage.setTitle("JavaGame");  // タイトル設定
 
             GameController.getInstance().show();  // シーンの挿入

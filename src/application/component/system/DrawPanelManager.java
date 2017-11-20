@@ -1,5 +1,6 @@
 package application.component.system;
 
+import application.Main;
 import application.component.map.GameMap;
 import application.component.objects.CollisionObject;
 import application.component.objects.GameObject;
@@ -52,6 +53,16 @@ public class DrawPanelManager {
         drawPane.getChildren().add(gameObject.getImage());
     }
 
+    /**
+     * オブジェクトの排除
+     *
+     * @param gameObject
+     */
+    public void removeGameObject(GameObject gameObject) {
+        gameMap.deleteGameObject(gameObject);
+        drawPane.getChildren().remove(gameObject.getImage());
+    }
+
     public GameMap getGameMap() {
         return gameMap;
     }
@@ -74,8 +85,8 @@ public class DrawPanelManager {
         if ( y < minY ) { y = minY; } else if ( y > maxY ) { y = maxY; }
 
         // 格納
-        drawPane.setTranslateX(x);
-        drawPane.setTranslateY(y);
+        drawPane.setLayoutX(x);
+        drawPane.setLayoutY(y);
     }
 
     private void transfer(Point pos) {
@@ -140,10 +151,11 @@ public class DrawPanelManager {
      * オブジェクトの有効範囲の更新
      */
     private void transferRangeOfActivities(int x, int y) {
+
         // 描画パネル上の座標を基準にした
         int minX = -RANGE_MARGIN, minY = -RANGE_MARGIN;  // 下限
-        int maxX = (int)drawPane.getWidth() + RANGE_MARGIN;  // 上限
-        int maxY = (int)drawPane.getHeight() + RANGE_MARGIN;
+        int maxX = (int)drawPane.getWidth() - GameController.getSceneWidth() - RANGE_MARGIN;  // 上限
+        int maxY = (int)drawPane.getHeight() - GameController.getSceneHeight() - RANGE_MARGIN;
 
         // 補正
         if ( x < minX ) { x = minX; } else if ( x > maxX ) { x = maxX; }
@@ -170,5 +182,9 @@ public class DrawPanelManager {
      */
     public void addFactory(CharacterFactory cf) {
         factoryList.add(cf);
+    }
+
+    public Rectangle getRangeOfActivities() {
+        return rangeOfActivities;
     }
 }
