@@ -11,6 +11,8 @@ import lib.TupleUtil.Tuple3;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -183,20 +185,13 @@ public class MapFactory {
      * @return 文字列データ
      */
     private static List<String> getFileString(String resource) {
-        //== ファイルの準備
-        File file = new File(resource);
-
-        BufferedReader bReader = null;
+        //== ファイル情報の読み込み
+        List<String> inputString = null;
         try {
-            bReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
-        } catch ( UnsupportedEncodingException e ) {
-            e.printStackTrace();
-        } catch ( FileNotFoundException e ) {
+            inputString = Files.readAllLines(new File(resource).toPath(), StandardCharsets.UTF_8);
+        } catch ( IOException e ) {
             e.printStackTrace();
         }
-
-        //== ファイル情報の読み込み
-        List<String> inputString = bReader.lines().collect(Collectors.toList());
         return inputString;
     }
 
