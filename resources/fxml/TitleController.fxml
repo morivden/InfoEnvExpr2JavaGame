@@ -7,25 +7,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TitleController">
+<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Title.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TitleController">
    <children>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Text fx:id="gameTitle" stroke="BLACK" strokeDashOffset="1.0" strokeLineCap="BUTT" strokeMiterLimit="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="げーむたいとる" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial" size="60.0" />
-               </font>
-            </Text>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-               <children>
-                  <Button fx:id="startButton" alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#clickStartButton" stylesheets="@../css/title.css" text="Start" textAlignment="CENTER" textOverrun="CLIP">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin></Button>
-                  <Button fx:id="configBottun" mnemonicParsing="false" onAction="#clickConfigButton" stylesheets="@../css/title.css" text="Config" />
-               </children>
-            </VBox>
-         </children>
-      </VBox>
+      <Accordion stylesheets="@../css/Title.css" />
+      <Button fx:id="startButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="280.0" layoutY="241.0" mnemonicParsing="false" onAction="#clickStartButton" text="Start" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="configBottun" layoutX="274.0" layoutY="307.0" mnemonicParsing="false" onAction="#clickConfigButton" text="Config" />
+      <Text fx:id="textTitle" layoutX="102.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't Stop! Keep Going!">
+         <font>
+            <!--  <Font name="Yukarimobile" size="39.0" /> -->
+            <Font name="Yuppy SC Regular" size="39.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

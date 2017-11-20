@@ -8,10 +8,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -22,10 +25,10 @@ import java.util.ResourceBundle;
 public class TitleController implements Initializable {
 
 	@FXML private Pane root;
-    @FXML private Text gameTitle;
+    @FXML private Text textTitle;
     @FXML private Button startButton;
     @FXML private Button configBottun;
-
+    
     private static final TitleController tc;  // TitleControllerインスタンス
     private static final Scene SCENE;
     private static File file = new File("resources//bgm//02 Phantom.mp3");
@@ -56,6 +59,7 @@ public class TitleController implements Initializable {
     }
 
     public void show() {
+    	textTitle.setFont(Font.loadFont(new File("resources/font/yukarimobil.ttf").toURI().toString(), 39)); // タイトルのフォントを外部フォントに指定
         TitleControllerMain.primaryStage.setScene(SCENE);
     }
     
