@@ -42,11 +42,14 @@ public class Enemy extends CharacterController {
                 int distanceX = playerPos.x - character.getPosition().x;
                 int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
-                if (character.isOnGround()) {
-                    speedY = (int)GameEnvironment.getGravity();
+                if (character.isOnGround() && distanceY > 0.0 && character.getYSpeed() == 0) {
+                    // speedY = (int)GameEnvironment.getGravity();
+                    speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
+                    character.setOnGround(false);
                 } else {
                     speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
                 }
+                System.out.println(character.getYSpeed());
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
