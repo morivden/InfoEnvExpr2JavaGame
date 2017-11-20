@@ -45,12 +45,11 @@ public class GameController implements Initializable {
         // drawPaneにフォーカスを移す
         drawPane.setFocusTraversable(true);
         drawPane.requestFocus();
-
-        gameManager = GameManager.getInstance(drawPane, 1);
-        gameManager.start();
     }
 
     public static GameController getInstance() {
+        gc.gameManager = GameManager.getInstance(gc.drawPane, 1);
+        gc.gameManager.start();
         return gc;
     }
 

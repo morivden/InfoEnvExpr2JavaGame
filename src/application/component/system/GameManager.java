@@ -10,7 +10,7 @@ import application.component.objects.character.OffensiveObject;
 import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.PlayerFactory;
-import javafx.application.Platform;
+import application.controller.TitleController;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
 
@@ -28,7 +28,6 @@ import static application.component.system.GameManager.GameProcessState.*;
 public class GameManager {
     private static final GameManager ourInstance = new GameManager();
     private static final int PROCESS_INTERVAL_MILLISECOND = 35;           // 処理の間隔
-    private static final InputManager inputManager = new InputManager();  // 入力キー管理
 
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
@@ -38,7 +37,8 @@ public class GameManager {
     private Timer gameTimer;        // ゲームプロセス用タイマー
     private Player player;          // プレイヤーコントローラ
 
-    private DrawPanelManager dpm;   // パネル管理
+    private DrawPanelManager dpm;       // パネル管理
+    private InputManager inputManager;  // 入力キー管理
 
     /**
      * インスタンスの取得
@@ -50,15 +50,24 @@ public class GameManager {
     public static GameManager getInstance(Pane drawPane, int stageNum) {
         ourInstance.stageNum = stageNum;
         ourInstance.drawPane = drawPane;
+        ourInstance.inputManager = new InputManager();
         return ourInstance;
     }
 
     public static void setKeyState(InputManager.KindOfPushedKey key, boolean state) {
-        inputManager.set(key, state);
+        ourInstance.inputManager.set(key, state);
     }
 
     public static boolean getKeyState(InputManager.KindOfPushedKey key) {
-        return inputManager.get(key);
+        return ourInstance.inputManager.get(key);
+    }
+
+    /**
+     * ゴール処理リクエストメソッド
+     */
+    public static void requestGoal() {
+        ourInstance.stop();  // 処理の停止
+        TitleController.getInstance().show();
     }
 
     /**
