@@ -44,7 +44,7 @@ public class RectangleStageBlock extends StageObject {
         moveImage();
     }
 
-    private void moveImage() {
+    protected void moveImage() {
         int posX = (int)(position.x - imageManager.getImageView().getImage().getWidth()/2);
         int posY = (int)(position.y - imageManager.getImageView().getImage().getHeight()/2);
 

@@ -25,7 +25,7 @@ public class Hero extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int JUMP_SPEED = -14;
     public static int MAX_SPEED = 100;
-    public static int DEFAULT_HP = 1;
+    public static int DEFAULT_HP = 100;
 
     private Rectangle collRect;
 

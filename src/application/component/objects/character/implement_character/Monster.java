@@ -26,6 +26,8 @@ public class Monster extends PlayableCharacter {
     public static int DEFAULT_RANGE = 200;
     public static int DEFAULT_HP = 10;
 
+    public static int DEFAULT_DAMAGE_VALUE = 1;
+
     private Point collisionRelativeDistance;
 
     private Circle range = new Circle(DEFAULT_RANGE);
@@ -61,6 +63,9 @@ public class Monster extends PlayableCharacter {
         //== 当たり判定関連
         RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x + collisionRelativeDistance.x,
                 position.y + collisionRelativeDistance.y, (int)waitImage.getWidth(), (int) waitImage.getHeight());
+        //= 衝突イベントの追加
+        rectCO.addEvent(new PlayerDamageCollision(DEFAULT_DAMAGE_VALUE));
+
         collisionObject = rectCO;
 
         moveImage();

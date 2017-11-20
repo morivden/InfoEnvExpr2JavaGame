@@ -12,7 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -27,7 +30,9 @@ public class GameController implements Initializable {
     protected GameManager gameManager;
 
     static {
-        FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/GameController.fxml"));
+        FXMLLoader fxmlLoader = null;
+        fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/GameController.fxml"));
+
         try {
             fxmlLoader.load();
         } catch ( IOException e ) {

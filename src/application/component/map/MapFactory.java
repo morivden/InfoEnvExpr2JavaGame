@@ -10,9 +10,7 @@ import lib.TupleUtil.Tuple2;
 import lib.TupleUtil.Tuple3;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -134,9 +132,9 @@ public class MapFactory {
      */
     private static char[][] readMapDate(MapInformation mapInfo) throws IllegalMapDataException {
         char[][] mapData;
-        String resource = mapInfo.getURL().getPath();  // リソース位置
+        String resource = mapInfo.getURL().getFile();  // リソース位置
 
-        List<String> inputString = new ArrayList();
+        List<String> inputString;
 
         //== 読み込み準備
         inputString = getFileString(resource);
@@ -186,14 +184,16 @@ public class MapFactory {
      */
     private static List<String> getFileString(String resource) {
         //== ファイルの準備
-        FileReader fReader = null;
+        File file = new File(resource);
+
+        BufferedReader bReader = null;
         try {
-            fReader = new FileReader(resource);
+            bReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+        } catch ( UnsupportedEncodingException e ) {
+            e.printStackTrace();
         } catch ( FileNotFoundException e ) {
             e.printStackTrace();
         }
-
-        BufferedReader bReader = new BufferedReader(fReader);
 
         //== ファイル情報の読み込み
         List<String> inputString = bReader.lines().collect(Collectors.toList());
