@@ -2,15 +2,14 @@ package application.component.system.character.factory;
 
 import application.component.objects.GameObject;
 import application.component.objects.character.PlayableCharacter;
-import application.component.objects.character.implement_character.TMPCharacter;
 import application.component.system.GameManager;
-import application.component.system.character.controller.CharacterController;
 import application.component.system.character.controller.Player;
 import javafx.application.Platform;
-// import com.sun.javafx.geom.Point2D;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.Optional;
+
+// import com.sun.javafx.geom.Point2D;
 
 /**
  * プレイヤーが操作するキャラクターを生成するクラス
@@ -31,6 +30,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
      * @return
      */
     public static PlayerFactory getInstance(Point createPosition) {
+        ourInstance.createdCharacterController = null;  // 前コントローラの削除
         ourInstance.setCreatePosition(createPosition);  // 位置の更新
         return ourInstance;
     }
@@ -47,7 +47,6 @@ public class PlayerFactory extends CharacterFactory<Player> {
     private static void setCreatePosition(Point createPosition) {
         ourInstance.createPosition = createPosition;
     }
-
 
     /**
      * 保持するキャラクターコントローラを取得

@@ -109,6 +109,7 @@ public class MapFactory {
                         //== '0' のときはプレイヤーとして
                         if ( iChar == '0' ) {
                             // プレイヤー
+                            System.out.println(pos);
                             factoryList.add(0, PlayerFactory.getInstance(pos));
                         } else {
                             // エネミー
