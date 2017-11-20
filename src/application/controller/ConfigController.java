@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
@@ -59,6 +60,9 @@ public class ConfigController implements Initializable {
     }
 
     public void show() {
+    	config.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 61 ) );
+    	volume.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
+    	contrast.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
         //ConfigControllerMain.primaryStage.setScene(SCENE);
         TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
