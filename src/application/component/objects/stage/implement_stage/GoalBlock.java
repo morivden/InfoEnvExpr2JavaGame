@@ -7,13 +7,20 @@ import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 import application.component.system.character.factory.PlayerFactory;
 import javafx.application.Platform;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import lib.ImageUtil;
+import lib.TupleUtil;
 
 import java.awt.*;
 
 public class GoalBlock extends StageObject {
-    private static String WAIT_IMAGE = "/images/goal.png";
+    private static final String WAIT_IMAGE = "/images/goal.png";
+    private static final int COLLISION_MARGIN = 8;  // 当たり判定補正用
 
     public GoalBlock(Point pos) {
         super(pos);
@@ -24,17 +31,22 @@ public class GoalBlock extends StageObject {
         imageManager.showImage(ImageManager.ObjectStatus.WAIT);
 
         //=== 衝突物体関連
-        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x - (int)waitImage.getHeight(),
-                position.y - (int)waitImage.getHeight() / 2, (int)waitImage.getWidth(), (int) waitImage.getHeight());
-        collisionObject = rectCO;
+        int width = (int) waitImage.getWidth() - COLLISION_MARGIN * 2;
+        int height = (int) waitImage.getHeight();
+        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x - width / 2,
+                position.y - height / 2, width, height);
+
+        //= 衝突イベント関連
+        // ゴールリクエストの発火イベント
         rectCO.addEvent((ed, go, ing) -> {
             PlayerFactory.getPlayerCharacterController().ifPresent(player -> {
                 if ( go == player.getCharacter() ) {
                     Platform.runLater(() -> GameManager.requestGoal());
-                    System.out.println("ゴール");
                 }
             });
         });
+
+        collisionObject = rectCO;  // 登録
 
         updateImage();
     }

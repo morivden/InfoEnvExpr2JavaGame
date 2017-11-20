@@ -2,9 +2,8 @@ package application.component.system.character.controller;
 
 import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameManager;
-// import com.sun.javafx.geom.Point2D;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.Optional;
 import java.util.Random;
 
@@ -66,8 +65,7 @@ public class Enemy extends CharacterController {
 
     @Override
     protected boolean checkUpdateValid() {
-        //== キャラクターが有効範囲内に存在するか
-        // かつ、寿命が設定されているかで判定
+        //== 寿命が設定されているかで判定
         return !character.getLifeTime().isPresent();
     }
 
