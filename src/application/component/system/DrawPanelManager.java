@@ -54,6 +54,7 @@ public class DrawPanelManager {
 
     /**
      * オブジェクトの排除
+     * 
      * @param gameObject
      */
     public void removeGameObject(GameObject gameObject) {

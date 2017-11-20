@@ -85,8 +85,8 @@ public class PlayerFactory extends CharacterFactory<Player> {
         PlayableCharacter character = createdCharacterController.getCharacter();
         if ( character.getLifeTime().isPresent() &&
                 System.currentTimeMillis() >  character.getLifeTime().get() ) {
+            Platform.runLater(() -> GameManager.removeGameObject(character));  // 削除依頼
             createdCharacterController = null;  // 除去
-            GameManager.removeGameObject(character);  // 削除依頼
         }
     }
 

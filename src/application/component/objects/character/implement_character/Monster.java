@@ -18,7 +18,7 @@ public class Monster extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
     public static int DEFAULT_RANGE = 200;
-    public static int DEFAULT_HP = 10;
+    public static int DEFAULT_HP = 0;
 
 
     Point collisionRelativeDistance;
@@ -71,7 +71,7 @@ public class Monster extends PlayableCharacter {
 
     @Override
     public Node getImage() {
-        return new Group(imageManager.getImageView(), range);
+        return imageManager.getImageView();
     }
 
     @Override

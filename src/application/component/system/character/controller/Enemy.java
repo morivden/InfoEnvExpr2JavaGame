@@ -66,8 +66,9 @@ public class Enemy extends CharacterController {
 
     @Override
     protected boolean checkUpdateValid() {
-        //== キャラクターが有効範囲内に存在するかで判定
-        return GameManager.isValid(character);
+        //== キャラクターが有効範囲内に存在するか
+        // かつ、寿命が設定されているかで判定
+        return GameManager.isValid(character) && !character.getLifeTime().isPresent();
     }
 
     @Override
