@@ -49,8 +49,6 @@ public class Enemy extends CharacterController {
                         System.out.println("プレイヤーを追ってジャンプ");
                         speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
                         character.setOnGround(false);
-                    } else {
-                        
                     }
                 } else {
                     // 敵キャラが接地していない時
