@@ -16,7 +16,7 @@ public class GameControllerMain extends Application {
 
             this.primaryStage.setTitle("JavaGame");  // タイトル設定
 
-            GameController.getInstance().show();  // シーンの挿入
+            GameController.getInstance(1).show();  // シーンの挿入
             this.primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
