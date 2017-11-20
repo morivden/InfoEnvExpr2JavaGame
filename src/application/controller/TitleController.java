@@ -8,10 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -22,7 +24,7 @@ import java.util.ResourceBundle;
 public class TitleController implements Initializable {
 
 	@FXML private Pane root;
-    @FXML private Text gameTitle;
+    @FXML private Label labelTitle;
     @FXML private Button startButton;
     @FXML private Button configBottun;
 
