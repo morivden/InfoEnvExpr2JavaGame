@@ -134,9 +134,9 @@ public class MapFactory {
      */
     private static char[][] readMapDate(MapInformation mapInfo) throws IllegalMapDataException {
         char[][] mapData;
-        String resource = mapInfo.getURL().getPath();  // リソース位置
+        String resource = mapInfo.getURL().getFile();  // リソース位置
 
-        List<String> inputString = new ArrayList();
+        List<String> inputString;
 
         //== 読み込み準備
         inputString = getFileString(resource);

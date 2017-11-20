@@ -16,7 +16,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -32,14 +31,8 @@ public class GameController implements Initializable {
 
     static {
         FXMLLoader fxmlLoader = null;
-        try {
-            String url = URLDecoder.decode(ClassLoader.getSystemResource("fxml/GameController.fxml").getPath(), "UTF-8");
-            fxmlLoader = new FXMLLoader(new URL("file:" + url));
-        } catch ( UnsupportedEncodingException e ) {
-            e.printStackTrace();
-        } catch ( MalformedURLException e ) {
-            e.printStackTrace();
-        }
+        fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/GameController.fxml"));
+
         try {
             fxmlLoader.load();
         } catch ( IOException e ) {
