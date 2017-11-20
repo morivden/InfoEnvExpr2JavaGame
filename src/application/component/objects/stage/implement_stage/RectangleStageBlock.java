@@ -41,10 +41,10 @@ public class RectangleStageBlock extends StageObject {
         collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
         collRect.setFill(Color.YELLOW);
 
-        updateImage();
+        moveImage();
     }
 
-    private void updateImage() {
+    private void moveImage() {
         int posX = (int)(position.x - imageManager.getImageView().getImage().getWidth()/2);
         int posY = (int)(position.y - imageManager.getImageView().getImage().getHeight()/2);
 
@@ -58,4 +58,8 @@ public class RectangleStageBlock extends StageObject {
 //    public Node getImage() {
 //        return collRect;
 //    }
+    
+    public void updateImage() {
+        
+    }
 }

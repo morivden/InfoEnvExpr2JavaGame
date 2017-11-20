@@ -1,5 +1,6 @@
 package application.component.objects;
 
+import java.awt.image.ImagingOpException;
 import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +14,8 @@ public class ImageManager {
         WAIT,
         IMG_LEFT,
         IMG_RIGHT,
-        JUMP
+        JUMP,
+        DEAD
     }
     
     public ImageManager() {
