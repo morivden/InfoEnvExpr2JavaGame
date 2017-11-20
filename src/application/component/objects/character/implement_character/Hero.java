@@ -7,10 +7,13 @@ import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.util.Optional;
@@ -20,6 +23,7 @@ public class Hero extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/player/wait.png";
     private static String LEFT_IMAGE = "/images/player/left.png";
     private static String RIGHT_IMAGE = "/images/player/right.png";
+    private static String HEART_IMAGE = "/images/heart.png";
     private static String JUMP_IMAGE = "/images/player/jump.png";
     private static String DEAD_IMAGE = "/images/enemy/dead.png";
     public static int DEFAULT_SPEED = 10;
@@ -27,9 +31,15 @@ public class Hero extends PlayableCharacter {
     public static int MAX_SPEED = 100;
     public static int DEFAULT_HP = 100;
 
+    public static int HEART_DEFAULT_SIZE = 10;
+
     private Rectangle collRect;
 
     private Point collisionRelativeDistance;
+
+    private Group playerImage;
+    private ImageView heartView;  // 体力表示用のハート画像
+    private static ColorAdjust screenLight = new ColorAdjust();  // ハート画像の色を変えるエフェクト
 
     public Hero(Point pos) {        
         super(pos);
@@ -51,6 +61,13 @@ public class Hero extends PlayableCharacter {
         imageManager.addImage(ImageManager.ObjectStatus.DEAD, deadImage);
         
         imageManager.showImage(ImageManager.ObjectStatus.WAIT);
+
+        // 体力関連
+        Image heart = new Image(HEART_IMAGE, HEART_DEFAULT_SIZE, HEART_DEFAULT_SIZE, true, true);;
+
+        heartView =  new ImageView(heart);
+        playerImage = new Group(imageManager.getImageView(), heartView);
+        heartView.setEffect(screenLight);
 
         //=== 衝突物体の相対距離算出
         collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
@@ -98,7 +115,7 @@ public class Hero extends PlayableCharacter {
 //    }
     public Node getImage() {
 //        return new Group(collRect, imageManager.getImageView());
-        return imageManager.getImageView();
+        return playerImage;
     }
 
     @Override
@@ -146,5 +163,15 @@ public class Hero extends PlayableCharacter {
         if (this.hp == 0) {
             imageManager.showImage(ImageManager.ObjectStatus.DEAD);
         }
+    }
+
+    @Override
+    protected void moveImage() {
+        super.moveImage();
+
+        heartView.setX(getPosition().x - HEART_DEFAULT_SIZE / 2);
+        heartView.setY(getPosition().y - GameEnvironment.getBlockScale() / 2 - HEART_DEFAULT_SIZE );
+
+        screenLight.setBrightness( getHp() / (double)DEFAULT_HP - 1);
     }
 }
