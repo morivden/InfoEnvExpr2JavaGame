@@ -60,11 +60,13 @@ public class ConfigController implements Initializable {
     }
 
     public void show() {
+        volumeBar.setValue(TitleController.getMediaPlayer().getVolume());
+        contrastBar.setValue(screenLight.getBrightness());
     	config.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 61 ) );
     	volume.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
     	contrast.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
-        //ConfigControllerMain.primaryStage.setScene(SCENE);
-        TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
+
+        Main.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
     
     
@@ -83,8 +85,6 @@ public class ConfigController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		volumeBar.setValue(TitleController.getMediaPlayer().getVolume());
-		contrastBar.setValue(screenLight.getBrightness());
 		root.setEffect(screenLight);
 	}
 }

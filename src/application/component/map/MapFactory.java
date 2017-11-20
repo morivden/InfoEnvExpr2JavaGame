@@ -110,13 +110,11 @@ public class MapFactory {
                     Point pos = new Point(fHol * blockSize + blockSize / 2,
                                               fVer * blockSize + blockSize / 2);
                     char iChar = gol.getIdentificationChar();  // 識別文字列の取得
-                    // TODO java.lang.Character を要修正
                     //= 文字が数値であるとき、ファクトリーを生成
                     if ( java.lang.Character.isDigit(iChar) ) {
                         //== '0' のときはプレイヤーとして
                         if ( iChar == '0' ) {
                             // プレイヤー
-                            System.out.println(pos);
                             factoryList.add(0, PlayerFactory.getInstance(pos));
                         } else {
                             // エネミー

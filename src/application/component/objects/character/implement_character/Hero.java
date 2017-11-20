@@ -1,6 +1,5 @@
 package application.component.objects.character.implement_character;
 
-import application.component.objects.GameObject;
 import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
@@ -10,13 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.awt.*;
-import java.util.Optional;
 
 
 public class Hero extends PlayableCharacter {
@@ -78,10 +73,6 @@ public class Hero extends PlayableCharacter {
 //        rectCO.addEvent((o, e, a) -> System.out.println("  ヒーロー衝突"));
         collisionObject = rectCO;
 
-        // TODO 消すやつ
-        collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
-        collRect.setFill(Color.color(0, 0, 0.5, 0.5));
-
         moveImage();
     }
 
@@ -89,8 +80,7 @@ public class Hero extends PlayableCharacter {
     public void move() {
         position.setLocation(position.x + speed.x, position.y + speed.y);
         collisionObject.transfer( position.x + collisionRelativeDistance.x, position.y + collisionRelativeDistance.y);
-        collRect.setX((int)(((RectangleCollisionObject)collisionObject).getRectangle().getX()));
-        collRect.setY((int)(((RectangleCollisionObject)collisionObject).getRectangle().getY()));
+
         moveImage();
     }
     

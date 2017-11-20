@@ -229,7 +229,6 @@ public class GameManager {
     private class GameProcessTask extends TimerTask {
         @Override
         public void run() {
-            // TODO 各ゲームプロセスの実装
             //== 有効範囲の更新
             moveRangeOfActivities();
 
@@ -253,8 +252,6 @@ public class GameManager {
 
             //== 無効キャラクターの削除
             dpm.getFactoryList().forEach(fac -> fac.checkLifeTile());
-
-            //== ゲーム終了判定
         }
 
         /**

@@ -81,7 +81,6 @@ public abstract class PlayableCharacter extends Character implements MovableObje
         if ( !lifeTime.isPresent() ) {
             // このインスタンスがゲームから排除される時間の設定
             lifeTime = Optional.of(System.currentTimeMillis() + DISABLE_STAY_TIME);
-            // TODO 画像の切り替え処理を追加する
         }
     }
 
@@ -105,7 +104,6 @@ public abstract class PlayableCharacter extends Character implements MovableObje
         public void ignite(CollisionObject collidedObj, GameObject gameObject, CollisionObject collidingObj) {
             Optional<Player> player = PlayerFactory.getPlayerCharacterController();
             if ( player.isPresent() && gameObject == player.get().getCharacter() ) {
-                System.out.println(player.get().getCharacter().getHp());
                 player.get().getCharacter().damage(damageVal);
             }
         }

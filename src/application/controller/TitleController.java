@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class TitleController implements Initializable {
     
     private static final TitleController tc;  // TitleControllerインスタンス
     private static final Scene SCENE;
-    private static File file = new File("resources//bgm//02 Phantom.mp3");
+    private static File file = new File("resources//bgm//stage_bgm.mp3");
     private static Media media = new Media(file.toURI().toString());
     private static MediaPlayer mediaPlayer = new MediaPlayer(media);
     
@@ -44,6 +45,13 @@ public class TitleController implements Initializable {
         }
         Parent parent = fxmlLoader.getRoot();
         Scene scene = new Scene(parent);
+        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
         mediaPlayer.play();
 
         SCENE = scene;
@@ -60,7 +68,7 @@ public class TitleController implements Initializable {
 
     public void show() {
     	textTitle.setFont(Font.loadFont(new File("resources/font/yukarimobil.ttf").toURI().toString(), 39)); // タイトルのフォントを外部フォントに指定
-        TitleControllerMain.primaryStage.setScene(SCENE);
+        Main.primaryStage.setScene(SCENE);
     }
     
     @FXML
@@ -74,6 +82,7 @@ public class TitleController implements Initializable {
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		root.setEffect(ConfigController.getScreenLight());
 	}
 }
