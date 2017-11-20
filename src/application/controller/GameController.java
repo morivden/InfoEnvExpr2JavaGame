@@ -52,8 +52,8 @@ public class GameController implements Initializable {
         drawPane.requestFocus();
     }
 
-    public static GameController getInstance() {
-        gc.gameManager = GameManager.getInstance(gc.drawPane, 3);
+    public static GameController getInstance(int num) {
+        gc.gameManager = GameManager.getInstance(gc.drawPane, num);
         gc.gameManager.start();
         return gc;
     }

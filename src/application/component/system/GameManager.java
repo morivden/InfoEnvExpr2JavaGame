@@ -110,7 +110,7 @@ public class GameManager {
      * プレーヤーコントローラの取得
      */
     public static Optional<Player> getPlayerCharacterController() {
-         return Optional.of(ourInstance.player);
+         return Optional.ofNullable(ourInstance.player);
     }
 
     /**
