@@ -27,7 +27,7 @@ import static application.component.system.GameManager.GameProcessState.*;
  */
 public class GameManager {
     private static final GameManager ourInstance = new GameManager();
-    private static final int PROCESS_INTERVAL_MILLISECOND = 30;           // 処理の間隔
+    private static final int PROCESS_INTERVAL_MILLISECOND = 35;           // 処理の間隔
     private static final InputManager inputManager = new InputManager();  // 入力キー管理
 
     private int stageNum;     // 現在選択肢ているステージ番号
@@ -59,6 +59,15 @@ public class GameManager {
 
     public static boolean getKeyState(InputManager.KindOfPushedKey key) {
         return inputManager.get(key);
+    }
+
+    /**
+     * 操作キャラクターの登録
+     *
+     * @param player
+     */
+    public static void registerPlayer(Player player) {
+        ourInstance.player = player;
     }
 
     /**
@@ -146,7 +155,7 @@ public class GameManager {
         // 実行
         gameTimer = new Timer("game_timer", true);
         gpt = new GameProcessTask();
-        gameTimer.scheduleAtFixedRate(gpt, 0, PROCESS_INTERVAL_MILLISECOND);  // 実行
+        gameTimer.scheduleAtFixedRate(gpt, 200, PROCESS_INTERVAL_MILLISECOND);  // 実行
         gameState = RUN;                    // 状態の更新
     }
 
@@ -174,7 +183,6 @@ public class GameManager {
         for ( CharacterFactory cf : factoryList ) {
             if ( cf instanceof PlayerFactory ) {
                 Optional<Player> ply = cf.create();
-                player = ply.get();
             }
         }
         //= プレイヤーがマップ上に存在しないとき
@@ -216,9 +224,6 @@ public class GameManager {
             //== 有効範囲の更新
             moveRangeOfActivities();
 
-            //== ファクトリーの更新
-            dpm.getFactoryList().stream().forEach(cf -> cf.create());
-
             //== キャラクターの更新
             dpm.getFactoryList().stream().forEach(cf -> cf.updateAll());
 
@@ -230,6 +235,9 @@ public class GameManager {
 
             //== 攻撃オブジェクトの更新
             OffensiveObject.attackOffensiveObjects(dpm.getGameMap().getOffensiveObjects());
+
+            //== ファクトリーの更新
+            dpm.getFactoryList().stream().forEach(cf -> cf.create());
 
             //== 描画パネル(drawPane)の移動
             moveDrawPanel();
@@ -256,9 +264,9 @@ public class GameManager {
         private void moveRangeOfActivities(){
             // プレイヤーの位置の取得
             Point characterPos = new Point();
-            getPlayerCharacterController().ifPresent(ply -> {
-                characterPos.setLocation(ply.getCharacter().getPosition());
-            });
+            if ( getPlayerCharacterController().isPresent() ) {
+                characterPos.setLocation(getPlayerCharacterController().get().getCharacter().getPosition());
+            }
 
             dpm.focusPointForRangeOfActivities(characterPos);
         }
@@ -269,9 +277,10 @@ public class GameManager {
         private void moveDrawPanel() {
             // プレイヤーの位置の取得
             Point characterPos = new Point();
-            getPlayerCharacterController().ifPresent(ply -> {
-                characterPos.setLocation(ply.getCharacter().getPosition());
-            });
+            if ( getPlayerCharacterController().isPresent() ) {
+                characterPos.setLocation(getPlayerCharacterController().get().getCharacter().getPosition());
+            }
+
 
             // 移動
             Platform.runLater(() -> dpm.focusPoint(characterPos));

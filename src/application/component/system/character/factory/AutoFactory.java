@@ -45,8 +45,6 @@ public class AutoFactory extends CharacterFactory<Enemy> {
             return Optional.empty();
         }
 
-        System.out.println(createdCharacterController.size());
-
         GameObject newGameObject = gameObjectList.getInstance(new Point(createPosition.x, createPosition.y));
 
         // 生成オブジェクトがPlayableObjectか判定

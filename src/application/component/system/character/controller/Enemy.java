@@ -78,7 +78,7 @@ public class Enemy extends CharacterController {
 
     @Override
     protected void updateLifeTime() {
-        if ( character.getHp() < 1 ) {
+        if ( character.getHp() < 1 || !GameManager.isValid(character) ) {
             character.disable();
         }
     }

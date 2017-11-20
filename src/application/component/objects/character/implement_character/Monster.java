@@ -1,11 +1,9 @@
 package application.component.objects.character.implement_character;
 
-import application.component.objects.DammyCollisionObject;
 import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -18,10 +16,9 @@ public class Monster extends PlayableCharacter {
     public static int DEFAULT_SPEED = 10;
     public static int MAX_SPEED = 100;
     public static int DEFAULT_RANGE = 200;
-    public static int DEFAULT_HP = 0;
+    public static int DEFAULT_HP = 10;
 
-
-    Point collisionRelativeDistance;
+    private Point collisionRelativeDistance;
 
     private Circle range = new Circle(DEFAULT_RANGE);
 

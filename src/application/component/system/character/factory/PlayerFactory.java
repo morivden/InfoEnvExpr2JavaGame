@@ -35,6 +35,10 @@ public class PlayerFactory extends CharacterFactory<Player> {
         return ourInstance;
     }
 
+    public static Point getCreatePosition() {
+        return ourInstance.createPosition;
+    }
+
     /**
      * 生成位置の格納
      *
@@ -56,7 +60,9 @@ public class PlayerFactory extends CharacterFactory<Player> {
 
     @Override
     public void updateAll() {
-        createdCharacterController.update();
+        if ( createdCharacterController != null ) {
+            createdCharacterController.update();
+        }
     }
 
     @Override
@@ -76,6 +82,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
         Platform.runLater(() -> GameManager.addGameObject(createP));  // ゲームオブジェクトの登録
         Player player = new Player(createP);
         register(player);  // コントローラの登録
+        GameManager.registerPlayer(player);  // ゲームマネージャへの登録
 
         return Optional.of(player);
     }
