@@ -4,12 +4,16 @@ import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
 import application.component.system.GameEnvironment;
+import application.component.system.character.controller.CharacterController;
+import application.component.system.character.controller.Player;
+import application.component.system.character.factory.PlayerFactory;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
+import java.util.Optional;
 
 public class Monster extends PlayableCharacter {
     private static String WAIT_IMAGE = "/images/monster.png";

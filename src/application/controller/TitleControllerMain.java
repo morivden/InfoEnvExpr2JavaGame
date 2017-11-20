@@ -18,7 +18,7 @@ public class TitleControllerMain extends Application {
             this.primaryStage.setHeight(WINDOW_HEIGHT);
             this.primaryStage.setTitle("JavaGame");  // タイトル設定
 
-            TitleController.getInstance().show(); // タイトル部分のシーンを挿入
+            TitleController.getInstance().show();  // タイトル部分のシーンを挿入
             this.primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -281,9 +281,9 @@ public class GameManager {
                 characterPos.setLocation(getPlayerCharacterController().get().getCharacter().getPosition());
             }
 
-
             // 移動
-            Platform.runLater(() -> dpm.focusPoint(characterPos));
+            dpm.focusPoint(characterPos);
+//            Platform.runLater(() -> );
         }
     }
 }

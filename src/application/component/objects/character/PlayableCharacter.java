@@ -67,4 +67,11 @@ public abstract class PlayableCharacter extends Character implements MovableObje
             // TODO 画像の切り替え処理を追加する
         }
     }
+
+    /**
+     * キャラクターを即無効にする
+     */
+    public void kill() {
+        lifeTime = Optional.of(0l);
+    }
 }
