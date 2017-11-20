@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.Main;
 import application.component.system.GameManager;
 import application.component.system.InputManager;
 import javafx.fxml.FXML;
@@ -50,6 +51,8 @@ public class GameController implements Initializable {
         // drawPaneにフォーカスを移す
         drawPane.setFocusTraversable(true);
         drawPane.requestFocus();
+
+        drawPane.setEffect(ConfigController.getScreenLight());
     }
 
     public static GameController getInstance(int num) {
@@ -59,7 +62,7 @@ public class GameController implements Initializable {
     }
 
     public void show() {
-        TitleControllerMain.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
+        Main.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
 
     /**

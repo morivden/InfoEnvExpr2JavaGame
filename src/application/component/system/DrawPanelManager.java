@@ -40,7 +40,6 @@ public class DrawPanelManager {
         drawPane.getChildren().clear();  // 既存要素の削除
         drawPane.setPrefWidth(gm.getMapWidth());
         drawPane.setPrefHeight(gm.getMapHeight());
-        // TODO GameObject実装後、実装
         List<GameObject> gameObjects = gm.getGameObjects();
         gameObjects.stream().forEach(go -> drawPane.getChildren().add(go.getImage()));
     }

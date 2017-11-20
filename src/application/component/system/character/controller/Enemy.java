@@ -45,7 +45,6 @@ public class Enemy extends CharacterController {
                 if (character.isOnGround()) {
                     // プレイヤーが敵キャラよりも上にいる時
                     if (distanceY < 0 && character.getYSpeed() == 0) {
-                        System.out.println("プレイヤーを追ってジャンプ");
                         speedY = (character.getDefaultSpeed() * (int)Math.signum(distanceY)) / 2 + (int)GameEnvironment.getGravity();
                         character.setOnGround(false);
                     }

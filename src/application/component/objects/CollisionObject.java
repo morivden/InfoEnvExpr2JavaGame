@@ -5,7 +5,6 @@ import java.util.List;
 import application.component.objects.character.MovableObject;
 
 public abstract class CollisionObject {
-    // TODO 抽象クラスかインターフェースか要検討
     /**
      * オブジェクトごとの衝突チェック
      * @param gameObject

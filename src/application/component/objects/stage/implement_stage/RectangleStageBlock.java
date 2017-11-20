@@ -37,10 +37,6 @@ public class RectangleStageBlock extends StageObject {
         rectCO.addEvent(new StageCollision());
         collisionObject = rectCO;
 
-        // TODO 消すやつ
-        collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
-        collRect.setFill(Color.YELLOW);
-
         moveImage();
     }
 
