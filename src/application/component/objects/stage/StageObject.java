@@ -79,7 +79,7 @@ public abstract class StageObject extends GameObject {
                     // 上からぶつかっている場合
 //                    System.out.println("上から衝突");
                     tmpCharacter.setSpeed(tmpCharacter.getXSpeed(), ySpeed - (height1 - (y2 - y1)));
-                    tmpCharacter.onGround = true;
+                    tmpCharacter.setOnGround(true);
                 } else if ( ySpeed < 0 && ONE_ANGLE_SECTION <= degree && degree <= ONE_ANGLE_SECTION * 3 ) {
                     // 下からぶつかっている場合
 //                    System.out.println("下から衝突");

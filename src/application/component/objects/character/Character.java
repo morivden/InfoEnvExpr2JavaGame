@@ -14,4 +14,15 @@ public abstract class Character extends GameObject {
     public int getHp() {
         return hp;
     }
+
+    /**
+     * hp に引数の値だけダメージを与え、残りHPを返却すr
+     *
+     * @param damageVal ダメージ値
+     * @return
+     */
+    public int damage(int damageVal) {
+        hp -= damageVal;
+        return hp;
+    }
 }
