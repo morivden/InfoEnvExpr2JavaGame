@@ -23,7 +23,7 @@ public abstract class PlayableCharacter extends Character implements MovableObje
         return speed.y;
     }
 
-    protected void updateImage() {
+    protected void moveImage() {
         Point relDist = getCollisionRelativeDistance();
         imageManager.transfer(position.x + relDist.x, position.y + relDist.y);
     }

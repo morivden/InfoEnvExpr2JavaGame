@@ -28,4 +28,8 @@ public class TMPStageBlock extends StageObject {
     public Node getImage() {
         return rect;
     }
+    
+    public void updateImage() {
+        
+    }
 }

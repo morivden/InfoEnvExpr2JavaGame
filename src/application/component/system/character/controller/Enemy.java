@@ -42,6 +42,8 @@ public class Enemy extends CharacterController {
                     speedX = distanceX;
                 }
                 speedX *= ACCELERATE_VALUE;  // 減速処理
+                
+                character.updateImage();
             } else {  //== 索敵範囲にいない場合
                 long currentChangeSpeedTime = System.currentTimeMillis();  // 最新のスピード更新時間
 
@@ -58,10 +60,13 @@ public class Enemy extends CharacterController {
                     speedX *= -1;  // 方向の反転
                     previousChangeSpeedTime = currentChangeSpeedTime;
                 }
+                
+                character.updateImage();
             }
         }
 
         character.setSpeed(speedX, 0);
+        character.updateImage();
     }
 
     @Override
