@@ -1,6 +1,7 @@
 package application.component.system.character.controller;
 
 import application.component.objects.character.PlayableCharacter;
+import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 // import com.sun.javafx.geom.Point2D;
 
@@ -20,11 +21,14 @@ public class Enemy extends CharacterController {
     private long previousChangeSpeedTime;  // 以前のスピード更新時間
 
     int speedX;  // 現在のX方向のスピード
+    int speedY;  // 現在のY方向のスピード
 
     public Enemy(PlayableCharacter character) {
         this.character = character;
         DEFAULT_WAIT_SPEED = character.getDefaultSpeed() / 5;
         speedX = DEFAULT_WAIT_SPEED;
+        speedY = DEFAULT_WAIT_SPEED + (int)GameEnvironment.getGravity();
+        this.character.setOnGround(false);
     }
 
     @Override
@@ -34,9 +38,11 @@ public class Enemy extends CharacterController {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
-            if ( playerPos.distance(character.getPosition()) < character.getRange() ) {
+            if ( playerPos.distance(character.getPosition()) < character.getRange() && this.character.isOnGround()) {
                 int distanceX = playerPos.x - character.getPosition().x;
+                int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
+                speedY = character.getDefaultSpeed() * (int)Math.signum(distanceY) + (int)GameEnvironment.getGravity();
 
                 if ( Math.abs(speedX) > Math.abs(distanceX) ) {
                     speedX = distanceX;
@@ -61,7 +67,7 @@ public class Enemy extends CharacterController {
             }
         }
 
-        character.setSpeed(speedX, 0);
+        character.setSpeed(speedX, speedY);
     }
 
     @Override
