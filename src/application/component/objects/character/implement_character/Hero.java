@@ -1,5 +1,6 @@
 package application.component.objects.character.implement_character;
 
+import application.component.objects.GameObject;
 import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.character.PlayableCharacter;
@@ -12,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
+import java.util.Optional;
 
 
 public class Hero extends PlayableCharacter {
@@ -86,11 +88,6 @@ public class Hero extends PlayableCharacter {
     @Override
     public Point getSpeed() {
         return speed;
-    }
-
-    @Override
-    public void disable() {
-
     }
 
     @Override

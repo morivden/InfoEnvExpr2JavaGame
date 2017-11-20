@@ -28,20 +28,9 @@ public class Enemy extends CharacterController {
     }
 
     @Override
-    public void update() {
+    protected void updateSpeed() {
         Optional<Player> playerCharacterController = GameManager.getPlayerCharacterController();
 
-        //== キャラクターが有効範囲ない場合、無視
-        if ( !GameManager.isValid(character) ) {
-            character.setSpeed(0, 0); // 停止
-            return;
-        }
-
-        //== スピード値更新
-        updateSpeed(playerCharacterController);
-    }
-
-    private void updateSpeed(Optional<Player> playerCharacterController) {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
@@ -73,6 +62,24 @@ public class Enemy extends CharacterController {
         }
 
         character.setSpeed(speedX, 0);
+    }
+
+    @Override
+    protected boolean checkUpdateValid() {
+        //== キャラクターが有効範囲内に存在するかで判定
+        return GameManager.isValid(character);
+    }
+
+    @Override
+    protected void notUpdate() {
+        character.setSpeed(0, 0); // 停止
+    }
+
+    @Override
+    protected void updateLifeTime() {
+        if ( character.getHp() < 1 ) {
+            character.disable();
+        }
     }
 
     @Override

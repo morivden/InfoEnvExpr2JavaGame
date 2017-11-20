@@ -11,7 +11,7 @@ public class Player extends CharacterController {
     }
 
     @Override
-    public void update() {
+    protected void updateSpeed() {
         character.setSpeed(0, 0);
         if ( GameManager.getKeyState(InputManager.KindOfPushedKey.UP_KEY) ) {
             character.setSpeed(character.getXSpeed(), -character.DEFAULT_SPEED);
@@ -23,6 +23,23 @@ public class Player extends CharacterController {
             character.setSpeed(-character.DEFAULT_SPEED, character.getYSpeed());
         } else if ( GameManager.getKeyState(InputManager.KindOfPushedKey.RIGHT_KEY) ) {
             character.setSpeed(character.DEFAULT_SPEED, character.getYSpeed());
+        }
+    }
+
+    @Override
+    protected boolean checkUpdateValid() {
+        return true;
+    }
+
+    @Override
+    protected void notUpdate() {
+
+    }
+
+    @Override
+    protected void updateLifeTime() {
+        if ( character.getHp() < 1 ) {
+            character.disable();
         }
     }
 

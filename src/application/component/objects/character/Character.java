@@ -10,4 +10,8 @@ public abstract class Character extends GameObject {
     public Character(Point pos) {
         super(pos);
     }
+
+    public int getHp() {
+        return hp;
+    }
 }

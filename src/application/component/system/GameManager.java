@@ -29,7 +29,6 @@ public class GameManager {
     private static final GameManager ourInstance = new GameManager();
     private static final int PROCESS_INTERVAL_MILLISECOND = 30;           // 処理の間隔
     private static final InputManager inputManager = new InputManager();  // 入力キー管理
-    private static final int DISABLE_STAY_TIME = 5000;                    // 状態を無効にした後に、留まる時間(ms)
 
     private int stageNum;     // 現在選択肢ているステージ番号
     private Pane drawPane;    // 使用するパネル
