@@ -3,6 +3,7 @@ package application.component.system.character.factory;
 import application.component.objects.GameObject;
 import application.component.objects.character.implement_character.Hero;
 import application.component.objects.character.implement_character.Monster;
+import application.component.objects.stage.implement_stage.GoalBlock;
 import application.component.objects.stage.implement_stage.RectangleStageBlock;
 import application.component.objects.stage.implement_stage.TMPStageBlock;
 import com.sun.javafx.geom.Point2D;
@@ -17,7 +18,8 @@ public enum GameObjectList {
     // オブジェクト一覧
     Hero('0', pos -> { return new Hero(pos); }),
     Monster('1', pos -> { return new Monster(pos); }),
-    TMPStage('@', pos -> { return new RectangleStageBlock(pos); });
+    Goal('G', pos -> { return new GoalBlock(pos); }),
+    RectStage('@', pos -> { return new RectangleStageBlock(pos); });
 
     private char identificationChar;     // 識別用文字列
 
@@ -40,7 +42,7 @@ public enum GameObjectList {
      * @return game object
      */
     public static GameObject createOf(char iChar, Point pos) {
-        GameObjectList gol = getOf(iChar).orElse(TMPStage);
+        GameObjectList gol = getOf(iChar).orElse(RectStage);
         return gol.createProcess.getInstance(pos);
     }
 

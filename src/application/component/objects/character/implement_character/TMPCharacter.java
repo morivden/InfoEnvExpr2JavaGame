@@ -38,6 +38,10 @@ public class TMPCharacter extends PlayableCharacter {
 
         updateImg();
     }
+    
+    public void jump() {
+        
+    }
 
     public void setSpeed(int xSpeed, int ySpeed) {
         speed.setLocation(speedCheck(xSpeed), speedCheck(ySpeed));

@@ -4,42 +4,35 @@ import application.component.objects.ImageManager;
 import application.component.objects.RectangleCollisionObject;
 import application.component.objects.stage.StageObject;
 import application.component.system.GameEnvironment;
+import application.component.system.character.factory.PlayerFactory;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 
-public class RectangleStageBlock extends StageObject {
-    private static String WAIT_IMAGE = "/images/rect_stage.png";
+public class GoalBlock extends StageObject {
+    private static String WAIT_IMAGE = "/images/goal.png";
 
-    private Rectangle collRect;
-
-    private Point collisionRelativeDistance;
-
-    public RectangleStageBlock(Point pos) {
+    public GoalBlock(Point pos) {
         super(pos);
 
-        //===  イメージ関連
+        //=== イメージ関連
         Image waitImage = new Image(WAIT_IMAGE, GameEnvironment.getBlockScale(), GameEnvironment.getBlockScale(), true, true);
         imageManager.addImage(ImageManager.ObjectStatus.WAIT, waitImage);
         imageManager.showImage(ImageManager.ObjectStatus.WAIT);
 
-        //=== 衝突物体の相対距離算出
-        collisionRelativeDistance = new Point(-(int)(waitImage.getWidth() / 2), -(int)(waitImage.getHeight() / 2));
-
         //=== 衝突物体関連
-        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x + collisionRelativeDistance.x,
-                position.y + collisionRelativeDistance.y,
-                (int)waitImage.getWidth(), (int)waitImage.getHeight());
-        rectCO.addEvent(new StageCollision());
+        RectangleCollisionObject rectCO = new RectangleCollisionObject(position.x - (int)waitImage.getHeight(),
+                position.y - (int)waitImage.getHeight() / 2, (int)waitImage.getWidth(), (int) waitImage.getHeight());
         collisionObject = rectCO;
-
-        // TODO 消すやつ
-        collRect = new Rectangle(rectCO.getRectangle().x, rectCO.getRectangle().y, rectCO.getRectangle().width, rectCO.getRectangle().height);
-        collRect.setFill(Color.YELLOW);
+        rectCO.addEvent((ed, go, ing) -> {
+            PlayerFactory.getPlayerCharacterController().ifPresent(player -> {
+                if ( go == player.getCharacter() ) {
+                    // TODO　GameManagerに対して、ゲームクリアリクエストを送る処理を追加する
+                    System.out.println("ゴール");
+                }
+            });
+        });
 
         updateImage();
     }
@@ -55,7 +48,4 @@ public class RectangleStageBlock extends StageObject {
     public Node getImage() {
         return imageManager.getImageView();
     }
-//    public Node getImage() {
-//        return collRect;
-//    }
 }
