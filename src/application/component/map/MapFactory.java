@@ -63,6 +63,10 @@ public class MapFactory {
         switch ( stageNum ) {
             case 1:
                 mapInfo = MapInformation.STAGE1;
+            case 2:
+                mapInfo = MapInformation.STAGE2;
+            case 3:
+                mapInfo = MapInformation.STAGE3;
         }
         return mapInfo;
     }
