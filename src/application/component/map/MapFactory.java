@@ -11,6 +11,7 @@ import lib.TupleUtil.Tuple3;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +188,7 @@ public class MapFactory {
         //== ファイル情報の読み込み
         List<String> inputString = null;
         try {
-            inputString = Files.readAllLines(new File(resource).toPath());
+            inputString = Files.readAllLines(new File(resource).toPath(), StandardCharsets.UTF_8);
         } catch ( IOException e ) {
             e.printStackTrace();
         }
