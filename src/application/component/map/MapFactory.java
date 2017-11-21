@@ -194,7 +194,7 @@ public class MapFactory {
         //== ファイルの準備
         BufferedReader bReader = null;
         try {
-            bReader = new BufferedReader(new InputStreamReader(MapInformation.STAGE1.getURL().openStream()));
+            bReader = new BufferedReader(new InputStreamReader(resource.openStream()));
         } catch ( IOException e ) {
             e.printStackTrace();
         }
