@@ -37,7 +37,7 @@ public class Enemy extends CharacterController {
         if ( playerCharacterController.isPresent() ) {
             Point playerPos = playerCharacterController.get().getCharacter().getPosition();
             //== プレイヤーキャラクターが索敵範囲にいる場合
-            if ( playerPos.distance(character.getPosition()) < character.getRange()) {
+            if ( playerPos.distance(character.getPosition()) < character.getRange() && !playerCharacterController.get().getCharacter().getLifeTime().isPresent() ) {
                 int distanceX = playerPos.x - character.getPosition().x;
                 int distanceY = playerPos.y - character.getPosition().y;
                 speedX = character.getDefaultSpeed() * (int)Math.signum(distanceX);
