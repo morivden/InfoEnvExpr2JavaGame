@@ -11,14 +11,18 @@ import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.PlayerFactory;
 import application.controller.TitleController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import lib.TupleUtil;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import static application.component.system.GameManager.GameProcessState.*;
 
@@ -33,8 +37,7 @@ public class GameManager {
     private Pane drawPane;    // 使用するパネル
 
     private GameProcessState gameState = GameProcessState.STOP;  // ゲームの状態
-    private GameProcessTask gpt;    // ゲームプロセス
-    private Timer gameTimer;        // ゲームプロセス用タイマー
+    private Timeline gameTimer;        // ゲームプロセス用タイマー
     private Player player;          // プレイヤーコントローラ
 
     private DrawPanelManager dpm;       // パネル管理
@@ -133,8 +136,7 @@ public class GameManager {
     public void pause() {
         // ゲームが実行中であれば、停止
         if ( gameState == RUN ) {
-            gameTimer.cancel();  // 停止
-            gameTimer.purge();   // タスクの消去
+            gameTimer.stop();  // 停止
             gameTimer = null;    // 破棄
             gameState = PAUSE;   // 状態の更新
         }
@@ -162,9 +164,10 @@ public class GameManager {
         }
 
         // 実行
-        gameTimer = new Timer("game_timer", true);
-        gpt = new GameProcessTask();
-        gameTimer.scheduleAtFixedRate(gpt, 200, PROCESS_INTERVAL_MILLISECOND);  // 実行
+        gameTimer = new Timeline(new KeyFrame(Duration.millis(PROCESS_INTERVAL_MILLISECOND), new GameProcessTask()));
+        gameTimer.setCycleCount(Timeline.INDEFINITE);
+        gameTimer.play();
+
         gameState = RUN;                    // 状態の更新
     }
 
@@ -226,9 +229,9 @@ public class GameManager {
     /**
      * ゲーム部クラス
      */
-    private class GameProcessTask extends TimerTask {
+    private class GameProcessTask implements EventHandler<ActionEvent> {
         @Override
-        public void run() {
+        public void handle(ActionEvent event) {
             //== 有効範囲の更新
             moveRangeOfActivities();
 
