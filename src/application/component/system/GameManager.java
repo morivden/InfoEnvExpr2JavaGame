@@ -3,6 +3,7 @@ package application.component.system;
 import application.component.map.GameMap;
 import application.component.map.MapFactory;
 import application.component.map.MapFactory.IllegalMapDataException;
+import application.component.map.MapInformation;
 import application.component.objects.CollisionObject;
 import application.component.objects.GameObject;
 import application.component.objects.character.MovableObject;
@@ -11,6 +12,7 @@ import application.component.system.character.controller.Player;
 import application.component.system.character.factory.CharacterFactory;
 import application.component.system.character.factory.PlayerFactory;
 import application.controller.TitleController;
+import com.sun.xml.internal.ws.api.databinding.MappingInfo;
 import javafx.scene.layout.Pane;
 import lib.TupleUtil;
 

@@ -32,8 +32,8 @@ public class TitleController implements Initializable {
     
     private static final TitleController tc;  // TitleControllerインスタンス
     private static final Scene SCENE;
-    private static File file = new File("resources//bgm//stage_bgm.mp3");
-    private static Media media = new Media(file.toURI().toString());
+    private static File file = new File("bgm/stage_bgm.mp3");
+    private static Media media = new Media(ClassLoader.getSystemResource("bgm/stage_bgm.mp3").toString());
     private static MediaPlayer mediaPlayer = new MediaPlayer(media);
     
     static  {
@@ -67,7 +67,7 @@ public class TitleController implements Initializable {
     }
 
     public void show() {
-    	textTitle.setFont(Font.loadFont(new File("resources/font/yukarimobil.ttf").toURI().toString(), 39)); // タイトルのフォントを外部フォントに指定
+    	textTitle.setFont(Font.loadFont(ClassLoader.getSystemResource("font/yukarimobil.ttf").toString(), 39)); // タイトルのフォントを外部フォントに指定
         Main.primaryStage.setScene(SCENE);
     }
     

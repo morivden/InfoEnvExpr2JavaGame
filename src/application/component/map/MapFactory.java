@@ -11,6 +11,7 @@ import lib.TupleUtil.Tuple3;
 
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class MapFactory {
      */
     private static char[][] readMapDate(MapInformation mapInfo) throws IllegalMapDataException {
         char[][] mapData;
-        String resource = mapInfo.getURL().getFile();  // リソース位置
+        URL resource = mapInfo.getURL();  // リソース位置
 
         List<String> inputString;
 
@@ -189,14 +190,17 @@ public class MapFactory {
      * @param resource 読み込むファイルのURL
      * @return 文字列データ
      */
-    private static List<String> getFileString(String resource) {
-        //== ファイル情報の読み込み
-        List<String> inputString = null;
+    private static List<String> getFileString(URL resource) {
+        //== ファイルの準備
+        BufferedReader bReader = null;
         try {
-            inputString = Files.readAllLines(new File(resource).toPath(), StandardCharsets.UTF_8);
+            bReader = new BufferedReader(new InputStreamReader(MapInformation.STAGE1.getURL().openStream()));
         } catch ( IOException e ) {
             e.printStackTrace();
         }
+
+        //== ファイル情報の読み込み
+        List<String> inputString = bReader.lines().collect(Collectors.toList());
         return inputString;
     }
 
