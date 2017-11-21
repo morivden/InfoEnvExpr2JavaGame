@@ -52,7 +52,7 @@ public class AutoFactory extends CharacterFactory<Enemy> {
             return Optional.empty();
         }
 
-        Platform.runLater(() -> GameManager.addGameObject(newGameObject));  // ゲームオブジェクトの登録
+        GameManager.addGameObject(newGameObject);  // ゲームオブジェクトの登録
         // コントローラへの譲渡
         Enemy enemy = new Enemy((PlayableCharacter) newGameObject);
         register(enemy);  // リストへの追加

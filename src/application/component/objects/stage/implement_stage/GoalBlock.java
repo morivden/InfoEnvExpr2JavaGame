@@ -7,14 +7,8 @@ import application.component.system.GameEnvironment;
 import application.component.system.GameManager;
 import application.component.system.character.factory.PlayerFactory;
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import lib.ImageUtil;
-import lib.TupleUtil;
 
 import java.awt.*;
 
@@ -41,7 +35,7 @@ public class GoalBlock extends StageObject {
         rectCO.addEvent((ed, go, ing) -> {
             PlayerFactory.getPlayerCharacterController().ifPresent(player -> {
                 if ( go == player.getCharacter() ) {
-                    Platform.runLater(() -> GameManager.requestGoal());
+                    GameManager.requestGoal();
                 }
             });
         });
