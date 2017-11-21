@@ -22,7 +22,7 @@ public class Main extends Application {
 
             this.primaryStage.setTitle("JavaGame");  // タイトル設定
             this.primaryStage.setResizable(false);   // ウィンドウサイズの固定
-            this.primaryStage.initStyle(StageStyle.UTILITY);  // 最大化・最小化の無効
+            this.primaryStage.setMaximized(false);   // 最大化の無効
 
             TitleController.getInstance().show();  // タイトル部分のシーンを挿入
             this.primaryStage.show();
