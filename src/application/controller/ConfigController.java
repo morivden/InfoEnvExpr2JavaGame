@@ -62,9 +62,9 @@ public class ConfigController implements Initializable {
     public void show() {
         volumeBar.setValue(TitleController.getMediaPlayer().getVolume());
         contrastBar.setValue(screenLight.getBrightness());
-    	config.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 61 ) );
-    	volume.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
-    	contrast.setFont( Font.loadFont( new File( "resources/font/yukarimobil.ttf" ).toURI().toString() , 24 ) );
+    	config.setFont( Font.loadFont( ClassLoader.getSystemResource("font/yukarimobil.ttf" ).toString() , 61 ) );
+    	volume.setFont( Font.loadFont( ClassLoader.getSystemResource("font/yukarimobil.ttf" ).toString() , 24 ) );
+    	contrast.setFont( Font.loadFont( ClassLoader.getSystemResource("font/yukarimobil.ttf" ).toString() , 24 ) );
 
         Main.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }

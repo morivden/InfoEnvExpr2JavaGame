@@ -52,7 +52,7 @@ public class SelectStageController implements Initializable {
     }
 	
 	public void show() {
-    	textTitle.setFont(Font.loadFont(new File("resources/font/yukarimobil.ttf").toURI().toString(), 55)); // タイトルのフォントを外部フォントに指定
+    	textTitle.setFont(Font.loadFont(ClassLoader.getSystemResource("font/yukarimobil.ttf").toString(), 55)); // タイトルのフォントを外部フォントに指定
     	Main.primaryStage.setScene(SCENE);                 // 画面遷移を確認するために一時的に変更
     }
 
