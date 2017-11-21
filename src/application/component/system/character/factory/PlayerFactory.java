@@ -78,7 +78,7 @@ public class PlayerFactory extends CharacterFactory<Player> {
 
         PlayableCharacter createP = (PlayableCharacter) newGameObject;
 
-        Platform.runLater(() -> GameManager.addGameObject(createP));  // ゲームオブジェクトの登録
+        GameManager.addGameObject(createP);  // ゲームオブジェクトの登録
         Player player = new Player(createP);
         register(player);  // コントローラの登録
         GameManager.registerPlayer(player);  // ゲームマネージャへの登録
